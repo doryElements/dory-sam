@@ -1,5 +1,11 @@
 <link rel="import" href="../polymer/polymer.html">
 
+<link rel="import" href="../iron-pages/iron-pages.html">
+<link rel="import" href="../neon-animation/neon-animated-pages.html">
+
+<link rel="import" href="dory-sam-list.html">
+<link rel="import" href="dory-sam-editor.html">
+
 <!--
 `dory-sam`
 Polymer 1
@@ -8,27 +14,51 @@ Polymer 1
 -->
 
 <dom-module id="dory-sam">
-  <template>
-    <style>
-      :host {
-        display: block;
-      }
-    </style>
-    <h2>Hello [[prop1]]</h2>
-  </template>
+    <template>
+        <style>
+            :host {
+                display: block;
+            }
+            neon-animated-pages {
+                height: 100%;
+            }
+            iron-pages {
+                height: 100%;
+            }
+        </style>
+        <h2>Hello [[page]]</h2>
 
-  <script>
-    Polymer({
+        <iron-pages id="pages"
+                selected="[[page]]"
+                attr-for-selected="name"
+                fallback-selection="list"
+                role="main">
+            <dory-sam-list name="list"></dory-sam-list>
+            <dory-sam-editor name="edit"></dory-sam-editor>
+        </iron-pages>
+    </template>
 
-      is: 'dory-sam',
+    <script>
+        Polymer({
 
-      properties: {
-        prop1: {
-          type: String,
-          value: 'dory-sam',
-        },
-      },
+            is: 'dory-sam',
 
-    });
-  </script>
+            listeners: {
+                'dory-open-page': '_changePage'
+            },
+
+            properties: {
+                page: {
+                    type: String,
+                    value: 'list',
+                },
+            },
+            _changePage: function (e) {
+                e.preventDefault();
+                var detail = e.detail;
+                this.page = detail.page;
+            }
+
+        });
+    </script>
 </dom-module>

@@ -1,4 +1,5 @@
-# \<dory-sam\>
+# \<dory-sam\> [![Build Status](https://travis-ci.org/doryElements/dory-sam.svg?branch=master)](https://travis-ci.org/doryElements/dory-sam)
+
 
 Polymer 1
 

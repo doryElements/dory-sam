@@ -1,0 +1,44 @@
+<link rel="import" href="../polymer/polymer.html">
+
+<link rel="import" href="../paper-toolbar/paper-toolbar.html">
+<link rel="import" href="../paper-icon-button/paper-icon-button.html">
+
+<!--
+`dory-sam-editor`
+Polymer Element dory-sam-editor
+
+@demo demo/index.html 
+-->
+
+<dom-module id="dory-sam-editor">
+    <template>
+        <style>
+            :host {
+                display: block;
+            }
+        </style>
+        <paper-toolbar class="medium-tall">
+            <paper-icon-button id="button" icon="clear" on-tap="_requestList"></paper-icon-button>
+        </paper-toolbar>
+
+        <h2 on-tap="_requestList">Editor [[prop1]]</h2>
+    </template>
+
+    <script>
+        Polymer({
+
+            is: 'dory-sam-editor',
+
+            properties: {
+                prop1: {
+                    type: String,
+                    value: 'dory-sam-editor',
+                },
+            },
+
+            _requestList: function (e) {
+                this.fire('dory-open-page', {page:'list', id:'sam01'})
+            },
+        });
+    </script>
+</dom-module>
