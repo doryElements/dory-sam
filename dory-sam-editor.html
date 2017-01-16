@@ -27,7 +27,7 @@ Polymer Element dory-sam-editor
 
         </paper-toolbar>
 
-        <h2 on-tap="_requestList">Editor [[prop1]]</h2>
+        <h2 on-tap="_requestList">Editor of entity : [[entityId]]</h2>
     </template>
 
     <script>
@@ -37,14 +37,14 @@ Polymer Element dory-sam-editor
 
             properties: {
 
-                prop1: {
+                entityId: {
                     type: String,
                     value: 'dory-sam-editor',
                 },
             },
 
             _requestList: function (e) {
-                this.fire('dory-open-page', {page:'list', id:'sam01'})
+                this.fire('dory-open-page', {page:'list'})
             },
 
         });

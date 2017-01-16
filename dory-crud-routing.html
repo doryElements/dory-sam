@@ -17,7 +17,7 @@ Polymer 1
 @demo demo/index.html 
 -->
 
-<dom-module id="dory-sam-routing">
+<dom-module id="dory-crud-routing">
     <template>
         <style>
             :host {
@@ -35,24 +35,28 @@ Polymer 1
         <app-location route="{{route}}"  use-hash-as-path></app-location>
 
 
-        <app-route route="{{route}}" pattern="[[_computePagePattern()]]"
+        <app-route route="{{route}}" pattern="/list"
                 data="{{routeData}}"
                 tail="{{subroute}}">
         </app-route>
-        <app-route route="{{route}}" pattern="/sam/:page/:id"
+        <app-route route="{{route}}" pattern="/:page/:id"
                    data="{{routeEditData}}"
                    tail="{{subrouteEdit}}">
         </app-route>
 
-
         <iron-pages id="pages"
                 selected="[[page]]"
-                attr-for-selected="name"
+                attr-for-selected="page"
                 fallback-selection="list"
                 role="main">
-            <slot name="list"></slot>
-            <slot name="edit"></slot>
+            <div page="list">
+                <slot  name="list" ></slot>
+            </div>
+            <div page="edit">
+                <slot  name="edit" id="pageEdit"  ></slot>
+            </div>
         </iron-pages>
+
 
 
     </template>
@@ -60,7 +64,7 @@ Polymer 1
     <script>
         Polymer({
 
-            is: 'dory-sam',
+            is: 'dory-crud-routing',
 
             listeners: {
                 'dory-open-page': '_changePageEvent'
@@ -85,26 +89,36 @@ Polymer 1
                     type: Object,
                     notify: true
                 },
+                entityId: {
+                    type: Object,
+                    notify: true,
+                    value: 'sssss'
+                },
             },
-            _computePagePattern: function () {
-                return '/sam'+ '/:page'
-            },
+
 
             _changePageEvent: function (e) {
                 e.preventDefault();
                 var detail = e.detail;
+                if (detail.id) {
+                    this.entityId = detail.id;
+                }
                 this.page = detail.page;
-                this._changeUrl();
+                this._changeUrl(detail);
             },
-            _changeUrl: function () {
+
+            _changeUrl: function (opt) {
                 var newRoute = JSON.parse(JSON.stringify( this.route));
-                newRoute.path =  '/'+ this.page;
+                newRoute.path =  '/'+ opt.page;
+                if (opt.id) {
+                    newRoute.path += '/'+opt.id;
+                }
 //                newRoute.prefix = '/sam';
                 this.route= newRoute;
             },
 
             _routeDataChanged: function (oldValue, newValue) {
-                console.log()
+              console.log()
               this.page= this.routeData.page;
             },
 

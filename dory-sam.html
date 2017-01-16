@@ -1,13 +1,7 @@
 <link rel="import" href="../polymer/polymer.html">
 
-<link rel="import" href="../iron-pages/iron-pages.html">
+<link rel="import" href="dory-crud-routing.html">
 
-<link rel="import" href="../neon-animation/neon-animated-pages.html">
-
-<link rel="import" href="../iron-location/iron-location.html">
-
-<link rel="import" href="../app-route/app-location.html">
-<link rel="import" href="../app-route/app-route.html">
 
 <link rel="import" href="dory-sam-list.html">
 <link rel="import" href="dory-sam-editor.html">
@@ -25,36 +19,14 @@ Polymer 1
             :host {
                 display: block;
             }
-            neon-animated-pages {
-                height: 100%;
-            }
-            /*iron-pages {*/
-                /*height: 100%;*/
-            /*}*/
         </style>
-        <h2>Hello [[page]]</h2>
-
-        <app-location route="{{route}}"  use-hash-as-path></app-location>
 
 
-        <app-route route="{{route}}" pattern="[[_computePagePattern()]]"
-                data="{{routeData}}"
-                tail="{{subroute}}">
-        </app-route>
-        <app-route route="{{route}}" pattern="/sam/:page/:id"
-                   data="{{routeEditData}}"
-                   tail="{{subrouteEdit}}">
-        </app-route>
 
-
-        <iron-pages id="pages"
-                selected="[[page]]"
-                attr-for-selected="name"
-                fallback-selection="list"
-                role="main">
-            <dory-sam-list name="list"></dory-sam-list>
-            <dory-sam-editor name="edit"></dory-sam-editor>
-        </iron-pages>
+        <dory-crud-routing page="{{page}}" entity-id="{{entityId}}">
+            <dory-sam-list slot="list"></dory-sam-list>
+            <dory-sam-editor slot="edit" entity-id="{{entityId}}"></dory-sam-editor>
+        </dory-crud-routing>
 
 
     </template>
@@ -64,58 +36,15 @@ Polymer 1
 
             is: 'dory-sam',
 
-            listeners: {
-                'dory-open-page': '_changePageEvent'
-            },
 
             properties: {
                 page: {
                     type: String,
                     value: 'list',
                 },
-                route: {
-                    type: Object,
-                    observer: '_print',
-                    notify: true
-                },
-                routeData: {
-                    type: Object,
-                    observer: '_routeDataChanged',
-                    notify: true
-                },
-                subroute: {
-                    type: Object,
-                    notify: true
-                },
-            },
-            _computePagePattern: function () {
-                return '/sam'+ '/:page'
+
             },
 
-            _changePageEvent: function (e) {
-                e.preventDefault();
-                var detail = e.detail;
-                this.page = detail.page;
-                this._changeUrl();
-            },
-            _changeUrl: function () {
-                var newRoute = JSON.parse(JSON.stringify( this.route));
-                newRoute.path =  '/'+ this.page;
-//                newRoute.prefix = '/sam';
-                this.route= newRoute;
-            },
-
-            _routeDataChanged: function (oldValue, newValue) {
-                console.log()
-              this.page= this.routeData.page;
-            },
-
-            _print: function (e) {
-                console.log('route : ',this.route);
-                console.log('routeData : ',this.routeData);
-                console.log('subroute : ',this.subroute);
-                console.log('routeEditData : ',this.routeEditData);
-            }
 
         });
     </script>

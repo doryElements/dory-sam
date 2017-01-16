@@ -21,7 +21,8 @@ Polymer Element dory-sam-list
             <paper-icon-button id="button" icon="arrow-back"></paper-icon-button>
             <div class="title">List</div>
         </paper-toolbar>
-        <h2 on-tap="_requestEdit">List [[prop1]]</h2>
+        <h2 on-tap="_requestEdit">Edit sam01</h2>
+        <h2 on-tap="_requestEdit2">Edit sam02</h2>
     </template>
 
     <script>
@@ -39,7 +40,9 @@ Polymer Element dory-sam-list
             _requestEdit: function (e) {
               this.fire('dory-open-page', {page:'edit', id:'sam01'})
             },
-
+            _requestEdit2: function (e) {
+                this.fire('dory-open-page', {page:'edit', id:'sam02'})
+            },
         });
     </script>
 </dom-module>
