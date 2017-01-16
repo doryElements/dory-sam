@@ -9,8 +9,6 @@
 <link rel="import" href="../app-route/app-location.html">
 <link rel="import" href="../app-route/app-route.html">
 
-<link rel="import" href="dory-sam-list.html">
-<link rel="import" href="dory-sam-editor.html">
 
 <!--
 `dory-sam`
@@ -19,7 +17,7 @@ Polymer 1
 @demo demo/index.html 
 -->
 
-<dom-module id="dory-sam">
+<dom-module id="dory-sam-routing">
     <template>
         <style>
             :host {
@@ -52,8 +50,8 @@ Polymer 1
                 attr-for-selected="name"
                 fallback-selection="list"
                 role="main">
-            <dory-sam-list name="list"></dory-sam-list>
-            <dory-sam-editor name="edit"></dory-sam-editor>
+            <slot name="list"></slot>
+            <slot name="edit"></slot>
         </iron-pages>
 
 
