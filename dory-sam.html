@@ -1,7 +1,13 @@
 <link rel="import" href="../polymer/polymer.html">
 
 <link rel="import" href="../iron-pages/iron-pages.html">
+
 <link rel="import" href="../neon-animation/neon-animated-pages.html">
+
+<link rel="import" href="../iron-location/iron-location.html">
+
+<link rel="import" href="../app-route/app-location.html">
+<link rel="import" href="../app-route/app-route.html">
 
 <link rel="import" href="dory-sam-list.html">
 <link rel="import" href="dory-sam-editor.html">
@@ -22,11 +28,20 @@ Polymer 1
             neon-animated-pages {
                 height: 100%;
             }
-            iron-pages {
-                height: 100%;
-            }
+            /*iron-pages {*/
+                /*height: 100%;*/
+            /*}*/
         </style>
         <h2>Hello [[page]]</h2>
+
+        <app-location route="{{route}}"  use-hash-as-path></app-location>
+        <app-route
+                route="{{route}}"
+                pattern="/:page"
+                data="{{routeData}}"
+                tail="{{subroute}}">
+        </app-route>
+
 
         <iron-pages id="pages"
                 selected="[[page]]"
@@ -36,6 +51,8 @@ Polymer 1
             <dory-sam-list name="list"></dory-sam-list>
             <dory-sam-editor name="edit"></dory-sam-editor>
         </iron-pages>
+
+
     </template>
 
     <script>
@@ -52,11 +69,30 @@ Polymer 1
                     type: String,
                     value: 'list',
                 },
+                route: {
+                    type: Object,
+                    observer: '_print',
+                    notify: true
+                },
+                routeData: {
+                    type: Object,
+                    observer: '_print',
+                    notify: true
+                },
+                subroute: {
+                    type: Object,
+                    observer: '_print',
+                    notify: true
+                },
             },
             _changePage: function (e) {
                 e.preventDefault();
                 var detail = e.detail;
                 this.page = detail.page;
+            },
+
+            _print: function (e) {
+                console.log(e.detail);
             }
 
         });

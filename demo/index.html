@@ -10,19 +10,32 @@
 
     <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
     <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
+
+    <link rel="import" href="../../iron-demo-helpers/url-bar.html">
+
+
     <link rel="import" href="../dory-sam.html">
 
-    <style is="custom-style" include="demo-pages-shared-styles">
+    <style >
+      body {
+        margin: 0;
+        padding: 0;
+      }
+
+      url-bar {
+        background-color: red;
+        width: 600px;
+        height: 150px;
+      }
+
     </style>
   </head>
   <body>
-    <div class="vertical-section-container centered">
-      <h3>Basic dory-sam demo</h3>
-      <demo-snippet>
-        <template>
+
+
+          <url-bar></url-bar>
           <dory-sam></dory-sam>
-        </template>
-      </demo-snippet>
+
     </div>
   </body>
 </html>

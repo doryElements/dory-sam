@@ -5,7 +5,9 @@
   "dependencies": {
     "polymer": "Polymer/polymer#^1.4.0",
     "iron-pages": "PolymerElements/iron-pages#^1.0.8",
-    "neon-animation": "PolymerElements/neon-animation#^1.2.4"
+    "neon-animation": "PolymerElements/neon-animation#^1.2.4",
+    "app-route": "PolymerElements/app-route#^0.9.3",
+    "paper-toolbar": "PolymerElements/paper-toolbar#^1.1.7"
   },
   "devDependencies": {
     "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
