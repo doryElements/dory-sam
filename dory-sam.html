@@ -4,6 +4,7 @@
 
 
 <link rel="import" href="../dory-sam-list/dory-sam-list.html">
+<link rel="import" href="../dory-sam-list/dory-sam-editor.html">
 
 <link rel="import" href="dory-sam-list-demo.html">
 <link rel="import" href="dory-sam-editor-demo.html">
@@ -20,18 +21,13 @@ Polymer 1
         <style>
             :host {
                 display: block;
-
-            }
-            dory-crud-routing {
-                width: 500px;
-                height: 500px;
             }
         </style>
 
 
 
         <dory-crud-routing page="{{page}}" entity-id="{{entityId}}">
-            <dory-sam-list-demo slot="list"></dory-sam-list-demo>
+            <dory-sam-list-demo slot="list" items="[[listData]]"></dory-sam-list-demo>
             <dory-sam-editor-demo slot="edit" entity-id="{{entityId}}"></dory-sam-editor-demo>
         </dory-crud-routing>
 
@@ -49,6 +45,37 @@ Polymer 1
                     type: String,
                     value: 'list',
                 },
+                listData: {
+                    type:Object,
+                    value: function () {
+                        var data = [];
+                        var generator = function (id) {
+                            var envs = ['PROD', 'QUALIF', 'REC']
+                            return {
+                                id: id,
+                                app: 'Oura' + id,
+                                env: envs[(i%envs.length)],
+                                uris: [
+                                    {value: 'http://uneUrlSuperLongue.pcq.desFois/onenrecontre_' + id},
+                                    {value: 'http://uneAutreUrl.pcq.desFois/uneautre_' + id},
+                                ],
+                                servers: [
+                                    {value: 'serv1 ' + id, zone: 'LAN'},
+                                    {value: 'serv2 ' + id, zone: 'DMZ'},
+                                ],
+                                databases: [
+                                    {value: 'nomDatabase'}
+                                ]
+                            }
+                        };
+                        for(var i=0;i<20;i++) {
+                            data[i] = generator(i);
+                        }
+                        return data;
+                    }
+                },
+
+
 
             },
 
