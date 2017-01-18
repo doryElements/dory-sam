@@ -6,7 +6,6 @@
 <link rel="import" href="../dory-sam-list/dory-sam-list.html">
 <link rel="import" href="../dory-sam-list/dory-sam-editor.html">
 
-<link rel="import" href="dory-sam-list-demo.html">
 <link rel="import" href="dory-sam-editor-demo.html">
 
 <!--
@@ -27,7 +26,7 @@ Polymer 1
 
 
         <dory-crud-routing page="{{page}}" entity-id="{{entityId}}">
-            <dory-sam-list-demo slot="list" items="[[listData]]"></dory-sam-list-demo>
+            <dory-sam-list slot="list" items="[[listData]]"></dory-sam-list>
             <dory-sam-editor-demo slot="edit" entity-id="{{entityId}}"></dory-sam-editor-demo>
         </dory-crud-routing>
 
