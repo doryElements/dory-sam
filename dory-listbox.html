@@ -1,0 +1,51 @@
+<link rel="import" href="../polymer/polymer.html">
+
+<link rel="import" href="../paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="../paper-listbox/paper-listbox.html">
+<link rel="import" href="../paper-item/paper-item.html">
+
+<!--
+`dory-listbox`
+Polymer Element dory-listbox
+
+@demo demo/index.html
+-->
+
+<dom-module id="dory-listbox">
+    <template>
+        <style>
+            :host {
+                display: block;
+            }
+        </style>
+        <paper-dropdown-menu label="[[label]]">
+            <paper-listbox selected="{{selected}}" attr-for-selected="code" class="dropdown-content">
+                <template id="menu" is="dom-repeat" items="[[codeLabels]]">
+                    <paper-item code="[[item.code]]">[[item.label]]</paper-item>
+                </template>
+            </paper-listbox>
+        </paper-dropdown-menu>
+    </template>
+
+    <script>
+        Polymer({
+
+            is: 'dory-listbox',
+
+            properties: {
+                selected: {
+                    type: Object,
+                    notify: true
+                },
+                label: {
+                    type: String
+                },
+                codeLabels: {
+                    type: Array,
+                    notify: true
+                },
+            },
+
+        });
+    </script>
+</dom-module>

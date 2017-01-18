@@ -1,0 +1,137 @@
+<link rel="import" href="../polymer/polymer.html">
+
+
+<link rel="import" href="../paper-styles/paper-styles.html">
+
+<link rel="import" href="../iron-icons/iron-icons.html">
+<link rel="import" href="../iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../iron-flex-layout/iron-flex-layout-classes.html">
+
+<link rel="import" href="../paper-card/paper-card.html">
+<link rel="import" href="../paper-fab/paper-fab.html">
+
+
+<link rel="import" href="../paper-input/paper-input.html">
+<link rel="import" href="../paper-icon-button/paper-icon-button.html">
+
+<link rel="import" href="dory-listbox.html">
+
+<link rel="import" href="../iron-validator-behavior/iron-validator-behavior.html">
+<link rel="import" href="../iron-form-element-behavior/iron-form-element-behavior.html">
+<link rel="import" href="dory-sam-servers-validator.html">
+<link rel="import" href="../paper-button/paper-button.html">
+
+<!--
+`dory-sam-editor-servers`
+
+
+@demo demo/index.html 
+-->
+
+<dom-module id="dory-sam-editor-servers">
+    <template>
+        <style include="shared-styles iron-flex iron-flex-alignment iron-flex-factors">
+            :host {
+                display: block;
+                margin-top: 8px;
+            }
+            :host[invalid] {
+                border-left: 1px solid red;
+            }
+
+            .header {
+                --paper-card-header: {
+                    background-color: var(--paper-grey-200);
+                }
+            }
+
+            .buttonadd {
+                background-color: var(--paper-grey-200);
+                margin: 8px;
+                @apply(--layout-vertical);
+            }
+
+            .card-add-location {
+                position: absolute;
+                float: right;
+                font-size: 15px;
+                top: -35px;
+                right: 40px;
+            }
+
+        </style>
+        <paper-card heading="Serveurs" alt="Serveurs" class="header layout vertical">
+            <div class="card-content">
+                <!--<paper-fab icon="add" title="add" class="card-add-location" on-tap="_addServer"></paper-fab>-->
+                <template is="dom-repeat" items="{{servers}}">
+                    <div class="layout horizontal wrap end">
+                        <dory-listbox label="Zone" selected="{{item.zone}}" code-labels="[[zones]]"></dory-listbox>
+                        <paper-input value="{{item.name}}" class="flex-3" label="Name">
+                            <paper-icon-button suffix icon="clear" on-tap="_deleteServer"></paper-icon-button>
+                        </paper-input>
+                    </div>
+                </template>
+                <paper-button class="buttonadd" on-tap="_addServer" raised>Ajouter un serveur</paper-button>
+            </div>
+        </paper-card>
+    </template>
+
+    <script>
+        Polymer({
+
+            is: 'dory-sam-editor-servers',
+
+            behaviors: [
+                Polymer.IronFormElementBehavior,
+                Polymer.IronValidatableBehavior
+            ],
+
+            properties: {
+                servers: {
+                    type: Array,
+                    notify: true
+                },
+                zones: {
+                    type: Array,
+                    notify: true,
+                    value: function () {
+                        return [
+                            {code: 'LAN', label: 'LAN'},
+                            {code: 'DMZ', label: 'DMZ'}
+                        ];
+                    }
+                },
+//                validator: {
+//                    type: String,
+//                },
+//                invalid: {
+//                    notify: true,
+//                    type: Boolean,
+//                    value:true
+//                }
+            },
+
+            // Mécanisme prioritaire : le validator est ignoré si _getValidity est défini
+//            _getValidity: function(values) {
+//                console.log('----- _getValidity');
+//                return false;
+//            },
+
+            _addServer: function () {
+                if (!this.servers) {
+                    this.set('servers', []);
+                }
+                var server = {};
+                this.push('servers', server);
+//                console.log('data', JSON.stringify(this.data));
+            },
+            _deleteServer: function (e) {
+//              var index = this.servers.indexOf(server);
+                var index = e.model.index;
+//              console.log('delete server ', e.model.index);
+                this.splice('servers', index, 1);
+            },
+
+        });
+    </script>
+</dom-module>

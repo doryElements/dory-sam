@@ -1,0 +1,27 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../iron-validator-behavior/iron-validator-behavior.html">
+
+<!--
+`dory-sam-servers-validator`
+
+
+@demo demo/index.html 
+-->
+
+<dom-module id="dory-sam-servers-validator">
+    <script>
+        Polymer({
+
+            is: 'dory-sam-servers-validator',
+
+            behaviors: [
+                    Polymer.IronValidatorBehavior],
+
+            validate: function(values) {
+                console.log("Validate du composant dory-sam-servers-validator : " + values);
+                return false;
+            },
+
+        });
+    </script>
+</dom-module>

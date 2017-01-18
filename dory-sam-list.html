@@ -1,0 +1,47 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="dory-sam-card.html">
+<link rel="import" href="../iron-list/iron-list.html">
+
+<!--
+`dory-list`
+
+
+@demo demo/index.html 
+-->
+
+<dom-module id="dory-sam-list">
+    <template>
+        <style>
+            :host {
+                display: block;
+                @apply(--layout-fullbleed); /* height: 100vh; margin: 0 */
+                @apply(--layout-vertical); /* display: flex; flex-direction: column; */
+            }
+
+            iron-list {
+                background-color: #ddd;
+                @apply(--layout-flex-auto); /* flex: 1 1 auto; */
+            }
+        </style>
+
+        <iron-list items="[[items]]" as="item" grid>
+            <template>
+                <dory-sam-card data="[[item]]"></dory-sam-card>
+            </template>
+        </iron-list>
+    </template>
+
+    <script>
+        Polymer({
+
+            is: 'dory-sam-list',
+
+            properties: {
+                items: {
+                    type: Array,
+                },
+            },
+
+        });
+    </script>
+</dom-module>

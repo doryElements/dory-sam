@@ -1,0 +1,109 @@
+<link rel="import" href="../polymer/polymer.html">
+
+
+<link rel="import" href="../iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../iron-flex-layout/iron-flex-layout-classes.html">
+
+<link rel="import" href="../paper-input/paper-input.html">
+<link rel="import" href="../paper-icon-button/paper-icon-button.html">
+
+<link rel="import" href="../paper-card/paper-card.html">
+<link rel="import" href="../paper-fab/paper-fab.html">
+<link rel="import" href="../paper-input/paper-textarea.html">
+<link rel="import" href="../paper-checkbox/paper-checkbox.html">
+<link rel="import" href="../paper-button/paper-button.html">
+
+<link rel="import" href="../iron-form/iron-form.html">
+<link rel="import" href="../iron-icons/iron-icons.html">
+
+<!--
+`dory-sam-dyn-list`
+
+
+@demo demo/index.html 
+-->
+
+<dom-module id="dory-sam-dyn-list">
+    <template>
+        <style>
+            :host {
+                display: block;
+                margin-top: 8px;
+            }
+            .header {
+                --paper-card-header: {
+                    background-color: var(--paper-grey-200);
+                }
+            }
+            .buttonadd {
+                background-color: var(--paper-grey-200);
+                margin: 8px;
+                @apply(--layout-vertical);
+            }
+            label {
+                color: var(--paper-grey-600);
+            }
+        </style>
+        <!--<paper-card heading="[[title]]" alt="[[title]]" class="header layout vertical">-->
+            <label>[[title]]</label>
+            <div class="card-content">
+            <template id="urls" is="dom-repeat" items="{{list}}" as="it">
+                <paper-input value="{{it.value}}" placeholder="[[placeholder]]" label="[[labelItem]] [[_add(index,1)]]">
+                    <div prefix>
+                        [[prefix]]
+                    </div>
+                    <paper-icon-button suffix icon="clear" on-tap="_deleteElt"></paper-icon-button>
+                </paper-input>
+            </template>
+            <paper-button class="buttonadd" on-tap="_addElt" raised>[[buttonLabel]]</paper-button>
+            </div>
+        <!--</paper-card>-->
+
+    </template>
+
+    <script>
+        Polymer({
+
+            is: 'dory-sam-dyn-list',
+
+            properties: {
+                list: {
+                    type: Array,
+                    notify: true,
+                },
+                title: {
+                    type: String,
+                },
+                prefix: {
+                    type: String,
+                },
+                labelItem: {
+                    type: String,
+                },
+                buttonLabel: {
+                    type: String,
+                },
+                placeholder: {
+                    type: String,
+                }
+            },
+
+            _addElt: function() {
+                if(!this.list) {
+                    this.set('list', []);
+                }
+                this.push('list', [{value:''}]);
+            },
+
+            _deleteElt: function(e) {
+                var index = e.model.index;
+                this.splice('list', index, 1);
+            },
+
+            _add: function(op1, op2) {
+                return op1 + op2;
+            }
+
+        });
+    </script>
+</dom-module>
