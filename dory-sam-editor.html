@@ -93,8 +93,9 @@ Dory Service Application Mapping Form Editor
                 </form>
             </div>
             <div class="card-actions">
-                <paper-button blabla on-tap="_doValidate">Validate</paper-button>
-                <paper-button blabla on-tap="_requestList">Back</paper-button>
+                <paper-button on-tap="_doValidate">Validate</paper-button>
+                <paper-button on-tap="_doSubmit">Submit</paper-button>
+                <paper-button on-tap="_requestList">Back</paper-button>
             </div>
 
         </paper-card>
@@ -138,6 +139,10 @@ Dory Service Application Mapping Form Editor
             _doValidate: function () {
                 var isValid = this.$.form.validate();
                 console.log('Form is valid : ', isValid);
+            },
+
+            _doSubmit: function () {
+                document.getElementById('form').submit();
             },
 
             _registerElementPrint: function (e) {

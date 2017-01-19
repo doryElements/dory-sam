@@ -104,13 +104,12 @@
 
             // Mécanisme prioritaire : le validator est ignoré si _getValidity est défini
             _getValidity: function (values) {
-                console.log('----- _getValidity');
-
-                console.log(this.getElementsByClassName('uniqname')[0].value);
+                console.log('----- _getValidity server');
+                this.invalid = false;
 
                 var names = Array.prototype.slice.call(this.getElementsByClassName('uniqname')).map(function (e) {
                     return e.value;
-                })
+                });
 
                 var count = [];
 
@@ -121,11 +120,15 @@
                     });
                     count[current] = filterresult.length;
                 }
+                var component = this;
                 Array.prototype.slice.call(this.getElementsByClassName('uniqname')).forEach(function (e) {
-                    if (count[e.value] > 1) e.invalid = true;
+                    if (count[e.value] > 1) {
+                        e.invalid = true;
+                        component.invalid = true;
+                    }
                 });
 
-                return true;
+                return !this.invalid;
             },
 
             _addServer: function () {
@@ -144,6 +147,7 @@
             },
 
             _setValid: function (e) {
+                this.invalid = false;
                 Array.prototype.slice.call(this.getElementsByClassName('uniqname')).filter(function (elt) {
                     return elt.value == Polymer.dom(e).localTarget.value;
                 }).forEach(function (elt) {
