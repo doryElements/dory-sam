@@ -145,7 +145,7 @@
 
             _setValid: function (e) {
                 Array.prototype.slice.call(this.getElementsByClassName('uniqname')).filter(function (elt) {
-                    return elt.value == e.target.value;
+                    return elt.value == Polymer.dom(e).localTarget.value;
                 }).forEach(function (elt) {
                     elt.invalid = false
                 });
