@@ -18,7 +18,6 @@
 
 <link rel="import" href="../iron-validator-behavior/iron-validator-behavior.html">
 <link rel="import" href="../iron-form-element-behavior/iron-form-element-behavior.html">
-<link rel="import" href="dory-sam-servers-validator.html">
 <link rel="import" href="../paper-button/paper-button.html">
 
 <!--
@@ -94,6 +93,10 @@
                     type: Array,
                     notify: true
                 },
+                value: {
+                  type: String,
+                    value: 'uneValue'
+                },
                 zones: {
                     type: Array,
                     notify: true,
@@ -115,10 +118,10 @@
             },
 
             // Mécanisme prioritaire : le validator est ignoré si _getValidity est défini
-//            _getValidity: function(values) {
-//                console.log('----- _getValidity');
-//                return false;
-//            },
+            _getValidity: function(values) {
+                console.log('----- _getValidity');
+                return false;
+            },
 
             _addServer: function () {
                 if (!this.servers) {
