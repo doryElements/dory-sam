@@ -19,7 +19,6 @@
 
 <link rel="import" href="dory-listbox.html">
 <link rel="import" href="dory-sam-editor-servers.html">
-<link rel="import" href="dory-sam-servers-validator.html">
 <link rel="import" href="dory-sam-dyn-list.html">
 
 <!--
@@ -47,7 +46,6 @@ Dory Service Application Mapping Form Editor
             }
         </style>
 
-        <dory-sam-servers-validator validator-name="dory-sam-servers-validator"></dory-sam-servers-validator>
         <paper-card heading="Edition de [[entityId]]">
             <div class="card-content">
                 <form is="iron-form" id="form">
@@ -75,8 +73,7 @@ Dory Service Application Mapping Form Editor
                                            placeholder="http://"></dory-sam-dyn-list>
 
 
-                        <dory-sam-editor-servers class="dynbox" servers="{{data.servers}}"
-                                                 validator="dory-sam-servers-validator"></dory-sam-editor-servers>
+                        <dory-sam-editor-servers class="dynbox" servers="{{data.servers}}"></dory-sam-editor-servers>
 
                         <dory-sam-dyn-list class="dynbox" title="Databases" list="{{data.databases}}"
                                            button-label="Ajouter une bdd"
@@ -126,6 +123,10 @@ Dory Service Application Mapping Form Editor
                         ];
                     }
                 },
+            },
+
+            validate: function() {
+                return _doValidate();
             },
 
             _doValidate: function () {
