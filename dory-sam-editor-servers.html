@@ -48,7 +48,6 @@
             .buttonadd {
                 background-color: var(--paper-grey-200);
                 margin: 8px;
-                @apply(--layout-vertical);
             }
 
             .card-add-location {
@@ -59,8 +58,12 @@
                 right: 40px;
             }
 
+            label {
+                color: var(--paper-grey-600);
+            }
         </style>
-        <paper-card heading="Serveurs" alt="Serveurs" class="header layout vertical">
+        <!--<paper-card heading="Serveurs" alt="Serveurs" class="header layout vertical">-->
+            <label>Serveurs</label>
             <div class="card-content">
                 <!--<paper-fab icon="add" title="add" class="card-add-location" on-tap="_addServer"></paper-fab>-->
                 <template is="dom-repeat" items="{{servers}}">
@@ -73,7 +76,7 @@
                 </template>
                 <paper-button class="buttonadd" on-tap="_addServer" raised>Ajouter un serveur</paper-button>
             </div>
-        </paper-card>
+        <!--</paper-card>-->
     </template>
 
     <script>

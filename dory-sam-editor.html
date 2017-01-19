@@ -37,38 +37,64 @@ Dory Service Application Mapping Form Editor
                 padding: 10px;
                 @apply(--layout-vertical);
                 @apply(--layout-flex);
+                background-color: #ddd;
+            }
+
+            .dynbox {
+                margin-top: 1em;
+                min-width: 600px;
+                @apply(--layout-flex-2);
             }
         </style>
 
         <dory-sam-servers-validator validator-name="dory-sam-servers-validator"></dory-sam-servers-validator>
-        Edition de [[entityId]]
-        <form is="iron-form" id="form">
+        <paper-card heading="Edition de [[entityId]]">
+            <div class="card-content">
+                <form is="iron-form" id="form">
 
-            <paper-input value="{{data.app}}" required auto-validate
-                         maxlength="20" label="Applications"></paper-input>
-            <paper-textarea char-counter maxlength="1000" required label="Description"
-                            value="{{data.description}}"></paper-textarea>
+                    <paper-input value="{{data.app}}" required auto-validate
+                                 maxlength="20" label="Nom"></paper-input>
+                    <paper-textarea char-counter maxlength="1000" required label="Description"
+                                    value="{{data.description}}"></paper-textarea>
 
-            <div class="layout horizontal center">
-                <dory-listbox selected="{{data.env}}" label="Environnements" code-labels="[[environments]]"></dory-listbox>
-                <div class="flex"></div>
-                <paper-checkbox>Integration continue</paper-checkbox>
+                    <div class="layout horizontal wrap">
+                        <div class="dynbox">
+                            <dory-listbox selected="{{data.env}}" label="Environnements"
+                                          code-labels="[[environments]]"></dory-listbox>
+                        </div>
+                        <div class="dynbox">
+                            <paper-checkbox>Integration continue</paper-checkbox>
+                        </div>
+
+                        <paper-tags-input class="dynbox" label="Software" items='["Oracle 10"]'
+                                          maxLength="10"></paper-tags-input>
+
+                        <dory-sam-dyn-list class="dynbox" title="Urls" list="{{data.uris}}"
+                                           button-label="Ajouter une Url"
+                                           label-item="URI"
+                                           placeholder="http://"></dory-sam-dyn-list>
+
+
+                        <dory-sam-editor-servers class="dynbox" servers="{{data.servers}}"
+                                                 validator="dory-sam-servers-validator"></dory-sam-editor-servers>
+
+                        <dory-sam-dyn-list class="dynbox" title="Databases" list="{{data.databases}}"
+                                           button-label="Ajouter une bdd"
+                                           label-item="Bdd"></dory-sam-dyn-list>
+
+                        <dory-sam-dyn-list class="dynbox" title="Vips" list="{{data.vips}}"
+                                           button-label="Ajouter un vip"
+                                           label-item="Vip"></dory-sam-dyn-list>
+
+                    </div>
+                </form>
+            </div>
+            <div class="card-actions">
+                <paper-button blabla on-tap="_doValidate">Validate</paper-button>
+                <paper-button blabla on-tap="_requestList">Back</paper-button>
             </div>
 
-            <dory-sam-dyn-list title="Urls" list="{{data.uris}}" button-label="Ajouter une Url" label-item="URI" placeholder="http://"></dory-sam-dyn-list>
-
-            <dory-sam-dyn-list title="Vips" list="{{data.vips}}" button-label="Ajouter un vip" label-item="Vip"></dory-sam-dyn-list>
-
-            <dory-sam-editor-servers servers="{{data.servers}}"
-                                     validator="dory-sam-servers-validator"></dory-sam-editor-servers>
-
-            <dory-sam-dyn-list title="Databases" list="{{data.databases}}" button-label="Ajouter une bdd" label-item="Bdd"></dory-sam-dyn-list>
-
-            <paper-tags-input label="Software" items='["Oracle 10"]'  maxLength="10"></paper-tags-input>
-
-        </form>
-        <paper-button blabla on-tap="_doValidate">Validate</paper-button>
-        <paper-button blabla on-tap="_requestList">Back</paper-button>
+        </paper-card>
 
     </template>
 
@@ -82,7 +108,7 @@ Dory Service Application Mapping Form Editor
             },
 
             properties: {
-                entityId : {
+                entityId: {
                     type: String
                 },
                 data: {
@@ -113,7 +139,7 @@ Dory Service Application Mapping Form Editor
             },
 
             _requestList: function (e) {
-                this.fire('dory-open-page', {page:'list'})
+                this.fire('dory-open-page', {page: 'list'})
             },
 
         });
