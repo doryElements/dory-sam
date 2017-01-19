@@ -21,6 +21,7 @@
 <link rel="import" href="dory-sam-editor-servers.html">
 <link rel="import" href="dory-sam-servers-validator.html">
 <link rel="import" href="dory-sam-dyn-list.html">
+<link rel="import" href="dory-markdown.html">
 
 <!--
 `dory-sam-list`
@@ -54,8 +55,13 @@ Dory Service Application Mapping Form Editor
 
                     <paper-input value="{{data.app}}" required auto-validate
                                  maxlength="20" label="Nom"></paper-input>
-                    <paper-textarea char-counter maxlength="1000" required label="Description"
-                                    value="{{data.description}}"></paper-textarea>
+
+                    <div class="layout horizontal wrap flex">
+                        <paper-textarea class="flex" char-counter maxlength="1000" rows="3" required label="Description"
+                                        value="{{data.description}}"></paper-textarea>
+
+                        <dory-markdown class="flex"  value="[[data.description]]"></dory-markdown>
+                    </div>
 
                     <div class="layout horizontal wrap">
                         <div class="dynbox">

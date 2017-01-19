@@ -24,7 +24,9 @@
     "iron-validator-behavior": "PolymerElements/iron-validator-behavior#^1.0.1",
     "iron-form": "PolymerElements/iron-form#^1.1.4",
     "paper-checkbox": "PolymerElements/paper-checkbox#^1.4.2",
-    "paper-tags": "PolymerEl/paper-tags#^1.1.0"
+    "paper-tags": "PolymerEl/paper-tags#^1.1.0",
+    "marked-element": "PolymerElements/marked-element#^1.2.0",
+    "prism-element": "PolymerElements/prism-element#^1.2.0"
   },
   "devDependencies": {
     "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
