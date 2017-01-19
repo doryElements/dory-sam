@@ -61,21 +61,18 @@
                 color: var(--paper-grey-600);
             }
         </style>
-        <!--<paper-card heading="Serveurs" alt="Serveurs" class="header layout vertical">-->
-            <label>Serveurs</label>
-            <div class="card-content">
-                <!--<paper-fab icon="add" title="add" class="card-add-location" on-tap="_addServer"></paper-fab>-->
-                <template is="dom-repeat" items="{{servers}}">
-                    <div class="layout horizontal wrap end">
-                        <dory-listbox label="Zone" selected="{{item.zone}}" code-labels="[[zones]]"></dory-listbox>
-                        <paper-input value="{{item.name}}" class="flex-3" label="Name">
-                            <paper-icon-button suffix icon="clear" on-tap="_deleteServer"></paper-icon-button>
-                        </paper-input>
-                    </div>
-                </template>
-                <paper-button class="buttonadd" on-tap="_addServer" raised>Ajouter un serveur</paper-button>
-            </div>
-        <!--</paper-card>-->
+        <label>Serveurs</label>
+        <div class="card-content">
+            <template is="dom-repeat" items="{{servers}}">
+                <div class="layout horizontal wrap end">
+                    <dory-listbox label="Zone" selected="{{item.zone}}" code-labels="[[zones]]"></dory-listbox>
+                    <paper-input value="{{item.name}}" class="flex-3 uniqname" label="Name" on-tap="_setValid">
+                        <paper-icon-button suffix icon="clear" on-tap="_deleteServer"></paper-icon-button>
+                    </paper-input>
+                </div>
+            </template>
+            <paper-button id="addserver" class="buttonadd" on-tap="_addServer" raised>Ajouter un serveur</paper-button>
+        </div>
     </template>
 
     <script>
@@ -93,10 +90,6 @@
                     type: Array,
                     notify: true
                 },
-                value: {
-                  type: String,
-                    value: 'uneValue'
-                },
                 zones: {
                     type: Array,
                     notify: true,
@@ -107,20 +100,32 @@
                         ];
                     }
                 },
-//                validator: {
-//                    type: String,
-//                },
-//                invalid: {
-//                    notify: true,
-//                    type: Boolean,
-//                    value:true
-//                }
             },
 
             // Mécanisme prioritaire : le validator est ignoré si _getValidity est défini
-            _getValidity: function(values) {
+            _getValidity: function (values) {
                 console.log('----- _getValidity');
-                return false;
+
+                console.log(this.getElementsByClassName('uniqname')[0].value);
+
+                var names = Array.prototype.slice.call(this.getElementsByClassName('uniqname')).map(function (e) {
+                    return e.value;
+                })
+
+                var count = [];
+
+                for (i = 0; i < names.length; i++) {
+                    var current = names[i];
+                    var filterresult = names.filter(function (e) {
+                        return e == current;
+                    });
+                    count[current] = filterresult.length;
+                }
+                Array.prototype.slice.call(this.getElementsByClassName('uniqname')).forEach(function (e) {
+                    if (count[e.value] > 1) e.invalid = true;
+                });
+
+                return true;
             },
 
             _addServer: function () {
@@ -137,6 +142,15 @@
 //              console.log('delete server ', e.model.index);
                 this.splice('servers', index, 1);
             },
+
+            _setValid: function (e) {
+                Array.prototype.slice.call(this.getElementsByClassName('uniqname')).filter(function (elt) {
+                    return elt.value == e.target.value;
+                }).forEach(function (elt) {
+                    elt.invalid = false
+                });
+//                e.srcElement.invalid = false;
+            }
 
         });
     </script>
