@@ -5,6 +5,9 @@
 <link rel="import" href="../paper-toolbar/paper-toolbar.html">
 <link rel="import" href="../paper-icon-button/paper-icon-button.html">
 
+<link rel="import" href="../paper-fab/paper-fab.html">
+<link rel="import" href="../paper-input/paper-input.html">
+
 <link rel="import" href="dory-sam-list.html">
 
 
@@ -28,9 +31,14 @@ Polymer Element dory-sam-page-list
         </paper-toolbar>
 
         <div>
-
+            <paper-input  placeholder="Search TODO">
+                <div prefix>></div>
+                <paper-icon-button suffix icon="search" on-tap="search"></paper-icon-button>
+            </paper-input>
 
         </div>
+
+        <iron-ajax auto url="demo-data.json" handle-as="json"  last-response="{{listData}}" ></iron-ajax>
         <dory-sam-list  items="[[listData]]"></dory-sam-list>
     </template>
 
@@ -44,38 +52,11 @@ Polymer Element dory-sam-page-list
                     type: String,
                     value: 'dory-sam-page-list',
                 },
-                listData: {
-                    type: Object,
-                    value: function () {
-                        var data = [];
-                        var generator = function (id) {
-                            var envs = ['PROD', 'QUALIF', 'REC']
-                            return {
-                                id: id,
-                                app: 'Oura' + id,
-                                env: envs[(i % envs.length)],
-                                uris: [
-                                    {value: 'http://uneUrlSuperLongue.pcq.desFois/onenrecontre_' + id},
-                                    {value: 'http://uneAutreUrl.pcq.desFois/uneautre_' + id},
-                                ],
-                                servers: [
-                                    {value: 'serv1 ' + id, zone: 'LAN'},
-                                    {value: 'serv2 ' + id, zone: 'DMZ'},
-                                ],
-                                databases: [
-                                    {value: 'nomDatabase'}
-                                ]
-                            }
-                        };
-                        for (var i = 0; i < 20; i++) {
-                            data[i] = generator(i);
-                        }
-                        return data;
-                    }
-                },
             },
 
-
+            search: function () {
+              console.log(JSON.stringify(this.listData));
+            },
 
             _requestEdit: function (entityId) {
                 this.fire('dory-open-page', {page:'edit', id:entityId})
