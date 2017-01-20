@@ -26,7 +26,8 @@
     "paper-checkbox": "PolymerElements/paper-checkbox#^1.4.2",
     "paper-tags": "PolymerEl/paper-tags#^1.1.0",
     "marked-element": "PolymerElements/marked-element#^1.2.0",
-    "prism-element": "PolymerElements/prism-element#^1.2.0"
+    "prism-element": "PolymerElements/prism-element#^1.2.0",
+    "air-cruddy": "FiveElements/air-cruddy"
   },
   "devDependencies": {
     "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",

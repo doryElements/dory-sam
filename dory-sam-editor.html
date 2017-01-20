@@ -22,6 +22,7 @@
 <link rel="import" href="dory-sam-dyn-list.html">
 <link rel="import" href="dory-markdown.html">
 
+<link rel="import" href="../air-cruddy/air-cruddy-elasticsearch.html">
 <!--
 `dory-sam-list`
 Dory Service Application Mapping Form Editor
@@ -49,53 +50,63 @@ Dory Service Application Mapping Form Editor
 
         <paper-card heading="Edition de [[entityId]]">
             <div class="card-content">
-                <form is="iron-form" id="form">
 
-                    <paper-input value="{{data.app}}" required auto-validate
-                                 maxlength="20" label="Nom"></paper-input>
 
-                    <div class="layout horizontal wrap flex">
-                        <paper-textarea class="flex" char-counter maxlength="1000" rows="3" required label="Description"
-                                        value="{{data.description}}"></paper-textarea>
+                <air-cruddy-elasticsearch id="cruddy" data="{{data}}" url="http://localhost:9200/twitter/tweet"
+                                            entity-id="1">
 
-                        <dory-markdown class="flex"  value="[[data.description]]"></dory-markdown>
-                    </div>
 
-                    <div class="layout horizontal wrap">
-                        <div class="dynbox">
-                            <dory-listbox selected="{{data.env}}" label="Environnements"
-                                          code-labels="[[environments]]"></dory-listbox>
-                        </div>
-                        <div class="dynbox">
-                            <paper-checkbox>Integration continue</paper-checkbox>
+                    <form is="iron-form" id="form">
+
+                        <paper-input value="{{data.app}}" required auto-validate
+                                     maxlength="20" label="Nom"></paper-input>
+
+                        <div class="layout horizontal wrap flex">
+                            <paper-textarea class="flex" char-counter maxlength="1000" rows="3" required
+                                            label="Description"
+                                            value="{{data.description}}"></paper-textarea>
+
+                            <dory-markdown class="flex" value="[[data.description]]"></dory-markdown>
                         </div>
 
-                        <paper-tags-input class="dynbox" label="Software" items='["Oracle 10"]'
-                                          maxLength="10"></paper-tags-input>
+                        <div class="layout horizontal wrap">
+                            <div class="dynbox">
+                                <dory-listbox selected="{{data.env}}" label="Environnements"
+                                              code-labels="[[environments]]"></dory-listbox>
+                            </div>
+                            <div class="dynbox">
+                                <paper-checkbox>Integration continue</paper-checkbox>
+                            </div>
 
-                        <dory-sam-dyn-list class="dynbox" title="Urls" list="{{data.uris}}"
-                                           button-label="Ajouter une Url"
-                                           label-item="URI"
-                                           placeholder="http://"></dory-sam-dyn-list>
+                            <paper-tags-input class="dynbox" label="Software" items='["Oracle 10"]'
+                                              maxLength="10"></paper-tags-input>
+
+                            <dory-sam-dyn-list class="dynbox" title="Urls" list="{{data.uris}}"
+                                               button-label="Ajouter une Url"
+                                               label-item="URI"
+                                               placeholder="http://"></dory-sam-dyn-list>
 
 
-                        <dory-sam-editor-servers class="dynbox" servers="{{data.servers}}"></dory-sam-editor-servers>
+                            <dory-sam-editor-servers class="dynbox"
+                                                     servers="{{data.servers}}"></dory-sam-editor-servers>
 
-                        <dory-sam-dyn-list class="dynbox" title="Databases" list="{{data.databases}}"
-                                           button-label="Ajouter une bdd"
-                                           label-item="Bdd"></dory-sam-dyn-list>
+                            <dory-sam-dyn-list class="dynbox" title="Databases" list="{{data.databases}}"
+                                               button-label="Ajouter une bdd"
+                                               label-item="Bdd"></dory-sam-dyn-list>
 
-                        <dory-sam-dyn-list class="dynbox" title="Vips" list="{{data.vips}}"
-                                           button-label="Ajouter un vip"
-                                           label-item="Vip"></dory-sam-dyn-list>
+                            <dory-sam-dyn-list class="dynbox" title="Vips" list="{{data.vips}}"
+                                               button-label="Ajouter un vip"
+                                               label-item="Vip"></dory-sam-dyn-list>
 
-                    </div>
-                </form>
+                        </div>
+                    </form>
+                </air-cruddy-elasticsearch>
             </div>
             <div class="card-actions">
                 <paper-button on-tap="_doValidate">Validate</paper-button>
                 <paper-button on-tap="_doSubmit">Submit</paper-button>
                 <paper-button on-tap="_requestList">Back</paper-button>
+                <paper-button on-tap="_create">Create</paper-button>
             </div>
 
         </paper-card>
@@ -110,7 +121,6 @@ Dory Service Application Mapping Form Editor
             listeners: {
                 'iron-form-element-register': '_registerElementPrint',
             },
-
             properties: {
                 entityId: {
                     type: String
@@ -118,6 +128,7 @@ Dory Service Application Mapping Form Editor
                 data: {
                     type: Object,
                     notify: true,
+                    value: function() { return {}; }
                 },
                 environments: {
                     type: Array,
@@ -132,7 +143,7 @@ Dory Service Application Mapping Form Editor
                 },
             },
 
-            validate: function() {
+            validate: function () {
                 return _doValidate();
             },
 
@@ -153,6 +164,12 @@ Dory Service Application Mapping Form Editor
             _requestList: function (e) {
                 this.fire('dory-open-page', {page: 'list'})
             },
+
+            _create: function() {
+                this.$.cruddy.data = this.data;
+//                this.$.cruddy.data = {id:'monid', ent1: this.data.app, ent2:'val2'};
+                this.$.cruddy.create();
+            }
 
         });
     </script>

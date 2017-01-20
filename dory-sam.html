@@ -24,7 +24,6 @@ Polymer 1
         </style>
 
 
-
         <dory-crud-routing page="{{page}}" entity-id="{{entityId}}">
             <dory-sam-list slot="list" items="[[listData]]"></dory-sam-list>
             <dory-sam-editor slot="edit" entity-id="{{entityId}}"></dory-sam-editor>
@@ -45,7 +44,7 @@ Polymer 1
                     value: 'list',
                 },
                 listData: {
-                    type:Object,
+                    type: Object,
                     value: function () {
                         var data = [];
                         var generator = function (id) {
@@ -53,7 +52,7 @@ Polymer 1
                             return {
                                 id: id,
                                 app: 'Oura' + id,
-                                env: envs[(i%envs.length)],
+                                env: envs[(i % envs.length)],
                                 uris: [
                                     {value: 'http://uneUrlSuperLongue.pcq.desFois/onenrecontre_' + id},
                                     {value: 'http://uneAutreUrl.pcq.desFois/uneautre_' + id},
@@ -67,13 +66,12 @@ Polymer 1
                                 ]
                             }
                         };
-                        for(var i=0;i<20;i++) {
+                        for (var i = 0; i < 20; i++) {
                             data[i] = generator(i);
                         }
                         return data;
                     }
                 },
-
 
 
             },
