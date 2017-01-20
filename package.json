@@ -14,9 +14,14 @@
     "lint": "polymer lint --input *.html",
     "dev": "polymer serve -p 8080 | npm run watch",
     "test": "polymer test",
-    "dev-install": "npm install -g bower polymer-cli browser-sync",
+    "dev-install": "npm i | npm install -g bower polymer-cli browser-sync gulp",
     "watch": "browser-sync start --proxy localhost:8080 --startPath /components/dory-sam/demo/ --files *.html,*.js,demo/*"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "browser-sync": "^2.18.6",
+    "gulp": "^3.9.1",
+    "proxy-middleware": "^0.15.0"
+  }
 }
