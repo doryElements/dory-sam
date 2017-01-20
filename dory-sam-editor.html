@@ -75,11 +75,13 @@ Dory Service Application Mapping Form Editor
                                               code-labels="[[environments]]"></dory-listbox>
                             </div>
                             <div class="dynbox">
-                                <paper-checkbox>Integration continue</paper-checkbox>
+                                <paper-checkbox checked="{{data.ci}}">Integration continue</paper-checkbox>
                             </div>
 
-                            <paper-tags-input class="dynbox" label="Software" items='["Oracle 10"]'
-                                              maxLength="10"></paper-tags-input>
+                            <dory-sam-dyn-list class="dynbox" title="Softwares" list="{{data.softwares}}"
+                                               button-label="Ajouter un soft"
+                                               label-item="Software"
+                                               ></dory-sam-dyn-list>
 
                             <dory-sam-dyn-list class="dynbox" title="Urls" list="{{data.uris}}"
                                                button-label="Ajouter une Url"
