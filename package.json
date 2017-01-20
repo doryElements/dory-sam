@@ -13,6 +13,7 @@
   "scripts": {
     "lint": "polymer lint --input *.html",
     "dev": "polymer serve -p 8080 | npm run watch",
+    "devp": "polymer serve -p 8080 | gulp serve",
     "test": "polymer test",
     "dev-install": "npm i | npm install -g bower polymer-cli browser-sync gulp",
     "watch": "browser-sync start --proxy localhost:8080 --startPath /components/dory-sam/demo/ --files *.html,*.js,demo/*"
