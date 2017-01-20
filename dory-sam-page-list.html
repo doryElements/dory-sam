@@ -1,0 +1,85 @@
+<link rel="import" href="../polymer/polymer.html">
+
+
+
+<link rel="import" href="../paper-toolbar/paper-toolbar.html">
+<link rel="import" href="../paper-icon-button/paper-icon-button.html">
+
+<link rel="import" href="dory-sam-list.html">
+
+
+<!--
+`dory-sam-page-list`
+Polymer Element dory-sam-page-list
+
+@demo demo/index.html 
+-->
+
+<dom-module id="dory-sam-page-list">
+    <template>
+        <style>
+            :host {
+                display: block;
+            }
+        </style>
+        <paper-toolbar class="medium-tall">
+            <paper-icon-button id="button" icon="arrow-back"></paper-icon-button>
+            <div class="title">Server Application Mapping</div>
+        </paper-toolbar>
+
+        <div>
+
+
+        </div>
+        <dory-sam-list  items="[[listData]]"></dory-sam-list>
+    </template>
+
+    <script>
+        Polymer({
+
+            is: 'dory-sam-page-list',
+
+            properties: {
+                prop1: {
+                    type: String,
+                    value: 'dory-sam-page-list',
+                },
+                listData: {
+                    type: Object,
+                    value: function () {
+                        var data = [];
+                        var generator = function (id) {
+                            var envs = ['PROD', 'QUALIF', 'REC']
+                            return {
+                                id: id,
+                                app: 'Oura' + id,
+                                env: envs[(i % envs.length)],
+                                uris: [
+                                    {value: 'http://uneUrlSuperLongue.pcq.desFois/onenrecontre_' + id},
+                                    {value: 'http://uneAutreUrl.pcq.desFois/uneautre_' + id},
+                                ],
+                                servers: [
+                                    {value: 'serv1 ' + id, zone: 'LAN'},
+                                    {value: 'serv2 ' + id, zone: 'DMZ'},
+                                ],
+                                databases: [
+                                    {value: 'nomDatabase'}
+                                ]
+                            }
+                        };
+                        for (var i = 0; i < 20; i++) {
+                            data[i] = generator(i);
+                        }
+                        return data;
+                    }
+                },
+            },
+
+
+
+            _requestEdit: function (entityId) {
+                this.fire('dory-open-page', {page:'edit', id:entityId})
+            },
+        });
+    </script>
+</dom-module>

@@ -52,10 +52,6 @@ Dory Service Application Mapping Form Editor
             <div class="card-content">
 
 
-                <air-cruddy-elasticsearch id="cruddy" data="{{data}}" url="http://localhost:9200/twitter/tweet"
-                                            entity-id="1">
-
-
                     <form is="iron-form" id="form">
 
                         <paper-input value="{{data.app}}" required auto-validate
@@ -102,14 +98,8 @@ Dory Service Application Mapping Form Editor
 
                         </div>
                     </form>
-                </air-cruddy-elasticsearch>
             </div>
-            <div class="card-actions">
-                <paper-button on-tap="_doValidate">Validate</paper-button>
-                <paper-button on-tap="_doSubmit">Submit</paper-button>
-                <paper-button on-tap="_requestList">Back</paper-button>
-                <paper-button on-tap="_create">Create</paper-button>
-            </div>
+
 
         </paper-card>
 

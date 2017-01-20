@@ -32,11 +32,7 @@ Polymer 1
             /*}*/
         </style>
 
-        <paper-header-panel >
-            <paper-toolbar>
-                <label>Hello [[page]]</label>
-            </paper-toolbar>
-        </paper-header-panel>
+
 
         <app-location route="{{route}}"  use-hash-as-path></app-location>
 
@@ -84,7 +80,7 @@ Polymer 1
                 },
                 route: {
                     type: Object,
-                    observer: '_print',
+//                    observer: '_print',
                     notify: true
                 },
                 routeData: {
