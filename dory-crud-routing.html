@@ -22,15 +22,21 @@ Polymer 1
         <style>
             :host {
                 display: block;
+                @apply(--paper-font-common-base);
             }
-            neon-animated-pages {
-                height: 100%;
-            }
+            /*neon-animated-pages {*/
+                /*height: 100%;*/
+            /*}*/
             /*iron-pages {*/
                 /*height: 100%;*/
             /*}*/
         </style>
-        <h2>Hello [[page]]</h2>
+
+        <paper-header-panel >
+            <paper-toolbar>
+                <label>Hello [[page]]</label>
+            </paper-toolbar>
+        </paper-header-panel>
 
         <app-location route="{{route}}"  use-hash-as-path></app-location>
 
