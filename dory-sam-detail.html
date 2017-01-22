@@ -1,0 +1,52 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../paper-header-panel/paper-header-panel.html">
+<!--
+`dory-sam-detail`
+
+
+@demo demo/index.html 
+-->
+
+<dom-module id="dory-sam-detail">
+    <template>
+        <style>
+            :host {
+                display: block;
+                @apply(--layout-vertical);
+            }
+        </style>
+
+            <div>
+                App: [[data.app]]
+            </div>
+            <div>
+                Env: [[data.env]]
+            </div>
+
+
+    </template>
+
+    <script>
+        Polymer({
+
+            is: 'dory-sam-detail',
+
+            properties: {
+                data: {
+                    type: Object,
+                },
+                language: {
+                    value: 'en'
+                },
+                resources: {
+                    value: function () {
+                        return {
+                            'en': {'REC': 'Recette', 'PROD': 'Production', 'QUALIF': 'Qualif'}
+                        }
+                    }
+                }
+            }
+
+        });
+    </script>
+</dom-module>

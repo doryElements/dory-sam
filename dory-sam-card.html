@@ -72,7 +72,7 @@ Custom property               | Description                                  | D
         </style>
 
         <paper-card heading="[[data.app]]" alt="[[data.app]]" elevation="3">
-            <div class="card-content">
+            <div class="card-content" on-tap="_showDetails">
                 <span class="card-subtitle">[[localize(data.env)]]</span>
 
                 <div class="iconslist">
@@ -80,8 +80,8 @@ Custom property               | Description                                  | D
                     <dory-sam-card-item items="[[data.servers]]" icon="dns" class="cardServer"></dory-sam-card-item>
                     <dory-sam-card-item items="[[data.databases]]" icon="device:storage" class="cardStorage"></dory-sam-card-item>
                 </div>
-                <paper-fab icon="icons:create" title="edit" on-tap="_requestEdit" mini></paper-fab>
             </div>
+            <paper-fab icon="icons:create" title="edit" on-tap="_requestEdit" mini></paper-fab>
         </paper-card>
 
     </template>
@@ -115,6 +115,9 @@ Custom property               | Description                                  | D
                 this.fire('dory-open-page', {page:'edit', id:this.data.app})
             },
 
+            _showDetails: function (e) {
+                this.fire('show-details', {data: this.data})
+            }
         });
     </script>
 </dom-module>

@@ -1,6 +1,8 @@
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="dory-sam-card.html">
+<link rel="import" href="dory-sam-detail.html">
 <link rel="import" href="../iron-list/iron-list.html">
+<link rel="import" href="../paper-dialog/paper-dialog.html">
 
 <!--
 `dory-list`
@@ -24,6 +26,11 @@
             }
         </style>
 
+        <paper-dialog id="detaildialog" modal>
+            <dory-sam-detail data="[[currentdata]]"></dory-sam-detail>
+            <paper-button dialog-confirm autofocus>Close</paper-button>
+        </paper-dialog>
+
         <iron-list items="[[items]]" as="item" scroll-target="document" grid>
             <template>
                 <dory-sam-card data="[[item]]"></dory-sam-card>
@@ -36,11 +43,20 @@
 
             is: 'dory-sam-list',
 
+            listeners: {
+                'show-details': '_showDetails'
+            },
+
             properties: {
                 items: {
                     type: Array,
                 },
             },
+
+            _showDetails: function (e, detail) {
+                this.$.detaildialog.open();
+                this.currentdata = detail.data;
+            }
 
         });
     </script>
