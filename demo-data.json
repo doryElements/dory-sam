@@ -59,6 +59,7 @@
     "id": 2,
     "app": "Oura2",
     "env": "REC",
+    "description": "Une description de l'appli",
     "uris": [
       {
         "value": "http://uneUrlSuperLongue.pcq.desFois/onenrecontre_2"

@@ -1,5 +1,8 @@
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../paper-header-panel/paper-header-panel.html">
+<link rel="import" href="dory-sam-card-item.html">
+<link rel="import" href="../paper-card/paper-card.html">
+<link rel="import" href="../app-localize-behavior/app-localize-behavior.html">
 <!--
 `dory-sam-detail`
 
@@ -14,15 +17,54 @@
                 display: block;
                 @apply(--layout-vertical);
             }
+
+            .cardServer {
+                --dory-item-color: var(--dory-icon-color-server, var(--paper-purple-800));
+            }
+
+            .cardUri {
+                --dory-item-color: var(--dory-icon-color-uri, var(--paper-yellow-700));
+            }
+
+            .cardStorage {
+                --dory-item-color: var(--dory-icon-color-storage, var(--paper-green-400));
+            }
+
+            .header {
+                text-align: center;
+                font-weight: bold;
+                font-size: 30px;
+            }
+            .subline {
+                @apply(--layout-horizontal);
+            }
         </style>
-
+        <div class="header">
+            [[data.app]]
+        </div>
+        <div class="subline">
             <div>
-                App: [[data.app]]
+                [[localize(data.env)]]
             </div>
-            <div>
-                Env: [[data.env]]
-            </div>
+            <div class="flex"></div>
+            <template is="dom-if" if="[[data.ci]]">
+                <div>
+                    CI : [[data.ci]]
+                </div>
+            </template>
+        </div>
+        <div>
+            [[data.description]]
+        </div>
 
+        <dory-sam-card-item items="[[data.uris]]" icon="maps:place" class="cardUri"></dory-sam-card-item>
+        <dory-sam-card-item items="[[data.servers]]" icon="dns" class="cardServer"></dory-sam-card-item>
+        <dory-sam-card-item items="[[data.databases]]" icon="device:storage" class="cardStorage"></dory-sam-card-item>
+
+        </dory-sam-card-item>
+        <template is="dom-repeat" items="[[data.uris]]">
+
+        </template>
 
     </template>
 
@@ -31,17 +73,21 @@
 
             is: 'dory-sam-detail',
 
+            behaviors: [
+                Polymer.AppLocalizeBehavior
+            ],
+
             properties: {
                 data: {
                     type: Object,
                 },
                 language: {
-                    value: 'en'
+                    value: 'fr'
                 },
                 resources: {
                     value: function () {
                         return {
-                            'en': {'REC': 'Recette', 'PROD': 'Production', 'QUALIF': 'Qualif'}
+                            'fr': {'REC': 'Recette', 'PROD': 'Production', 'QUALIF': 'Qualif'}
                         }
                     }
                 }
