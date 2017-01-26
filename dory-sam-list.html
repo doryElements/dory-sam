@@ -33,7 +33,7 @@
 
         <iron-list items="[[items]]" as="item" scroll-target="document" grid>
             <template>
-                <dory-sam-card data="[[item]]"></dory-sam-card>
+                <dory-sam-card data="[[_mapFromElasticSearch(item)]]"></dory-sam-card>
             </template>
         </iron-list>
     </template>
@@ -56,7 +56,11 @@
             _showDetails: function (e, detail) {
                 this.$.detaildialog.open();
                 this.currentdata = detail.data;
-            }
+            },
+
+            _mapFromElasticSearch: function(input) {
+                return input;
+            },
 
         });
     </script>

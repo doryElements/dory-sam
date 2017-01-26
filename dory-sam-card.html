@@ -37,7 +37,8 @@ Custom property               | Description                                  | D
 
             }
             paper-card {
-                max-width: 300px;
+                width: 300px;
+                height: 300px;
                 overflow: hidden;
                 margin: 8px;
             }
@@ -59,10 +60,9 @@ Custom property               | Description                                  | D
 
             paper-fab {
                 position: absolute;
-                right: 30px;
-                bottom: 30px;
+                right: 15px;
+                bottom: 15px;
                 --paper-fab-background: var(--paper-blue-100);
-
             }
 
             .iconslist {
@@ -71,14 +71,14 @@ Custom property               | Description                                  | D
 
         </style>
 
-        <paper-card heading="[[data.app]]" alt="[[data.app]]" elevation="3">
+        <paper-card heading="[[data._source.app]]" alt="[[data._source.app]]" elevation="3">
             <div class="card-content" on-tap="_showDetails">
                 <span class="card-subtitle">[[localize(data.env)]]</span>
 
                 <div class="iconslist">
-                    <dory-sam-card-item items="[[data.uris]]" icon="maps:place" class="cardUri"></dory-sam-card-item>
-                    <dory-sam-card-item items="[[data.servers]]" icon="dns" class="cardServer"></dory-sam-card-item>
-                    <dory-sam-card-item items="[[data.databases]]" icon="device:storage" class="cardStorage"></dory-sam-card-item>
+                    <dory-sam-card-item items="[[data._source.uris]]" icon="maps:place" class="cardUri"></dory-sam-card-item>
+                    <dory-sam-card-item items="[[data._source.servers]]" icon="dns" class="cardServer"></dory-sam-card-item>
+                    <dory-sam-card-item items="[[data._source.databases]]" icon="device:storage" class="cardStorage"></dory-sam-card-item>
                 </div>
             </div>
             <paper-fab icon="icons:create" title="edit" on-tap="_requestEdit" mini></paper-fab>
@@ -112,7 +112,7 @@ Custom property               | Description                                  | D
             },
 
             _requestEdit: function (e) {
-                this.fire('dory-open-page', {page:'edit', id:this.data.app})
+                this.fire('dory-open-page', {page:'edit', id:this.data._id})
             },
 
             _showDetails: function (e) {

@@ -40,31 +40,28 @@
             }
         </style>
         <div class="header">
-            [[data.app]]
+            [[data._source.app]]
         </div>
         <div class="subline">
             <div>
-                [[localize(data.env)]]
+                [[localize(data._source.env)]]
             </div>
             <div class="flex"></div>
-            <template is="dom-if" if="[[data.ci]]">
+            <template is="dom-if" if="[[data._source.ci]]">
                 <div>
-                    CI : [[data.ci]]
+                    CI : [[data._source.ci]]
                 </div>
             </template>
         </div>
         <div>
-            [[data.description]]
+            [[data._source.description]]
         </div>
 
-        <dory-sam-card-item items="[[data.uris]]" icon="maps:place" class="cardUri"></dory-sam-card-item>
-        <dory-sam-card-item items="[[data.servers]]" icon="dns" class="cardServer"></dory-sam-card-item>
-        <dory-sam-card-item items="[[data.databases]]" icon="device:storage" class="cardStorage"></dory-sam-card-item>
+        <dory-sam-card-item items="[[data._source.uris]]" icon="maps:place" class="cardUri"></dory-sam-card-item>
+        <dory-sam-card-item items="[[data._source.servers]]" icon="dns" class="cardServer"></dory-sam-card-item>
+        <dory-sam-card-item items="[[data._source.databases]]" icon="device:storage" class="cardStorage"></dory-sam-card-item>
 
         </dory-sam-card-item>
-        <template is="dom-repeat" items="[[data.uris]]">
-
-        </template>
 
     </template>
 

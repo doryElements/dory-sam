@@ -66,7 +66,7 @@
             <template is="dom-repeat" items="{{servers}}">
                 <div class="layout horizontal wrap end">
                     <dory-listbox label="Zone" selected="{{item.zone}}" code-labels="[[zones]]"></dory-listbox>
-                    <paper-input value="{{item.name}}" class="flex-3 uniqname" label="Name" on-tap="_setValid">
+                    <paper-input value="{{item.value}}" class="flex-3 uniqname" label="Name" on-tap="_setValid">
                         <paper-icon-button suffix icon="clear" on-tap="_deleteServer"></paper-icon-button>
                     </paper-input>
                 </div>

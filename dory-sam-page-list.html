@@ -1,12 +1,14 @@
 <link rel="import" href="../polymer/polymer.html">
 
 
-
 <link rel="import" href="../paper-toolbar/paper-toolbar.html">
 <link rel="import" href="../paper-icon-button/paper-icon-button.html">
 
 <link rel="import" href="../paper-fab/paper-fab.html">
 <link rel="import" href="../paper-input/paper-input.html">
+<link rel="import" href="../paper-fab/paper-fab.html">
+
+<link rel="import" href="../iron-ajax/iron-ajax.html">
 
 <link rel="import" href="dory-sam-list.html">
 
@@ -24,22 +26,31 @@ Polymer Element dory-sam-page-list
             :host {
                 display: block;
             }
+            paper-fab {
+                float: right;
+                z-index: 5000;
+                right: 30px;
+                top: 95px;
+                position: relative;
+                --paper-fab-background: var(--paper-blue-100);
+            }
+
         </style>
         <paper-toolbar class="medium-tall">
             <paper-icon-button id="button" icon="arrow-back"></paper-icon-button>
             <div class="title">Server Application Mapping</div>
-        </paper-toolbar>
-
-        <div>
-            <paper-input  placeholder="Search TODO">
-                <div prefix>></div>
+            <paper-input placeholder="Search TODO">
+                <div prefix>>&nbsp</div>
                 <paper-icon-button suffix icon="search" on-tap="search"></paper-icon-button>
             </paper-input>
+            <paper-fab icon="add-circle-outline" on-tap="_requestEdit" ></paper-fab>
+        </paper-toolbar>
 
-        </div>
 
-        <iron-ajax auto url="demo-data.json" handle-as="json"  last-response="{{listData}}" ></iron-ajax>
-        <dory-sam-list  items="[[listData]]"></dory-sam-list>
+        <iron-ajax auto url="http://localhost:9200/sam/sam/_search" handle-as="json" last-response="{{listData}}" on-response="_handleResponse"></iron-ajax>
+        <template is="dom-if" if="[[dataloaded]]">
+            <dory-sam-list  items="[[listData.hits.hits]]"></dory-sam-list>
+        </template>
     </template>
 
     <script>
@@ -52,15 +63,26 @@ Polymer Element dory-sam-page-list
                     type: String,
                     value: 'dory-sam-page-list',
                 },
+                dataloaded: {
+                    type: Boolean,
+                    value: false
+                }
             },
 
             search: function () {
-              console.log(JSON.stringify(this.listData));
+                console.log(JSON.stringify(this.listData));
             },
 
             _requestEdit: function (entityId) {
-                this.fire('dory-open-page', {page:'edit', id:entityId})
+                this.fire('dory-open-page', {page: 'edit', id: entityId})
             },
+            _handleResponse: function(e){
+                this.dataloaded = true;
+            },
+            _requestEdit: function (e) {
+                this.fire('dory-open-page', {page:'edit'})
+            },
+
         });
     </script>
 </dom-module>
