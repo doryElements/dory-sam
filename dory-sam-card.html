@@ -81,7 +81,7 @@ Custom property               | Description                                  | D
                     <dory-sam-card-item items="[[data._source.databases]]" icon="device:storage" class="cardStorage"></dory-sam-card-item>
                 </div>
             </div>
-            <paper-fab icon="icons:create" title="edit" on-tap="_requestEdit" mini></paper-fab>
+            <paper-fab icon="icons:create" title="edit [[this.data._id]]" on-tap="_requestEdit" mini></paper-fab>
         </paper-card>
 
     </template>

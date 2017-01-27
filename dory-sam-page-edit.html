@@ -50,10 +50,6 @@ Polymer Element dory-sam-page-edit
 
             is: 'dory-sam-page-edit',
 
-            listeners: {
-                'dory-open-page': 'retrieve'
-            },
-
             properties: {
                 data: {
                     type: Object
@@ -79,8 +75,7 @@ Polymer Element dory-sam-page-edit
             },
 
             _requestList: function (e) {
-                this.data = null;
-                this.entityId = null;
+                document.getElementById('request').generateRequest();
                 this.fire('dory-open-page', {page:'list'})
             },
 

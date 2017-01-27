@@ -103,9 +103,9 @@ Polymer 1
             _changePageEvent: function (e) {
                 e.preventDefault();
                 var detail = e.detail;
-                if (detail.id) {
+//                if (detail.id) {
                     this.entityId = detail.id;
-                }
+//                }
                 this.page = detail.page;
                 this._changeUrl(detail);
             },
