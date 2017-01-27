@@ -33,7 +33,7 @@ Polymer Element dory-sam-page-edit
         <div class="card-actions">
             <paper-button on-tap="validate">Validate</paper-button>
             <paper-button on-tap="retrieve">Retrieve</paper-button>
-            <paper-button on-tap="update">Update</paper-button>
+            <paper-button on-tap="save">Save</paper-button>
             <paper-button on-tap="newEntity">New</paper-button>
         </div>
 
@@ -63,18 +63,18 @@ Polymer Element dory-sam-page-edit
 
             },
 
-            update: function () {
-              this.$.cruddy.update();
+            save: function () {
+              this.$.cruddy.save();
             },
             retrieve: function () {
               this.$.cruddy.retrieve();
             },
             newEntity: function () {
-              this.$.cruddy.create();
+              this.$.cruddy.newEntity();
             },
 
             validate: function () {
-                this.$.editor.validate();
+               return  this.$.editor.validate();
             },
 
             _requestList: function (e) {

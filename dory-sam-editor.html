@@ -143,6 +143,7 @@ Dory Service Application Mapping Form Editor
             _doValidate: function () {
                 var isValid = this.$.form.validate();
                 console.log('Form is valid : ', isValid);
+                return isValid;
             },
 
             _doSubmit: function () {
