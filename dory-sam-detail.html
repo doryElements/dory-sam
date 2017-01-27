@@ -33,14 +33,20 @@
                 --dory-item-color: var(--dory-icon-color-storage, var(--paper-green-400));
             }
 
+            .software {
+                --dory-item-color: var(--dory-icon-color-software, var(--paper-blue-400));
+            }
+
             .header {
                 text-align: center;
                 font-weight: bold;
                 font-size: 30px;
             }
+
             .subline {
                 @apply(--layout-horizontal);
             }
+
             .description {
                 --dory-markdown-background-color: white
             }
@@ -63,11 +69,26 @@
         <dory-markdown class="flex description" value="[[data._source.description]]"></dory-markdown>
 
 
-        <dory-sam-card-item items="[[data._source.uris]]" icon="maps:place" class="cardUri"></dory-sam-card-item>
-        <dory-sam-card-item items="[[data._source.servers]]" icon="dns" class="cardServer"></dory-sam-card-item>
-        <dory-sam-card-item items="[[data._source.databases]]" icon="device:storage" class="cardStorage"></dory-sam-card-item>
-
-        </dory-sam-card-item>
+        <div>
+            <label>Urls</label>
+            <dory-sam-card-item items="[[data._source.uris]]" icon="maps:place" class="cardUri"></dory-sam-card-item>
+        </div>
+        <div class="layout horizontal flex">
+            <div class="flex">
+                <label>Serveurs</label>
+                <dory-sam-card-item items="[[data._source.servers]]" icon="dns" class="cardServer"></dory-sam-card-item>
+            </div>
+            <div class="flex">
+                <label>Bdds</label>
+                <dory-sam-card-item items="[[data._source.databases]]" icon="device:storage"
+                                    class="cardStorage"></dory-sam-card-item>
+            </div>
+            <div class="flex">
+                <label>Softwares</label>
+                <dory-sam-card-item items="[[data._source.softwares]]" icon="settings-applications"
+                                    class="software"></dory-sam-card-item>
+            </div>
+        </div>
 
     </template>
 
