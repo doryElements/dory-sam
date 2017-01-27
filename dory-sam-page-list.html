@@ -39,7 +39,7 @@ Polymer Element dory-sam-page-list
         <paper-toolbar class="medium-tall">
             <paper-icon-button id="button" icon="arrow-back"></paper-icon-button>
             <div class="title">Server Application Mapping</div>
-            <paper-input placeholder="Search TODO">
+            <paper-input value="{{searchText}}" placeholder="Search">
                 <div prefix>>&nbsp</div>
                 <paper-icon-button suffix icon="search" on-tap="search"></paper-icon-button>
             </paper-input>
@@ -47,8 +47,8 @@ Polymer Element dory-sam-page-list
         </paper-toolbar>
 
 
-        <iron-ajax auto url="http://localhost:9200/sam/sam/_search" handle-as="json"
-                   content-type="application/json"
+        <iron-ajax auto id="request" url="http://localhost:9200/sam/sam/_search" handle-as="json"
+                   content-type="application/json" body="[[queryBody]]" method="post"
                    last-response="{{listData}}" on-response="_handleResponse"></iron-ajax>
         <template is="dom-if" if="[[dataloaded]]">
             <dory-sam-list  items="[[listData.hits.hits]]"></dory-sam-list>
@@ -61,13 +61,17 @@ Polymer Element dory-sam-page-list
             is: 'dory-sam-page-list',
 
             properties: {
+                searchText: {
+                    type:String,
+                    observer: '_searchTextChanged',
+                    notify: true
+                },
+
                 queryBody: {
                     type: Object,
                     value: function () {
                         return {
-                            "query" : {
-                                "match_all" : {}
-                            },
+                            "query" : {  "match_all" : {} },
                             "aggs" : {
                                 "env_count" : {
                                     "cardinality" : {
@@ -85,8 +89,29 @@ Polymer Element dory-sam-page-list
                 }
             },
 
+            _searchTextChanged: function (newValue) {
+                console.log('Search text ', newValue);
+//                this.queryBody= this._createRequest(newValue);
+            },
             search: function () {
-                console.log(JSON.stringify(this.listData));
+                console.log('Do Search text ', this.searchText);
+//                console.log(JSON.stringify(this.listData));
+                this.queryBody= this._createRequest(this.searchText);
+//                this.request
+            },
+            
+            _createRequest: function (searchText) {
+                var request ={"query" : {  "match_all" : {} }};
+                if (searchText) {
+                    request =  {
+                        "query" : {
+                            "term" : { "app" : this.searchText }
+                        }
+                    };
+                };
+
+
+                return request;
             },
 
             _requestEdit: function (entityId) {

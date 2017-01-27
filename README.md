@@ -37,3 +37,13 @@ $ polymer test
 ```
 
 Your application is already set up to be tested via [web-component-tester](https://github.com/Polymer/web-component-tester). Run `polymer test` to run your application's test suite locally.
+
+
+## Init Elasticsearch
+```
+$ curl -XDELETE "http://localhost:9200/sam?pretty"
+
+$ curl -XPUT http://localhost:9200/sam?pretty --data-binary @elasticsearch/es-settings.json
+
+$ curl -XPUT localhost:9200/_bulk --data-binary @elasticsearch/data-sam.json
+```

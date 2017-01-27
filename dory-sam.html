@@ -7,6 +7,8 @@
 <link rel="import" href="dory-sam-page-edit.html">
 <link rel="import" href="dory-sam-page-list.html">
 
+<link rel="import" href="../paper-toast/paper-toast.html">
+
 <!--
 `dory-sam`
 Polymer 1
@@ -20,12 +22,23 @@ Polymer 1
             :host {
                 display: block;
             }
+            #toastError {
+                --paper-toast-background-color: red;
+                --paper-toast-color: white;
+            }
+            #toastResponse {
+                --paper-toast-background-color: green;
+                --paper-toast-color: white;
+            }
         </style>
+
+        <paper-toast id="toastResponse" class="capsule" text="[[lastResponse]]"></paper-toast>
+        <paper-toast id="toastError" class="capsule" horizontal-align="right" text="[[lastError]]"></paper-toast>
 
 
         <dory-crud-routing page="{{page}}" entity-id="{{entityId}}">
-            <dory-sam-page-list slot="list"  ></dory-sam-page-list>
-            <dory-sam-page-edit slot="edit" entity-id="{{entityId}}"></dory-sam-page-edit>
+            <dory-sam-page-list id="list" slot="list"  ></dory-sam-page-list>
+            <dory-sam-page-edit id="edit" slot="edit" entity-id="{{entityId}}"></dory-sam-page-edit>
         </dory-crud-routing>
 
 
@@ -44,6 +57,46 @@ Polymer 1
                 },
 
             },
+
+            listeners: {
+                'air-cruddy-retrieve': '_handleResponseRetrieve',
+                'air-cruddy-update': '_handleResponseUpdate',
+                'air-cruddy-create': '_handleResponseCreate',
+                'air-cruddy-delete': '_handleResponseDelete',
+                'air-cruddy-error': '_handleError',
+            },
+
+
+            _handleError: function (e) {
+                var detail = e.detail;
+                console.error('Handle Error : ', detail);
+                e.preventDefault();
+//                this.lastError = detail.message  || 'Error is Raised';
+//                this.$.toastError.open();
+                this.$.toastError.show(detail.message );
+                // On error go back to list
+                this.page = 'list';
+            },
+
+            _handleResponseRetrieve: function (e) {
+                this._showToastResponse(e, 'Chargé');
+            },
+            _handleResponseUpdate: function (e) {
+                this._showToastResponse(e, 'Sauvegardé');
+            },
+            _handleResponseCreate: function (e) {
+                this._showToastResponse(e, 'Crée');
+            },
+            _handleResponseDelete: function (e) {
+                this._showToastResponse(e, 'Supprimé');
+            },
+            _showToastResponse: function(e, message){
+                var detail = e.detail;
+                e.preventDefault();
+                console.log('Handle response : ', detail);
+                this.$.toastResponse.show(message);
+            },
+
 
 
         });
