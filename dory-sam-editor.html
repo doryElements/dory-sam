@@ -48,7 +48,7 @@ Dory Service Application Mapping Form Editor
             }
         </style>
 
-        <paper-card heading="Edition de [[entityId]]">
+        <paper-card heading="Edition de [[data.app]]">
             <div class="card-content">
 
 
@@ -112,7 +112,6 @@ Dory Service Application Mapping Form Editor
 
             listeners: {
                 'iron-form-element-register': '_registerElementPrint',
-                'dory-open-page': '_retrieveData'
             },
             properties: {
                 entityId: {
@@ -143,6 +142,7 @@ Dory Service Application Mapping Form Editor
             _doValidate: function () {
                 var isValid = this.$.form.validate();
                 console.log('Form is valid : ', isValid);
+                return isValid;
             },
 
             _doSubmit: function () {

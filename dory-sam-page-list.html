@@ -47,7 +47,9 @@ Polymer Element dory-sam-page-list
         </paper-toolbar>
 
 
-        <iron-ajax auto url="http://localhost:9200/sam/sam/_search" handle-as="json" last-response="{{listData}}" on-response="_handleResponse"></iron-ajax>
+        <iron-ajax auto id="request" url="http://localhost:9200/sam/sam/_search" handle-as="json"
+                   content-type="application/json"
+                   last-response="{{listData}}" on-response="_handleResponse"></iron-ajax>
         <template is="dom-if" if="[[dataloaded]]">
             <dory-sam-list  items="[[listData.hits.hits]]"></dory-sam-list>
         </template>
@@ -59,9 +61,23 @@ Polymer Element dory-sam-page-list
             is: 'dory-sam-page-list',
 
             properties: {
-                prop1: {
-                    type: String,
-                    value: 'dory-sam-page-list',
+                queryBody: {
+                    type: Object,
+                    value: function () {
+                        return {
+                            "query" : {
+                                "match_all" : {}
+                            },
+                            "aggs" : {
+                                "env_count" : {
+                                    "cardinality" : {
+                                        "field" : "env",
+                                        "missing": "N/A"
+                                    }
+                                }
+                            }
+                        }
+                    }
                 },
                 dataloaded: {
                     type: Boolean,
@@ -74,13 +90,10 @@ Polymer Element dory-sam-page-list
             },
 
             _requestEdit: function (entityId) {
-                this.fire('dory-open-page', {page: 'edit', id: entityId})
+                this.fire('dory-open-page', {page: 'edit', id: null});
             },
             _handleResponse: function(e){
                 this.dataloaded = true;
-            },
-            _requestEdit: function (e) {
-                this.fire('dory-open-page', {page:'edit'})
             },
 
         });
