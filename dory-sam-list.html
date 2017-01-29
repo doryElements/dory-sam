@@ -3,6 +3,7 @@
 <link rel="import" href="dory-sam-detail.html">
 <link rel="import" href="../iron-list/iron-list.html">
 <link rel="import" href="../paper-dialog/paper-dialog.html">
+<link rel="import" href="../paper-dialog-scrollable/paper-dialog-scrollable.html">
 
 <!--
 `dory-list`
@@ -24,11 +25,25 @@
                 background-color: #ddd;
                 @apply(--layout-flex-auto); /* flex: 1 1 auto; */
             }
+
+            paper-dialog {
+                overflow-y: scroll;
+            }
+            .header {
+                text-align: center;
+                font-weight: bold;
+                font-size: 30px;
+            }
         </style>
 
-        <paper-dialog id="detaildialog" modal>
-            <dory-sam-detail data="[[currentdata]]"></dory-sam-detail>
-            <paper-button dialog-confirm autofocus>Close</paper-button>
+        <paper-dialog id="detaildialog" >
+            <div class="header">
+                [[currentdata._source.app]]
+            </div>
+            <paper-dialog-scrollable>
+                <dory-sam-detail data="[[currentdata]]"></dory-sam-detail>
+                <!--<paper-button dialog-confirm autofocus>Close</paper-button>-->
+            </paper-dialog-scrollable>
         </paper-dialog>
 
         <iron-list items="[[items]]" as="item" scroll-target="document" grid>
@@ -58,7 +73,7 @@
                 this.currentdata = detail.data;
             },
 
-            _mapFromElasticSearch: function(input) {
+            _mapFromElasticSearch: function (input) {
                 return input;
             },
 

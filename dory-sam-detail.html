@@ -33,11 +33,6 @@
                 --dory-item-color: var(--dory-icon-color-storage, var(--paper-green-400));
             }
 
-            .header {
-                text-align: center;
-                font-weight: bold;
-                font-size: 30px;
-            }
             .subline {
                 @apply(--layout-horizontal);
             }
@@ -45,9 +40,6 @@
                 --dory-markdown-background-color: white
             }
         </style>
-        <div class="header">
-            [[data._source.app]]
-        </div>
         <div class="subline">
             <div>
                 [[localize(data._source.env)]]
