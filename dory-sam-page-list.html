@@ -48,11 +48,7 @@ Polymer Element dory-sam-page-list
 
 
         <iron-ajax auto id="request" url="http://localhost:9200/sam/sam/_search" handle-as="json"
-<<<<<<< HEAD
                    content-type="application/json" body="[[queryBody]]" method="post"
-=======
-                   content-type="application/json"
->>>>>>> 28a0dcc7514b39dd0505ab62e6d7155da7178f10
                    last-response="{{listData}}" on-response="_handleResponse"></iron-ajax>
         <template is="dom-if" if="[[dataloaded]]">
             <dory-sam-list  items="[[listData.hits.hits]]"></dory-sam-list>
