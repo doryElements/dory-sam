@@ -1,0 +1,24 @@
+{"index":{"_index" : "sam", "_type": "sam", "_id" : "0"}}
+{"app": "Magi","env": "PROD","uris": [{"value": "http://uneUrlSuperLongue.pcq.desFois/onenrecontre_0"},{"value": "http://uneAutreUrl.pcq.desFois/uneautre_0"} ],"servers": [{"value": "serv1 0","zone": "LAN"}, {"value": "serv2 0","zone": "DMZ"} ],"databases": [{"value": "nomDatabase"}]}
+{"index":{"_index" : "sam", "_type": "sam", "_id" : "1"}}
+{"app": "Magi","env": "QUALIF","uris": [{"value": "http://uneUrlSuperLongue.pcq.desFois/onenrecontre_1"},{"value": "http://uneAutreUrl.pcq.desFois/uneautre_1"} ],"servers": [{"value": "serv1 0","zone": "LAN"}, {"value": "serv2 0","zone": "DMZ"} ],"databases": [{"value": "nomDatabase"}]}
+{"index":{"_index" : "sam", "_type": "sam", "_id" : "2"}}
+{"app": "Magi","env": "REC","uris": [{"value": "http://uneUrlSuperLongue.pcq.desFois/onenrecontre_2"},{"value": "http://uneAutreUrl.pcq.desFois/uneautre_2"} ],"servers": [{"value": "serv1 0","zone": "LAN"}, {"value": "serv2 0","zone": "DMZ"} ],"databases": [{"value": "nomDatabase"}]}
+{"index":{"_index" : "sam", "_type": "sam", "_id" : "3"}}
+{"app": "Oura3","env": "PROD","uris": [{"value": "http://uneUrlSuperLongue.pcq.desFois/onenrecontre_2"},{"value": "http://uneAutreUrl.pcq.desFois/uneautre_2"} ],"servers": [{"value": "serv1 0","zone": "LAN"}, {"value": "serv2 0","zone": "DMZ"} ],"databases": [{"value": "nomDatabase"}]}
+{"index":{"_index" : "sam", "_type": "sam", "_id" : "4"}}
+{"app": "Oura4","env": "PROD","uris": [{"value": "http://uneUrlSuperLongue.pcq.desFois/onenrecontre_2"},{"value": "http://uneAutreUrl.pcq.desFois/uneautre_2"} ],"servers": [{"value": "serv1 0","zone": "LAN"}, {"value": "serv2 0","zone": "DMZ"} ],"databases": [{"value": "nomDatabase"}]}
+{"index":{"_index" : "sam", "_type": "sam", "_id" : "5"}}
+{"app": "Oura5","env": "PROD","uris": [{"value": "http://uneUrlSuperLongue.pcq.desFois/onenrecontre_2"},{"value": "http://uneAutreUrl.pcq.desFois/uneautre_2"} ],"servers": [{"value": "serv1 0","zone": "LAN"}, {"value": "serv2 0","zone": "DMZ"} ],"databases": [{"value": "nomDatabase"}]}
+{"index":{"_index" : "sam", "_type": "sam", "_id" : "6"}}
+{"app": "Oura6","env": "PROD","uris": [{"value": "http://uneUrlSuperLongue.pcq.desFois/onenrecontre_2"},{"value": "http://uneAutreUrl.pcq.desFois/uneautre_2"} ],"servers": [{"value": "serv1 0","zone": "LAN"}, {"value": "serv2 0","zone": "DMZ"} ],"databases": [{"value": "nomDatabase"}]}
+{"index":{"_index" : "sam", "_type": "sam", "_id" : "7"}}
+{"app": "Oura7","env": "PROD","uris": [{"value": "http://uneUrlSuperLongue.pcq.desFois/onenrecontre_2"},{"value": "http://uneAutreUrl.pcq.desFois/uneautre_2"} ],"servers": [{"value": "serv1 0","zone": "LAN"}, {"value": "serv2 0","zone": "DMZ"} ],"databases": [{"value": "nomDatabase"}]}
+{"index":{"_index" : "sam", "_type": "sam", "_id" : "8"}}
+{"app": "Oura8","env": "PROD","uris": [{"value": "http://uneUrlSuperLongue.pcq.desFois/onenrecontre_2"},{"value": "http://uneAutreUrl.pcq.desFois/uneautre_2"} ],"servers": [{"value": "serv1 0","zone": "LAN"}, {"value": "serv2 0","zone": "DMZ"} ],"databases": [{"value": "nomDatabase"}]}
+{"index":{"_index" : "sam", "_type": "sam", "_id" : "9"}}
+{"app": "Oura9","env": "PROD","uris": [{"value": "http://uneUrlSuperLongue.pcq.desFois/onenrecontre_2"},{"value": "http://uneAutreUrl.pcq.desFois/uneautre_2"} ],"servers": [{"value": "serv1 0","zone": "LAN"}, {"value": "serv2 0","zone": "DMZ"} ],"databases": [{"value": "nomDatabase"}]}
+{"index":{"_index" : "sam", "_type": "sam", "_id" : "10"}}
+{"app": "Oura10","env": "PROD","uris": [{"value": "http://uneUrlSuperLongue.pcq.desFois/onenrecontre_2"},{"value": "http://uneAutreUrl.pcq.desFois/uneautre_2"} ],"servers": [{"value": "serv1 0","zone": "LAN"}, {"value": "serv2 0","zone": "DMZ"} ],"databases": [{"value": "nomDatabase"}]}
+{"index":{"_index" : "sam", "_type": "sam", "_id" : "11"}}
+{"app": "Oura11","env": "PROD","uris": [{"value": "http://uneUrlSuperLongue.pcq.desFois/onenrecontre_2"},{"value": "http://uneAutreUrl.pcq.desFois/uneautre_2"} ],"servers": [{"value": "serv1 0","zone": "LAN"}, {"value": "serv2 0","zone": "DMZ"} ],"databases": [{"value": "nomDatabase"}]}

@@ -13,7 +13,7 @@ gulp.task('serve',   function () {
     // -------------
     var url = require('url');
     var proxy = require('proxy-middleware');
-    var proxyEsOpt = url.parse('http://localhost:9200/');
+    var proxyEsOpt = url.parse('http://integ1:9200/');
     proxyEsOpt.route = '/v1/';
     var proxyOptions = url.parse('http://localhost:8080/');
     proxyOptions.route = '/';

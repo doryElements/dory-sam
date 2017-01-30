@@ -38,6 +38,7 @@ Polymer Element dory-sam-page-edit
         </div>
 
         <air-cruddy-elasticsearch id="cruddy"  mode="cors" url="http://localhost:9200/sam/sam"
+                                  elastic-refresh="true"
                                   data="{{data}}" entity-id="{{entityId}}">
 
             <dory-sam-editor id="editor" data="{{data}}"></dory-sam-editor>
