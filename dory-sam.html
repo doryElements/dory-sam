@@ -54,6 +54,7 @@ Polymer 1
                 page: {
                     type: String,
                     value: 'list',
+                    observer: '_handlePageInitLivecycle'
                 },
 
             },
@@ -63,8 +64,23 @@ Polymer 1
                 'air-cruddy-update': '_handleResponseUpdate',
                 'air-cruddy-create': '_handleResponseCreate',
                 'air-cruddy-delete': '_handleResponseDelete',
-                'air-cruddy-error': '_handleError',
+                'air-cruddy-error': '_handleError'
             },
+
+            // LiveCycle call
+
+        _handlePageInitLivecycle: function (page) {
+            var element  =this.$[page];
+            if (!element) return;
+            console.log('_handlePageInitLivecycle : ' + page);
+            var funcInit = element['initPage'];
+            if (funcInit && (typeof funcInit === 'function')) {
+                funcInit = funcInit.bind(element);
+                return funcInit();
+            }
+
+        },
+
 
 
             _handleError: function (e) {
@@ -96,6 +112,9 @@ Polymer 1
                 console.log('Handle response : ', detail);
                 this.$.toastResponse.show(message);
             },
+
+
+
 
 
 

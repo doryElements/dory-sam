@@ -50,6 +50,7 @@ Polymer 1
                 selected="[[page]]"
                 attr-for-selected="page"
                 fallback-selection="list"
+                    activate-event="_handlePageChanged"
                 role="main">
             <div page="list">
                 <slot  name="list" ></slot>
@@ -69,9 +70,7 @@ Polymer 1
 
             is: 'dory-crud-routing',
 
-            listeners: {
-                'dory-open-page': '_changePageEvent'
-            },
+
 
             properties: {
                 page: {
@@ -99,6 +98,10 @@ Polymer 1
                 },
             },
 
+            listeners: {
+                'dory-open-page': '_changePageEvent'
+            },
+
 
             _changePageEvent: function (e) {
                 e.preventDefault();
@@ -109,6 +112,8 @@ Polymer 1
                 this.page = detail.page;
                 this._changeUrl(detail);
             },
+
+
 
             _changeUrl: function (opt) {
                 var newRoute = JSON.parse(JSON.stringify( this.route));
@@ -124,6 +129,7 @@ Polymer 1
               console.log()
               this.page= this.routeData.page;
             },
+
 
             _print: function (e) {
                 console.log('route : ',this.route);

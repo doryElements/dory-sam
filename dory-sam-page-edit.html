@@ -60,6 +60,11 @@ Polymer Element dory-sam-page-edit
 
             },
 
+
+            initPage: function () {
+              console.log('--------------- initPage Lyfecycle ------------------');
+            },
+
             save: function () {
               this.$.cruddy.save();
             },
