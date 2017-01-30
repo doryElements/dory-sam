@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+
+    <title>dory-sam-card demo</title>
+
+    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+
+    <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
+    <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
+    <link rel="import" href="../dory-sam-card.html">
+
+    <link rel="import" href="demo-data-display.html">
+
+    <style is="custom-style" include="demo-pages-shared-styles">
+        demo-snippet {
+            --demo-snippet: {
+                max-width: 800px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+        }
+
+    </style>
+</head>
+<body>
+<div class="vertical-section-container centered">
+    <h3>Basic dory-sam-card demo</h3>
+    <demo-snippet>
+        <template is="dom-bind" id="demo">
+            <demo-data-display data="[[data]]"></demo-data-display>
+            <dory-sam-card data="{{data}}" class="cardColor"></dory-sam-card>
+        </template>
+        <script>
+            var demo = document.querySelector('#demo');
+            var generator = function () {
+                return {
+                    _source: {
+                        app: 'Oura',
+                        env: 'PROD',
+                        uris: [
+                            {value: 'http://uneUrlSuperLongue.pcq.desFois/onenrecontre'},
+                            {value: 'http://uneUrlSuperLongue.pcq.desFois/onenrecontre2'},
+                        ],
+                        servers: [
+                            {value: 'serv1', zone: 'LAN'},
+                            {value: 'serv2', zone: 'DMZ'},
+                        ],
+                        databases: [
+                            {value: 'nomDatabase'}
+                        ]
+                    }
+                }
+            };
+            demo.data = generator();
+        </script>
+    </demo-snippet>
+</div>
+</body>
+</html>

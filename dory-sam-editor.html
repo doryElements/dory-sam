@@ -70,8 +70,13 @@ Dory Service Application Mapping Form Editor
                                 <dory-listbox selected="{{data.env}}" label="Environnements"
                                               code-labels="[[environments]]"></dory-listbox>
                             </div>
+
                             <div class="dynbox">
                                 <paper-checkbox checked="{{data.ci}}">Integration continue</paper-checkbox>
+                            </div>
+
+                            <div class="dynbox">
+                                <paper-tags-input label="Tags" show-counter="tags" items="{{data.tabs}}"></paper-tags-input>
                             </div>
 
                             <dory-sam-dyn-list class="dynbox" title="Softwares" list="{{data.softwares}}"
