@@ -68,10 +68,19 @@ Custom property               | Description                                  | D
             .iconslist {
                 @apply(--layout-vertical);
             }
+            .header {
+                padding: 16px;
+                font-size: 24px;
+                font-weight: 400;
+                color: var(--paper-card-header-color, #000);
+
+                @apply(--paper-card-header-text);
+            }
 
         </style>
 
-        <paper-card heading="[[data._source.app]]" alt="[[data._source.app]]" elevation="3">
+        <paper-card alt="[[data._source.app]]" elevation="3">
+            <div class="header" on-tap="_showDetails">[[data._source.app]]</div>
             <div class="card-content" on-tap="_showDetails">
                 <span class="card-subtitle">[[localize(data.env)]]</span>
 

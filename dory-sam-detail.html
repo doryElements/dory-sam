@@ -72,10 +72,13 @@
         <dory-markdown class="flex description" value="[[data._source.description]]"></dory-markdown>
 
 
-        <div>
-            <label>Urls</label>
-            <dory-sam-card-item items="[[data._source.uris]]" icon="maps:place" class="cardUri"></dory-sam-card-item>
-        </div>
+        <template is="dom-if" if="[[data._source.uris.length]]">
+            <div>
+                <label>Urls</label>
+                <dory-sam-card-item items="[[data._source.uris]]" icon="maps:place"
+                                    class="cardUri"></dory-sam-card-item>
+            </div>
+        </template>
         <div class="layout horizontal flex wrap">
             <template is="dom-if" if="[[data._source.servers.length]]">
                 <div class="flex item" small-width$="[[smallWidth]]">

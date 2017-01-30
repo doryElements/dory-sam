@@ -42,10 +42,10 @@ Polymer Element dory-sam-page-list
             <div class="title">Server Application Mapping</div>
             <div class="middle">
 
-            <paper-input value="{{searchText}}" placeholder="Search">
-                <div prefix>>&nbsp</div>
-                <paper-icon-button suffix icon="search" on-tap="search"></paper-icon-button>
-            </paper-input>
+                <paper-input value="{{searchText}}" placeholder="Search">
+                    <div prefix>>&nbsp</div>
+                    <paper-icon-button suffix icon="search" on-tap="search"></paper-icon-button>
+                </paper-input>
             </div>
             <paper-fab class="bottom" icon="add-circle-outline" on-tap="_requestEdit"></paper-fab>
         </paper-toolbar>
@@ -55,7 +55,7 @@ Polymer Element dory-sam-page-list
                    content-type="application/json" body="[[queryBody]]" method="post"
                    last-response="{{listData}}" on-response="_handleResponse"></iron-ajax>
         <template is="dom-if" if="[[dataloaded]]">
-            <dory-sam-list  items="[[listData.hits.hits]]"></dory-sam-list>
+            <dory-sam-list items="[[listData.hits.hits]]"></dory-sam-list>
         </template>
     </template>
 
@@ -66,7 +66,7 @@ Polymer Element dory-sam-page-list
 
             properties: {
                 searchText: {
-                    type:String,
+                    type: String,
                     observer: '_searchTextChanged',
                     notify: true
                 },
@@ -76,14 +76,14 @@ Polymer Element dory-sam-page-list
                     value: function () {
                         return {
                             "query" : {  "match_all" : {} },
-                            "aggs" : {
-                                "env_count" : {
-                                    "cardinality" : {
-                                        "field" : "env",
-                                        "missing": "N/A"
-                                    }
-                                }
-                            }
+//                            "aggs" : {
+//                                "env_count" : {
+//                                    "cardinality" : {
+//                                        "field" : "env",
+//                                        "missing": "N/A"
+//                                    }
+//                                }
+//                            }
                         }
                     }
                 },
@@ -100,19 +100,20 @@ Polymer Element dory-sam-page-list
             search: function () {
                 console.log('Do Search text ', this.searchText);
 //                console.log(JSON.stringify(this.listData));
-                this.queryBody= this._createRequest(this.searchText);
+                this.queryBody = this._createRequest(this.searchText);
 //                this.request
             },
-            
+
             _createRequest: function (searchText) {
-                var request ={"query" : {  "match_all" : {} }};
+                var request = {"query": {"match_all": {}}};
                 if (searchText) {
-                    request =  {
-                        "query" : {
-                            "term" : { "app" : this.searchText }
+                    request = {
+                        "query": {
+                            "term": {"app": this.searchText}
                         }
                     };
-                };
+                }
+                ;
 
 
                 return request;
@@ -121,7 +122,7 @@ Polymer Element dory-sam-page-list
             _requestEdit: function (entityId) {
                 this.fire('dory-open-page', {page: 'edit', id: null});
             },
-            _handleResponse: function(e){
+            _handleResponse: function (e) {
                 this.dataloaded = true;
             },
 

@@ -35,6 +35,7 @@ Polymer Element dory-sam-page-edit
             <paper-button on-tap="retrieve">Retrieve</paper-button>
             <paper-button on-tap="save">Save</paper-button>
             <paper-button on-tap="newEntity">New</paper-button>
+            <paper-button on-tap="newEntity">Delete</paper-button>
         </div>
 
         <air-cruddy-elasticsearch id="cruddy"  mode="cors" url="http://localhost:9200/sam/sam"
@@ -73,6 +74,9 @@ Polymer Element dory-sam-page-edit
             },
             newEntity: function () {
               this.$.cruddy.newEntity();
+            },
+            delete: function () {
+                this.$.cruddy.delete();
             },
 
             validate: function () {
