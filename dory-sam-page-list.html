@@ -27,24 +27,27 @@ Polymer Element dory-sam-page-list
                 display: block;
             }
             paper-fab {
-                float: right;
                 z-index: 10;
                 right: 30px;
-                top: 95px;
-                position: relative;
+                bottom: 28px;
+                position: fixed;
                 z-index: 10;
-                --paper-fab-background: var(--paper-blue-100);
+                --paper-fab-background: var(--primary-color);
             }
 
         </style>
         <paper-toolbar class="medium-tall">
+
             <paper-icon-button id="button" icon="arrow-back"></paper-icon-button>
             <div class="title">Server Application Mapping</div>
+            <div class="middle">
+
             <paper-input value="{{searchText}}" placeholder="Search">
                 <div prefix>>&nbsp</div>
                 <paper-icon-button suffix icon="search" on-tap="search"></paper-icon-button>
             </paper-input>
-            <paper-fab icon="add-circle-outline" on-tap="_requestEdit"></paper-fab>
+            </div>
+            <paper-fab class="bottom" icon="add-circle-outline" on-tap="_requestEdit"></paper-fab>
         </paper-toolbar>
 
 

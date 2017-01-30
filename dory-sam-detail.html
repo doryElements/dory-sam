@@ -3,6 +3,7 @@
 <link rel="import" href="dory-sam-card-item.html">
 <link rel="import" href="../paper-card/paper-card.html">
 <link rel="import" href="../app-localize-behavior/app-localize-behavior.html">
+<link rel="import" href="../iron-media-query/iron-media-query.html">
 
 
 <link rel="import" href="dory-markdown.html">
@@ -50,7 +51,12 @@
             .description {
                 --dory-markdown-background-color: white
             }
+
+            .item[small-width] {
+                min-width: 100%;
+            }
         </style>
+        <iron-media-query query="(max-width: 600px)" query-matches="{{smallWidth}}"></iron-media-query>
         <div class="subline">
             <div>
                 [[localize(data._source.env)]]
@@ -71,20 +77,27 @@
             <dory-sam-card-item items="[[data._source.uris]]" icon="maps:place" class="cardUri"></dory-sam-card-item>
         </div>
         <div class="layout horizontal flex wrap">
-            <div class="flex">
-                <label>Serveurs</label>
-                <dory-sam-card-item items="[[data._source.servers]]" icon="dns" class="cardServer"></dory-sam-card-item>
-            </div>
-            <div class="flex">
-                <label>Bdds</label>
-                <dory-sam-card-item items="[[data._source.databases]]" icon="device:storage"
-                                    class="cardStorage"></dory-sam-card-item>
-            </div>
-            <div class="flex">
-                <label>Softwares</label>
-                <dory-sam-card-item items="[[data._source.softwares]]" icon="settings-applications"
-                                    class="software"></dory-sam-card-item>
-            </div>
+            <template is="dom-if" if="[[data._source.servers.length]]">
+                <div class="flex item" small-width$="[[smallWidth]]">
+                    <label>Serveurs</label>
+                    <dory-sam-card-item items="[[data._source.servers]]" icon="dns"
+                                        class="cardServer"></dory-sam-card-item>
+                </div>
+            </template>
+            <template is="dom-if" if="[[data._source.databases.length]]">
+                <div class="flex item" small-width$="[[smallWidth]]">
+                    <label>Bdds</label>
+                    <dory-sam-card-item items="[[data._source.databases]]" icon="device:storage"
+                                        class="cardStorage"></dory-sam-card-item>
+                </div>
+            </template>
+            <template is="dom-if" if="[[data._source.softwares.length]]">
+                <div class="flex item" is="dom-if" if="[[data._source.softwares.length]]" small-width$="[[smallWidth]]">
+                    <label>Softwares [[data._source.softwares.length]]</label>
+                    <dory-sam-card-item items="[[data._source.softwares]]" icon="settings-applications"
+                                        class="software"></dory-sam-card-item>
+                </div>
+            </template>
         </div>
 
     </template>
