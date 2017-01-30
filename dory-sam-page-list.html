@@ -93,6 +93,10 @@ Polymer Element dory-sam-page-list
                 }
             },
 
+            initPage: function () {
+                this.$.request.generateRequest();
+            },
+
             _searchTextChanged: function (newValue) {
                 console.log('Search text ', newValue);
 //                this.queryBody= this._createRequest(newValue);
