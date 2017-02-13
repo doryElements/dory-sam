@@ -99,6 +99,7 @@ Polymer Element dory-sam-page-list
 
             _searchTextChanged: function (newValue) {
                 console.log('Search text ', newValue);
+                this.search();
 //                this.queryBody= this._createRequest(newValue);
             },
             search: function () {
@@ -112,12 +113,9 @@ Polymer Element dory-sam-page-list
                 var request = {"query": {"match_all": {}}};
                 if (searchText) {
                     request = {
-                        "query": {
-                            "term": {"app": this.searchText}
-                        }
+                        "query":{"simple_query_string":{"fields":["app"], "query":this.searchText+'*'}}
                     };
-                }
-                ;
+                };
 
 
                 return request;
