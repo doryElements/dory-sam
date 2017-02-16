@@ -76,9 +76,8 @@ Polymer Element dory-sam-page-edit
               this.$.cruddy.newEntity();
             },
             delete: function () {
-                var promise = this.$.cruddy.delete();
                 var elt = this;
-                promise.then(function(){elt._requestList();});
+                this.$.cruddy.delete().then(function(){elt._requestList();});
             },
 
             validate: function () {
