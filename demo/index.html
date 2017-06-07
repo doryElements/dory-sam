@@ -2,7 +2,6 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
 
     <title>dory-sam demo</title>
@@ -11,30 +10,21 @@
 
     <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
     <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
-
-
-    <link rel="import" href="../../ether-polyfill-fetch/ether-polyfill-fetch.html">
-
-
     <link rel="import" href="../dory-sam.html">
 
-    <style >
-      body {
-        margin: 0;
-        padding: 0;
-      }
-
-      url-bar {
-        background-color: red;
-        width: 600px;
-        height: 150px;
-      }
-
-    </style>
+    <custom-style>
+      <style is="custom-style" include="demo-pages-shared-styles">
+      </style>
+    </custom-style>
   </head>
   <body>
-
+    <div class="vertical-section-container centered">
+      <h3>Basic dory-sam demo</h3>
+      <demo-snippet>
+        <template>
           <dory-sam></dory-sam>
-
+        </template>
+      </demo-snippet>
+    </div>
   </body>
 </html>
