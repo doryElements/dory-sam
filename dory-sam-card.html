@@ -1,0 +1,86 @@
+<link rel="import" href="../polymer/polymer-element.html">
+
+<link rel="import" href="../paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../paper-card/paper-card.html">
+<link rel="import" href="../paper-dialog/paper-dialog.html">
+
+<link rel="import" href="dory-sam-editor.html">
+<link rel="import" href="dory-sam-card-details.html">
+
+<dom-module id="dory-sam-card">
+    <template>
+        <style>
+            :host {
+                display: block;
+            }
+            paper-dialog.editor-dialog {
+                position: fixed;
+                bottom: 16px;
+                right: 16px;
+                min-width : 400px;
+                overflow: auto;
+            }
+        </style>
+
+        <paper-card heading="[[name]]">
+            <div class="card-content">
+                [[description]]
+            </div>
+            <div class="card-actions">
+                <paper-icon-button icon="create" on-tap="openEditor"></paper-icon-button>
+                <paper-icon-button icon="visibility" on-tap="openDetails"></paper-icon-button>
+            </div>
+        </paper-card>
+
+        <paper-dialog id="editor" class="editor-dialog">
+                <dory-sam-editor></dory-sam-editor>
+        </paper-dialog>
+
+        <paper-dialog id="details" class="details-dialog">
+            <dory-sam-card-details data="{{data}}"></dory-sam-card-details>
+        </paper-dialog>
+    </template>
+
+    <script>
+        /**
+         * `dory-sam-card`
+         *
+         *
+         * @customElement
+         * @polymer
+         * @demo demo/index.html
+         */
+        class DorySamCard extends Polymer.Element {
+            static get is() {
+                return 'dory-sam-card';
+            }
+
+            static get properties() {
+                return {
+                    name: {
+                        type: String,
+                    },
+                    description:{
+                        type:String,
+                    },
+                    data: {
+                        type: Object,
+                        value: function () {
+                            return {};
+                        }
+                    }
+                };
+            }
+
+            openEditor() {
+                this.$.editor.open();
+            }
+
+            openDetails () {
+                this.$.details.open();
+            }
+        }
+
+        window.customElements.define(DorySamCard.is, DorySamCard);
+    </script>
+</dom-module>

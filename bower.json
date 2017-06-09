@@ -4,12 +4,15 @@
   "dependencies": {
     "polymer": "Polymer/polymer#^2.0.0",
     "air-cruddy": "FiveElements/air-cruddy",
+    "iron-form":"PolymerElements/iron-form",
     "paper-input": "PolymerElements/paper-input#^2.0.0",
     "paper-dropdown-menu": "PolymerElements/paper-dropdown-menu#^2.0.0",
     "paper-listbox": "PolymerElements/paper-listbox#^2.0.0",
     "paper-item": "PolymerElements/paper-item#^2.0.0",
     "paper-icon-button" : "PolymerElements/paper-icon-button",
-    "paper-card" : "PolymerElements/paper-card#^2.0.0"
+    "paper-card" : "PolymerElements/paper-card#^2.0.0",
+    "paper-dialog" : "PolymerElements/paper-dialog#^2.0.0",
+    "paper-tabs" : "PolymerElements/paper-tabs#^2.0.0"
   },
   "devDependencies": {
     "iron-demo-helpers": "PolymerElements/iron-demo-helpers#^2.0.0",

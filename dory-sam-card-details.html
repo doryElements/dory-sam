@@ -1,0 +1,155 @@
+<link rel="import" href="../polymer/polymer-element.html">
+
+<link rel="import" href="../paper-tabs/paper-tabs.html">
+
+<dom-module id="dory-sam-card-details">
+    <template>
+        <style>
+            :host {
+                display: block;
+            }
+            .closed-tab{
+                display : none;
+            }
+        </style>
+
+        <paper-tabs selected="0" fit-container>
+            <paper-tab on-tap="_openQuali">QUALIFICATION</paper-tab>
+            <paper-tab on-tap="_openRec">RECETTE</paper-tab>
+            <paper-tab on-tap="_openProd">PRODUCTION</paper-tab>
+        </paper-tabs>
+
+        <div id="quali" class="tab">
+            <h3>Softwares</h3>
+            <iron-list items="{{data.quali.softwares}}">
+
+            </iron-list>
+            <h3>Servers</h3>
+            <iron-list items="{{data.quali.servers}}">
+
+            </iron-list>
+            <h3>Bases de données</h3>
+            <iron-list items="{{data.quali.bdds}}">
+
+            </iron-list>
+            <h3>URLs</h3>
+            <iron-list items="{{data.quali.urls}}">
+
+            </iron-list>
+            <h3>VIPs</h3>
+            <iron-list items="{{data.quali.vips}}">
+
+            </iron-list>
+        </div>
+
+        <div id="rec" class="closed-tab">
+            <h3>Softwares</h3>
+            <iron-list>
+
+            </iron-list>
+            <h3>Servers</h3>
+            <iron-list>
+
+            </iron-list>
+            <h3>Bases de données</h3>
+            <iron-list>
+
+            </iron-list>
+            <h3>URLs</h3>
+            <iron-list>
+
+            </iron-list>
+            <h3>VIPs</h3>
+            <iron-list>
+
+            </iron-list>
+        </div>
+
+        <div id="prod" class="closed-tab">
+            <h3>Softwares</h3>
+            <iron-list>
+
+            </iron-list>
+            <h3>Servers</h3>
+            <iron-list>
+
+            </iron-list>
+            <h3>Bases de données</h3>
+            <iron-list>
+
+            </iron-list>
+            <h3>URLs</h3>
+            <iron-list>
+
+            </iron-list>
+            <h3>VIPs</h3>
+            <iron-list>
+
+            </iron-list>
+        </div>
+
+    </template>
+
+    <script>
+        /**
+         * `dory-sam-card-details`
+         *
+         *
+         * @customElement
+         * @polymer
+         * @demo demo/index.html
+         */
+        class DorySamCardDetails extends Polymer.Element {
+            static get is() {
+                return 'dory-sam-card-details';
+            }
+
+            static get properties() {
+                return {
+                    data: {
+                        type: Object,
+                        value: function () {
+                            return {};
+                        }
+                    }
+                };
+            }
+
+            _openQuali() {
+                this.$.rec.classList.add("closed-tab");
+                this.$.prod.classList.add("closed-tab");
+                this.$.quali.classList.remove("closed-tab");
+            }
+
+            _openRec() {
+                this.$.quali.classList.add("closed-tab");
+                this.$.prod.classList.add("closed-tab");
+                this.$.rec.classList.remove("closed-tab");
+            }
+
+            _openProd() {
+                this.$.rec.classList.add("closed-tab");
+                this.$.quali.classList.add("closed-tab");
+                this.$.prod.classList.remove("closed-tab");
+            }
+        }
+
+        window.customElements.define(DorySamCardDetails.is, DorySamCardDetails);
+    </script>
+</dom-module>
+
+data{
+    nom
+    description
+    prod{
+        softwares
+        serveurs
+        ...
+    }
+    rec{
+        ...
+    }
+    quali{
+        ...
+    }
+}
