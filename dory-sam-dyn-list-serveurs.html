@@ -1,0 +1,96 @@
+<link rel="import" href="../polymer/polymer-element.html">
+
+<link rel="import" href="../paper-input/paper-input.html">
+<link rel="import" href="../paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../paper-button/paper-button.html">
+
+<link rel="import" href="../iron-icons/iron-icons.html">
+
+<dom-module id="dory-sam-dyn-list-serveurs">
+    <template>
+        <style>
+            :host {
+                display: block;
+            }
+        </style>
+
+        <label>Serveurs</label>
+        <div>
+            <template is="dom-repeat" items="{{servers}}">
+
+                <paper-input value="{{it.value}}" label="Serveur [[_add(index,1)]]">
+                    <paper-dropdown-menu label="Zone" slot="prefix">
+                        <paper-listbox slot="dropdown-content" selected="{{item.zone}}">
+                            <paper-item value="DMZ">DMZ</paper-item>
+                            <paper-item value="LAN">LAN</paper-item>
+                        </paper-listbox>
+                    </paper-dropdown-menu>
+                    <paper-icon-button slot="suffix" icon="clear" on-tap="_deleteServer"></paper-icon-button>
+                </paper-input>
+
+            </template>
+            <paper-button class="buttonadd" on-tap="_addServer" raised>Ajouter un serveur</paper-button>
+        </div>
+    </template>
+
+    <script>
+        /**
+         * `dory-sam-dyn-list`
+         *
+         *
+         * @customElement
+         * @polymer
+         */
+        class DorySamDynListServeurs extends Polymer.Element {
+            static get is() { return 'dory-sam-dyn-list-serveurs'; }
+
+            static get properties() {
+                return {
+                    prop1: {
+                        type: String,
+                        value: 'dory-sam-dyn-list-serveurs'
+                    },
+                    list: {
+                        type: Array,
+                        notify: true,
+                        value: function() { return []; }
+                    },
+                    title: {
+                        type: String,
+                    },
+                    labelItem: {
+                        type: String,
+                    },
+                    buttonLabel: {
+                        type: String,
+                    },
+                    placeholder: {
+                        type: String,
+                    }
+                };
+            }
+
+            _addServer() {
+                if (!this.servers) {
+                    this.set('servers', []);
+                }
+                var server = {};
+                this.push('servers', server);
+    //                console.log('data', JSON.stringify(this.data));
+            }
+
+            _deleteServer(e) {
+                //var index = this.servers.indexOf(server);
+                var index = e.model.index;
+                //console.log('delete server ', e.model.index);
+                this.splice('servers', index, 1);
+            }
+
+            _add(op1, op2) {
+                return op1 + op2;
+            }
+        }
+
+        window.customElements.define(DorySamDynListServeurs.is, DorySamDynListServeurs);
+    </script>
+</dom-module>

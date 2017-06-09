@@ -1,0 +1,85 @@
+<link rel="import" href="../polymer/polymer-element.html">
+
+<link rel="import" href="../paper-input/paper-input.html">
+<link rel="import" href="../paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../paper-button/paper-button.html">
+
+<link rel="import" href="../iron-icons/iron-icons.html">
+
+<dom-module id="dory-sam-dyn-list">
+    <template>
+        <style>
+            :host {
+                display: block;
+            }
+        </style>
+
+        <label>[[title]]</label>
+        <div>
+            <template is="dom-repeat" items="{{list}}" as="it">
+                <paper-input value="{{it.value}}"  label="[[labelItem]] [[_add(index,1)]]">
+                    <paper-icon-button slot="suffix" icon="clear" on-tap="_deleteElt"></paper-icon-button>
+                </paper-input>
+            </template>
+            <paper-button class="buttonadd" on-tap="_addElt" raised>[[buttonLabel]]</paper-button>
+        </div>
+    </template>
+
+    <script>
+        /**
+         * `dory-sam-dyn-list`
+         *
+         *
+         * @customElement
+         * @polymer
+         */
+        class DorySamDynList extends Polymer.Element {
+            static get is() { return 'dory-sam-dyn-list'; }
+
+            static get properties() {
+                return {
+                    prop1: {
+                        type: String,
+                        value: 'dory-sam-dyn-list'
+                    },
+                    list: {
+                        type: Array,
+                        notify: true,
+                        value: function() { return []; }
+                    },
+                    title: {
+                        type: String,
+                    },
+                    placeholder:{
+                        type:String,
+                    },
+                    labelItem: {
+                        type: String,
+                    },
+                    buttonLabel: {
+                        type: String,
+                    }
+                };
+            }
+
+            constructor(){
+                super();
+            }
+            _addElt() {
+                if(!this.list) {
+                    this.set('list', []);
+                }
+                this.push('list', {value:''});
+            }
+            _deleteElt(e) {
+                var index = e.model.index;
+                this.splice('list', index, 1);
+            }
+            _add(op1, op2) {
+                return op1 + op2;
+            }
+        }
+
+        window.customElements.define(DorySamDynList.is, DorySamDynList);
+    </script>
+</dom-module>

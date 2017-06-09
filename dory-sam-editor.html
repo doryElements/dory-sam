@@ -1,0 +1,140 @@
+<link rel="import" href="../polymer/polymer-element.html">
+
+<link rel="import" href="../paper-input/paper-input.html">
+<link rel="import" href="../paper-input/paper-textarea.html">
+<link rel="import" href="../paper-button/paper-button.html">
+<link rel="import" href="../paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="../paper-listbox/paper-listbox.html">
+<link rel="import" href="../paper-item/paper-item.html">
+
+<link rel="import" href="../iron-form/iron-form.html">
+
+<link rel="import" href="dory-sam-dyn-list.html">
+<link rel="import" href="dory-sam-dyn-list-serveurs.html">
+
+<link rel="import" href="../air-cruddy/air-cruddy-elasticsearch.html">
+
+<dom-module id="dory-sam-editor">
+    <template>
+        <style>
+            :host {
+                display: block;
+            }
+
+            .buttons {
+                float: right;
+            }
+
+            .dynbox {
+                margin-top: 1em;
+                min-width: 50%;
+                @apply --layout-flex-auto;
+            }
+        </style>
+        <air-cruddy-elasticsearch id="cruddy" mode="cors" url="http://localhost:9200/sam/sam"
+                                  elastic-refresh="true" debug="true"
+                                  data="{{data}}" entity-id="{{entityId}}">
+
+
+            <form is="iron-form" id="form">
+                <!-- Nom -->
+                <paper-input value="{{data.app}}" label="Nom"></paper-input>
+
+                <!-- Description -->
+                <paper-textarea char-counter maxlength="1000" label="Description"
+                                value="{{data.description}}"></paper-textarea>
+
+                <!-- Environnements -->
+                <paper-dropdown-menu label="Environnement">
+                    <paper-listbox slot="dropdown-content" selected="{{data.env}}">
+                        <paper-item value="QUALIF">Qualification</paper-item>
+                        <paper-item value="REC">Recette</paper-item>
+                        <paper-item value="PROD">Production</paper-item>
+                    </paper-listbox>
+                </paper-dropdown-menu>
+
+                <!-- Sofrwares -->
+                <dory-sam-dyn-list class="dynbox" title="Softwares"
+                                   list="{{data.softwares}}"
+                                   button-label="Ajouter un soft"
+                                   label-item="Software">
+                </dory-sam-dyn-list>
+
+                <!-- Serveurs -->
+                <dory-sam-dyn-list-serveurs class="dynbox">
+
+                </dory-sam-dyn-list-serveurs>
+
+                <!-- URLs -->
+                <dory-sam-dyn-list class="dynbox" title="URLs"
+                                   list="{{data.uris}}"
+                                   button-label="Ajouter une URL"
+                                   label-item="URL"
+                                   placeholder="http://">
+                </dory-sam-dyn-list>
+
+                <!-- DBs -->
+                <dory-sam-dyn-list class="dynbox" title="Bases de données"
+                                   list="{{data.databases}}"
+                                   button-label="Ajouter une BDD"
+                                   label-item="BDD">
+                </dory-sam-dyn-list>
+
+                <!-- VIPs -->
+                <dory-sam-dyn-list class="dynbox" title="VIPs"
+                                   list="{{data.vips}}"
+                                   button-label="Ajouter un VIP"
+                                   label-item="VIP">
+                </dory-sam-dyn-list>
+
+                <div class="buttons">
+                    <paper-button raised on-tap="_save">Save</paper-button>
+                    <paper-button raised>Reset</paper-button>
+                </div>
+
+            </form>
+        </air-cruddy-elasticsearch>
+    </template>
+
+    <script>
+        /**
+         * `dory-sam-editor`
+         *
+         *
+         * @customElement
+         * @polymer
+         */
+        class DorySamEditor extends Polymer.Element {
+            static get is() {
+                return 'dory-sam-editor';
+            }
+
+            static get properties() {
+                return {
+                    entityId: {
+                        type: String
+                    },
+                    data: {
+                        type: Object,
+                        notify: true,
+                        value: function () {
+                            return {};
+                        }
+                    }
+                };
+            }
+
+            constructor() {
+                super();
+            }
+
+            _save() {
+                this.$.cruddy.save();
+            }
+
+        }
+
+
+        window.customElements.define(DorySamEditor.is, DorySamEditor);
+    </script>
+</dom-module>

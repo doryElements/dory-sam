@@ -1,4 +1,5 @@
 <link rel="import" href="../polymer/polymer-element.html">
+<link rel="import" href="dory-sam-editor.html">
 
 <dom-module id="dory-sam">
   <template>
@@ -7,7 +8,7 @@
         display: block;
       }
     </style>
-    <h2>Hello [[prop1]]!</h2>
+    <dory-sam-editor></dory-sam-editor>
   </template>
 
   <script>
@@ -29,6 +30,7 @@
           }
         };
       }
+
     }
 
     window.customElements.define(DorySam.is, DorySam);
