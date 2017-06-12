@@ -1,0 +1,19 @@
+language: node_js
+sudo: required
+dist: trusty
+addons:
+  firefox: '46.0'
+  apt:
+    sources:
+      - google-chrome
+    packages:
+      - google-chrome-stable
+node_js: '8'
+cache: yarn
+before_script:
+  - npm install -g bower polymer-cli
+  - bower install
+after_success:
+  - codeclimate-test-reporter < lcov.info
+script:
+  - xvfb-run polymer test
