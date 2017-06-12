@@ -1,16 +1,8 @@
 <link rel="import" href="../polymer/polymer-element.html">
 
-<link rel="import" href="../paper-input/paper-input.html">
-<link rel="import" href="../paper-input/paper-textarea.html">
-<link rel="import" href="../paper-button/paper-button.html">
-<link rel="import" href="../paper-dropdown-menu/paper-dropdown-menu.html">
-<link rel="import" href="../paper-listbox/paper-listbox.html">
-<link rel="import" href="../paper-item/paper-item.html">
+<link rel="import" href="../paper-tabs/paper-tabs.html">
 
-<link rel="import" href="../iron-form/iron-form.html">
-
-<link rel="import" href="dory-sam-dyn-list.html">
-<link rel="import" href="dory-sam-dyn-list-serveurs.html">
+<link rel="import" href="dory-sam-editor-form.html">
 
 <link rel="import" href="../air-cruddy/air-cruddy-elasticsearch.html">
 
@@ -24,76 +16,45 @@
             .buttons {
                 float: right;
             }
-
+            .closed-tab{
+                display : none;
+            }
             .dynbox {
                 margin-top: 1em;
                 min-width: 50%;
                 @apply --layout-flex-auto;
             }
         </style>
-        <air-cruddy-elasticsearch id="cruddy" mode="cors" url="http://localhost:9200/sam/sam"
-                                  elastic-refresh="true" debug="true"
-                                  data="{{data}}" entity-id="{{entityId}}">
 
+        <!-- Nom -->
+        <paper-input value="{{data.app}}" label="Nom"></paper-input>
 
-            <form is="iron-form" id="form">
-                <!-- Nom -->
-                <paper-input value="{{data.app}}" label="Nom"></paper-input>
+        <!-- Description -->
+        <paper-textarea char-counter maxlength="1000" label="Description" rows="3"
+                        value="{{data.description}}"></paper-textarea>
 
-                <!-- Description -->
-                <paper-textarea char-counter maxlength="1000" label="Description"
-                                value="{{data.description}}"></paper-textarea>
+            <paper-tabs selected="0" fit-container>
+                <paper-tab on-tap="_openFormQuali">QUALIFICATION</paper-tab>
+                <paper-tab on-tap="_openFormRec">RECETTE</paper-tab>
+                <paper-tab on-tap="_openFormProd">PRODUCTION</paper-tab>
+            </paper-tabs>
 
-                <!-- Environnements -->
-                <paper-dropdown-menu label="Environnement">
-                    <paper-listbox slot="dropdown-content" selected="{{data.env}}">
-                        <paper-item value="QUALIF">Qualification</paper-item>
-                        <paper-item value="REC">Recette</paper-item>
-                        <paper-item value="PROD">Production</paper-item>
-                    </paper-listbox>
-                </paper-dropdown-menu>
+            <div id="formQuali" class="tab">
+                <dory-sam-editor-form data="{{data.quali}}"></dory-sam-editor-form>
+            </div>
 
-                <!-- Sofrwares -->
-                <dory-sam-dyn-list class="dynbox" title="Softwares"
-                                   list="{{data.softwares}}"
-                                   button-label="Ajouter un soft"
-                                   label-item="Software">
-                </dory-sam-dyn-list>
+            <div id="formRec" class="closed-tab">
+                <dory-sam-editor-form data="{{data.rec}}"></dory-sam-editor-form>
+            </div>
 
-                <!-- Serveurs -->
-                <dory-sam-dyn-list-serveurs class="dynbox">
+            <div id="formProd" class="closed-tab">
+                <dory-sam-editor-form data="{{data.prod}}"></dory-sam-editor-form>
+            </div>
 
-                </dory-sam-dyn-list-serveurs>
-
-                <!-- URLs -->
-                <dory-sam-dyn-list class="dynbox" title="URLs"
-                                   list="{{data.uris}}"
-                                   button-label="Ajouter une URL"
-                                   label-item="URL"
-                                   placeholder="http://">
-                </dory-sam-dyn-list>
-
-                <!-- DBs -->
-                <dory-sam-dyn-list class="dynbox" title="Bases de données"
-                                   list="{{data.databases}}"
-                                   button-label="Ajouter une BDD"
-                                   label-item="BDD">
-                </dory-sam-dyn-list>
-
-                <!-- VIPs -->
-                <dory-sam-dyn-list class="dynbox" title="VIPs"
-                                   list="{{data.vips}}"
-                                   button-label="Ajouter un VIP"
-                                   label-item="VIP">
-                </dory-sam-dyn-list>
-
-                <div class="buttons">
-                    <paper-button raised on-tap="_save">Save</paper-button>
-                    <paper-button raised>Reset</paper-button>
-                </div>
-
-            </form>
-        </air-cruddy-elasticsearch>
+            <div class="buttons">
+                <paper-button raised on-tap="_save">Save</paper-button>
+                <paper-button raised>Reset</paper-button>
+            </div>
     </template>
 
     <script>
@@ -130,6 +91,24 @@
 
             _save() {
                 this.$.cruddy.save();
+            }
+
+            _openFormQuali() {
+                this.$.formRec.classList.add("closed-tab");
+                this.$.formProd.classList.add("closed-tab");
+                this.$.formQuali.classList.remove("closed-tab");
+            }
+
+            _openFormRec() {
+                this.$.formQuali.classList.add("closed-tab");
+                this.$.formProd.classList.add("closed-tab");
+                this.$.formRec.classList.remove("closed-tab");
+            }
+
+            _openFormProd() {
+                this.$.formRec.classList.add("closed-tab");
+                this.$.formQuali.classList.add("closed-tab");
+                this.$.formProd.classList.remove("closed-tab");
             }
 
         }
