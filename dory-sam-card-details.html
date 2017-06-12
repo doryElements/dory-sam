@@ -21,71 +21,71 @@
 
         <div id="quali" class="tab">
             <h3>Softwares</h3>
-            <iron-list items="{{data.quali.softwares}}">
-
-            </iron-list>
+            <template is="dom-repeat" items="[[data.quali.softwares]]" as="it">
+                <p>[[it.value]]</p>
+            </template>
             <h3>Servers</h3>
-            <iron-list items="{{data.quali.servers}}">
-
-            </iron-list>
+            <template is="dom-repeat" items="[[data.quali.servers]]" as="it">
+                <p><label>[[it.zone]] - [[it.value]]</label></p>
+            </template>
             <h3>Bases de données</h3>
-            <iron-list items="{{data.quali.bdds}}">
-
-            </iron-list>
+            <template is="dom-repeat" items="[[data.quali.bdds]]" as="it">
+                <p>[[it.value]]</p>
+            </template>
             <h3>URLs</h3>
-            <iron-list items="{{data.quali.urls}}">
-
-            </iron-list>
+            <template is="dom-repeat" items="[[data.quali.urls]]" as="it">
+                <p>[[it.value]]</p>
+            </template>
             <h3>VIPs</h3>
-            <iron-list items="{{data.quali.vips}}">
-
-            </iron-list>
+            <template is="dom-repeat" items="[[data.quali.vips]]" as="it">
+                <p>[[it.value]]</p>
+            </template>
         </div>
 
         <div id="rec" class="closed-tab">
             <h3>Softwares</h3>
-            <iron-list>
-
-            </iron-list>
+            <template is="dom-repeat" items="[[data.rec.softwares]]" as="it">
+                <p>[[it.value]]</p>
+            </template>
             <h3>Servers</h3>
-            <iron-list>
-
-            </iron-list>
+            <template is="dom-repeat" items="[[data.rec.servers]]" as="it">
+                <p><label>[[it.zone]] - [[it.value]]</label></p>
+            </template>
             <h3>Bases de données</h3>
-            <iron-list>
-
-            </iron-list>
+            <template is="dom-repeat" items="[[data.rec.bdds]]" as="it">
+                <p>[[it.value]]</p>
+            </template>
             <h3>URLs</h3>
-            <iron-list>
-
-            </iron-list>
+            <template is="dom-repeat" items="[[data.rec.urls]]" as="it">
+                <p>[[it.value]]</p>
+            </template>
             <h3>VIPs</h3>
-            <iron-list>
-
-            </iron-list>
+            <template is="dom-repeat" items="[[data.rec.vips]]" as="it">
+                <p>[[it.value]]</p>
+            </template>
         </div>
 
         <div id="prod" class="closed-tab">
             <h3>Softwares</h3>
-            <iron-list>
-
-            </iron-list>
+            <template is="dom-repeat" items="[[data.prod.softwares]]" as="it">
+                <p>[[it.value]]</p>
+            </template>
             <h3>Servers</h3>
-            <iron-list>
-
-            </iron-list>
+            <template is="dom-repeat" items="[[data.prod.servers]]" as="it">
+                <p><label>[[it.zone]] - [[it.value]]</label></p>
+            </template>
             <h3>Bases de données</h3>
-            <iron-list>
-
-            </iron-list>
+            <template is="dom-repeat" items="[[data.prod.bdds]]" as="it">
+                <p>[[it.value]]</p>
+            </template>
             <h3>URLs</h3>
-            <iron-list>
-
-            </iron-list>
+            <template is="dom-repeat" items="[[data.prod.urls]]" as="it">
+                <p>[[it.value]]</p>
+            </template>
             <h3>VIPs</h3>
-            <iron-list>
-
-            </iron-list>
+            <template is="dom-repeat" items="[[data.prod.vips]]" as="it">
+                <p>[[it.value]]</p>
+            </template>
         </div>
 
     </template>
@@ -137,19 +137,3 @@
         window.customElements.define(DorySamCardDetails.is, DorySamCardDetails);
     </script>
 </dom-module>
-
-data{
-    nom
-    description
-    prod{
-        softwares
-        serveurs
-        ...
-    }
-    rec{
-        ...
-    }
-    quali{
-        ...
-    }
-}
