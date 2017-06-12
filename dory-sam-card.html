@@ -22,9 +22,9 @@
             }
         </style>
 
-        <paper-card heading="[[name]]">
+        <paper-card heading="[[data.name]]">
             <div class="card-content">
-                [[description]]
+                [[data.description]]
             </div>
             <div class="card-actions">
                 <paper-icon-button icon="create" on-tap="openEditor"></paper-icon-button>
@@ -64,10 +64,7 @@
                         type:String,
                     },
                     data: {
-                        type: Object,
-                        value: function () {
-                            return {};
-                        }
+                        type: Object
                     }
                 };
             }

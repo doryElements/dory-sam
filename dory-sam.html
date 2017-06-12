@@ -8,7 +8,7 @@
         display: block;
       }
     </style>
-    <dory-sam-card name="MAGI" description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ac felis vel ipsum mollis pretium. Phasellus fermentum sodales imperdiet. Ut sed neque mollis, eleifend nibh eget, ornare arcu."></dory-sam-card>
+    <dory-sam-card name="MAGI" data="[[data]]"></dory-sam-card>
 
   </template>
 
@@ -25,9 +25,14 @@
       static get is() { return 'dory-sam'; }
       static get properties() {
         return {
-          prop1: {
-            type: String,
-            value: 'dory-sam'
+          data: {
+            type: Object,
+            value: function() {
+                return {
+                    name:  'application name',
+                    description : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ac felis vel ipsum mollis pretium. Phasellus fermentum sodales imperdiet. Ut sed neque mollis, eleifend nibh eget, ornare arcu.'
+                };
+            }
           }
         };
       }
