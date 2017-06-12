@@ -11,7 +11,7 @@
     "test": "test"
   },
   "scripts": {
-    "lint": "polymer lint --input *.html",
+    "lint": "polymer lint --rules polymer-2   --extra-dependencies bower_components/**/*",
     "dev": "polymer serve -p 8080 | npm run watch",
     "devp": "polymer serve -p 8080 | gulp serve",
     "test": "polymer test",
