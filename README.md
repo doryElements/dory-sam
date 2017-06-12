@@ -1,4 +1,4 @@
-# \<dory-sam\>
+# \<dory-sam\>  [![Build Status](https://travis-ci.org/doryElements/dory-sam.svg?branch=2.0)](https://travis-ci.org/doryElements/dory-sam)
 
 
 
