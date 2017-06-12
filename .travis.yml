@@ -16,4 +16,5 @@ before_script:
 after_success:
   - codeclimate-test-reporter < lcov.info
 script:
+  - xvfb-run npm run lint
   - xvfb-run polymer test
