@@ -1,6 +1,9 @@
 <link rel="import" href="../polymer/polymer-element.html">
 
 <link rel="import" href="../paper-tabs/paper-tabs.html">
+<link rel="import" href="../iron-icons/iron-icons.html">
+<link rel="import" href="../iron-icons/device-icons.html">
+<link rel="import" href="../iron-icon/iron-icon.html">
 
 <dom-module id="dory-sam-card-details">
     <template>
@@ -26,19 +29,22 @@
             </template>
             <h3>Servers</h3>
             <template is="dom-repeat" items="[[data.quali.servers]]" as="it">
-                <p><label>[[it.zone]] - [[it.value]]</label></p>
+                <p>
+                    <iron-icon icon="dns"></iron-icon>
+                    <label>[[it.zone]] - [[it.value]]</label>
+                </p>
             </template>
             <h3>Bases de données</h3>
             <template is="dom-repeat" items="[[data.quali.bdds]]" as="it">
-                <p>[[it.value]]</p>
+                <p><iron-icon icon="device:storage"></iron-icon> [[it.value]] </p>
             </template>
             <h3>URLs</h3>
             <template is="dom-repeat" items="[[data.quali.urls]]" as="it">
-                <p>[[it.value]]</p>
+                <p><iron-icon icon="cloud"></iron-icon> [[it.value]] </p>
             </template>
             <h3>VIPs</h3>
             <template is="dom-repeat" items="[[data.quali.vips]]" as="it">
-                <p>[[it.value]]</p>
+                <p><iron-icon icon="face"></iron-icon> [[it.value]] </p>
             </template>
         </div>
 
@@ -49,19 +55,22 @@
             </template>
             <h3>Servers</h3>
             <template is="dom-repeat" items="[[data.rec.servers]]" as="it">
-                <p><label>[[it.zone]] - [[it.value]]</label></p>
+                <p>
+                    <iron-icon icon="dns"></iron-icon>
+                    <label>[[it.zone]] - [[it.value]]</label>
+                </p>
             </template>
             <h3>Bases de données</h3>
             <template is="dom-repeat" items="[[data.rec.bdds]]" as="it">
-                <p>[[it.value]]</p>
+                <p><iron-icon icon="device:storage"></iron-icon><label> [[it.value]] </label></p>
             </template>
             <h3>URLs</h3>
             <template is="dom-repeat" items="[[data.rec.urls]]" as="it">
-                <p>[[it.value]]</p>
+                <p><iron-icon icon="cloud"></iron-icon><label> [[it.value]] </label></p>
             </template>
             <h3>VIPs</h3>
             <template is="dom-repeat" items="[[data.rec.vips]]" as="it">
-                <p>[[it.value]]</p>
+                <p><iron-icon icon="face"></iron-icon> [[it.value]] </p>
             </template>
         </div>
 
@@ -72,19 +81,22 @@
             </template>
             <h3>Servers</h3>
             <template is="dom-repeat" items="[[data.prod.servers]]" as="it">
-                <p><label>[[it.zone]] - [[it.value]]</label></p>
+                <p>
+                    <iron-icon icon="dns"></iron-icon>
+                    <label>[[it.zone]] - [[it.value]]</label>
+                </p>
             </template>
             <h3>Bases de données</h3>
             <template is="dom-repeat" items="[[data.prod.bdds]]" as="it">
-                <p>[[it.value]]</p>
+                <p><iron-icon icon="device:storage"></iron-icon><label> [[it.value]]  </label></p>
             </template>
             <h3>URLs</h3>
             <template is="dom-repeat" items="[[data.prod.urls]]" as="it">
-                <p>[[it.value]]</p>
+                <p><iron-icon icon="cloud"></iron-icon><label> [[it.value]] </label></p>
             </template>
             <h3>VIPs</h3>
             <template is="dom-repeat" items="[[data.prod.vips]]" as="it">
-                <p>[[it.value]]</p>
+                <p><iron-icon icon="face"></iron-icon> [[it.value]] </p>
             </template>
         </div>
 

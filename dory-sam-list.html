@@ -1,0 +1,46 @@
+<link rel="import" href="../polymer/polymer-element.html">
+<link rel="import" href="../iron-list/iron-list.html">
+
+<dom-module id="dory-sam-list">
+    <template>
+        <style>
+            :host {
+                display: block;
+                height: 100vh;
+            }
+        </style>
+
+        <iron-list items="[[items]]" as="it" scroll-target="document" grid>
+            <template>
+                <dory-sam-card data="[[it]]"></dory-sam-card>
+            </template>
+        </iron-list>
+
+    </template>
+
+    <script>
+        /**
+         * `dory-sam-list`
+         *
+         *
+         * @customElement
+         * @polymer
+         * @demo demo/index.html
+         */
+        class DorySamList extends Polymer.Element {
+            static get is() {
+                return 'dory-sam-list';
+            }
+
+            static get properties() {
+                return {
+                    items : {
+                        type : Array,
+                    }
+                };
+            }
+        }
+
+        window.customElements.define(DorySamList.is, DorySamList);
+    </script>
+</dom-module>

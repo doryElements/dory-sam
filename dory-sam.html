@@ -1,14 +1,21 @@
 <link rel="import" href="../polymer/polymer-element.html">
+
 <link rel="import" href="dory-sam-editor.html">
 <link rel="import" href="dory-sam-card.html">
+<link rel="import" href="dory-sam-list.html">
+
 <dom-module id="dory-sam">
   <template>
     <style>
       :host {
         display: block;
+
       }
     </style>
-    <dory-sam-card data="[[data]]"></dory-sam-card>
+    <dom-bind id="demo">
+      <dory-sam-list items="[[items]]"></dory-sam-list>
+    </dom-bind>
+
 
   </template>
 
@@ -25,58 +32,11 @@
       static get is() { return 'dory-sam'; }
       static get properties() {
         return {
-          data: {
-            type: Object,
-            value: function() {
-                return {
-                    app:  'application name',
-                    description : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ac felis vel ipsum mollis pretium. Phasellus fermentum sodales imperdiet. Ut sed neque mollis, eleifend nibh eget, ornare arcu.',
-                    quali : {
-                        servers: [
-                          {value: 'serv1', zone: 'LAN'},
-                          {value: 'serv2', zone: 'DMZ'}
-                        ],
-                        urls:[
-                          {value: 'http://uneUrlSuperLongue.pcq.desFois/onenrecontre1'},
-                          {value: 'http://uneUrlSuperLongue.pcq.desFois/onenrecontre0'}
-                        ],
-                        bdds:[
-                          {value: 'nomDatabaseQuali'}
-                        ],
-                    },
-                    rec : {
-                        servers: [
-                            {value: 'serv1', zone: 'LAN'},
-                            {value: 'serv2', zone: 'DMZ'}
-                        ],
-                        urls:[
-                            {value: 'http://uneUrlSuperLongue.pcq.desFois/onenrecontre1'},
-                            {value: 'http://uneUrlSuperLongue.pcq.desFois/onenrecontre0'}
-                        ],
-                        bdds:[
-                            {value: 'nomDatabaseRec'}
-                        ],
-
-                    },
-                    prod : {
-                        servers: [
-                            {value: 'serv1', zone: 'LAN'},
-                            {value: 'serv2', zone: 'DMZ'}
-                        ],
-                        urls:[
-                            {value: 'http://uneUrlSuperLongue.pcq.desFois/onenrecontre1'},
-                            {value: 'http://uneUrlSuperLongue.pcq.desFois/onenrecontre0'}
-                        ],
-                        bdds:[
-                            {value: 'nomDatabaseProd'}
-                        ],
-                    }
-                };
-            }
+          items:{
+            type:Object,
           }
         };
-      }
-
+      };
     }
 
     window.customElements.define(DorySam.is, DorySam);

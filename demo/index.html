@@ -18,13 +18,68 @@
     </custom-style>
   </head>
   <body>
-    <div class="vertical-section-container centered">
-      <h3>Basic dory-sam demo</h3>
-      <demo-snippet>
-        <template>
-          <dory-sam ></dory-sam>
-        </template>
-      </demo-snippet>
+    <div>
+        <dom-bind id="demo">
+          <template>
+            <dory-sam items="{{data}}"></dory-sam>
+          </template>
+        </dom-bind>
+        <script>
+            var demo = document.querySelector('#demo');
+            var generator = function () {
+                var result = [];
+                for (var i=1; i <25; i++) {
+                    result.push({
+                            app: 'Oura'+i,
+                            description: 'Description of application n°'+i+'. Please note that all of these applications are the same',
+                            quali : {
+                                servers: [
+                                    {value: 'serv1', zone: 'LAN'},
+                                    {value: 'serv2', zone: 'DMZ'}
+                                ],
+                                urls:[
+                                    {value: 'http://uneUrlSuperLongue.pcq.desFois/onenrecontre1'},
+                                    {value: 'http://uneUrlSuperLongue.pcq.desFois/onenrecontre0'}
+                                ],
+                                bdds:[
+                                    {value: 'nomDatabaseQuali'}
+                                ],
+                            },
+                            rec : {
+                                servers: [
+                                    {value: 'serv1', zone: 'LAN'},
+                                    {value: 'serv2', zone: 'DMZ'}
+                                ],
+                                urls:[
+                                    {value: 'http://uneUrlSuperLongue.pcq.desFois/onenrecontre1'},
+                                    {value: 'http://uneUrlSuperLongue.pcq.desFois/onenrecontre0'}
+                                ],
+                                bdds:[
+                                    {value: 'nomDatabaseRec'}
+                                ],
+
+                            },
+                            prod : {
+                                servers: [
+                                    {value: 'serv1', zone: 'LAN'},
+                                    {value: 'serv2', zone: 'DMZ'}
+                                ],
+                                urls:[
+                                    {value: 'http://uneUrlSuperLongue.pcq.desFois/onenrecontre1'},
+                                    {value: 'http://uneUrlSuperLongue.pcq.desFois/onenrecontre0'}
+                                ],
+                                bdds:[
+                                    {value: 'nomDatabaseQuali'}
+                                ],
+                        }
+                    });
+                }
+                return result;
+
+            };
+            demo.data = generator();
+            console.log(demo.data);
+        </script>
     </div>
   </body>
 </html>

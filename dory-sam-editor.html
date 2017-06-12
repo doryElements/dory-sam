@@ -27,11 +27,11 @@
         </style>
 
         <!-- Nom -->
-        <paper-input value="{{data.app}}" label="Nom"></paper-input>
+        <paper-input value="[[data.app]]" label="Nom"></paper-input>
 
         <!-- Description -->
         <paper-textarea char-counter maxlength="1000" label="Description" rows="3"
-                        value="{{data.description}}"></paper-textarea>
+                        value="[[data.description]]"></paper-textarea>
 
             <paper-tabs selected="0" fit-container>
                 <paper-tab on-tap="_openFormQuali">QUALIFICATION</paper-tab>
@@ -40,15 +40,15 @@
             </paper-tabs>
 
             <div id="formQuali" class="tab">
-                <dory-sam-editor-form data="{{data.quali}}"></dory-sam-editor-form>
+                <dory-sam-editor-form data="[[data.quali]]"></dory-sam-editor-form>
             </div>
 
             <div id="formRec" class="closed-tab">
-                <dory-sam-editor-form data="{{data.rec}}"></dory-sam-editor-form>
+                <dory-sam-editor-form data="[[data.rec]]"></dory-sam-editor-form>
             </div>
 
             <div id="formProd" class="closed-tab">
-                <dory-sam-editor-form data="{{data.prod}}"></dory-sam-editor-form>
+                <dory-sam-editor-form data="[[data.prod]]"></dory-sam-editor-form>
             </div>
 
             <div class="buttons">
