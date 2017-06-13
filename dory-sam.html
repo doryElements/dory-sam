@@ -1,7 +1,10 @@
 <link rel="import" href="../polymer/polymer-element.html">
 
+<link rel="import" href="../paper-fab/paper-fab.html">
+<link rel="import" href="../app-layout/app-layout.html">
+<link rel="import" href="../app-layout/app-toolbar/app-toolbar.html">
+
 <link rel="import" href="dory-sam-editor.html">
-<link rel="import" href="dory-sam-card.html">
 <link rel="import" href="dory-sam-list.html">
 
 <dom-module id="dory-sam">
@@ -11,18 +14,62 @@
         display: block;
 
       }
-    </style>
-    <dom-bind id="demo">
-      <dory-sam-list items="[[items]]"></dory-sam-list>
-    </dom-bind>
 
+      app-toolbar {
+        background-color: #4285f4;
+        color: #fff;
+      }
+
+      paper-dialog.editor-dialog{
+        position: fixed;
+        bottom: 16px;
+        right: 16px;
+        min-width : 400px;
+        max-width : 50%;
+        z-index: 10000;
+      }
+
+      paper-fab {
+        right: 30px;
+        bottom: 28px;
+        position: fixed;
+        z-index: 10;
+        --paper-fab-background: var(--primary-color);
+      }
+
+    </style>
+
+    <app-header reveals>
+      <app-toolbar>
+        <div main-title>Dory Initiative</div>
+        <paper-input value="{{searchText}}"  placeholder="Search">
+          <paper-icon-button slot="suffix" icon="search" on-tap="search"></paper-icon-button>
+        </paper-input>
+      </app-toolbar>
+    </app-header>
+
+    <paper-fab  icon="add-circle-outline" on-tap="_openEdit"></paper-fab>
+
+    <iron-ajax auto id="request" url="http://localhost:9200/sam/sam/_search" handle-as="json"
+               content-type="application/json" body="[[queryBody]]" method="get"
+               last-response="{{listData}}" on-response="_handleResponse"></iron-ajax>
+
+    <!--<dom-bind id="demo">-->
+      <template is="dom-if" if="[[dataloaded]]">
+        <dory-sam-list items="[[listData.hits.hits]]"></dory-sam-list>
+      </template>
+    <!--</dom-bind>-->
+
+    <paper-dialog id="maineditor" class="editor-dialog">
+      <dory-sam-editor></dory-sam-editor>
+    </paper-dialog>
 
   </template>
 
   <script>
     /**
      * `dory-sam`
-     * 
+     *
      *
      * @customElement
      * @polymer
@@ -34,9 +81,57 @@
         return {
           items:{
             type:Object,
-          }
+          },
+            searchText:{
+                type:String,
+                observer :'_searchTextChanged',
+                notify: true
+            },
+            queryBody: {
+                type: Object,
+                value: function () {
+                    return {
+                        "query" : {  "match_all" : {} },
+                    }
+                }
+            },
+
+            dataloaded: {
+                type: Boolean,
+                value: false
+            }
         };
       };
+
+      _searchTextChanged (newValue) {
+        this.search();
+      }
+
+      search() {
+          console.log('Do Search text ', this.searchText);
+          console.log(JSON.stringify(this.listData));
+          this.queryBody = this._createRequest(this.searchText);
+      }
+
+      _createRequest(searchText) {
+          let request = {"query":{"match-all":{}}};
+          if(searchText) {
+              request={
+                  "query":{"simple_query_string":{"fields":["app"], "query":this.searchText+'*'}}
+              };
+          };
+
+          return request;
+      }
+
+      _handleResponse(e) {
+          this.dataloaded = true;
+      }
+
+      _openEdit() {
+          this.$.maineditor.open();
+
+      }
     }
 
     window.customElements.define(DorySam.is, DorySam);

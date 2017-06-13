@@ -1,5 +1,10 @@
 <link rel="import" href="../polymer/polymer-element.html">
+
 <link rel="import" href="../iron-list/iron-list.html">
+<link rel="import" href="../paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../iron-icons/iron-icons.html">
+
+<link rel="import" href="dory-sam-card.html">
 
 <dom-module id="dory-sam-list">
     <template>
@@ -10,7 +15,7 @@
             }
         </style>
 
-        <iron-list items="[[items]]" as="it" scroll-target="document" grid>
+        <iron-list items="[[items]]" as="it" grid>
             <template>
                 <dory-sam-card data="[[it]]"></dory-sam-card>
             </template>

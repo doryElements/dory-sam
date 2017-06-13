@@ -5,6 +5,7 @@
 <link rel="import" href="../paper-card/paper-card.html">
 <link rel="import" href="../paper-dialog/paper-dialog.html">
 
+<link rel="import" href="dory-sam.html">
 <link rel="import" href="dory-sam-editor.html">
 <link rel="import" href="dory-sam-card-details.html">
 
@@ -14,14 +15,19 @@
             :host {
                 display: inline-block;
                 padding: 10px;
+                z-index: 1;
             }
             paper-dialog.editor-dialog {
-                position: fixed;
-                bottom: 16px;
-                right: 16px;
+                position: absolute;
                 min-width : 400px;
                 max-width : 50%;
-                overflow: auto;
+                z-index: 10000;
+            }
+
+            paper-dialog.details-dialog{
+                position : fixed;
+                z-index: 1000;
+                top:16px;
             }
 
             paper-card{
@@ -81,6 +87,9 @@
 
             openEditor() {
                 this.$.editor.open();
+                //this.$.maineditor.open();
+                //document.getElementById('maineditor').open();
+                //this.domHost._openEdit();
             }
 
             openDetails () {
