@@ -46,10 +46,6 @@
 
             static get properties() {
                 return {
-                    prop1: {
-                        type: String,
-                        value: 'dory-sam-dyn-list-serveurs'
-                    },
                     list: {
                         type: Array,
                         notify: true,
@@ -74,14 +70,14 @@
                 if (!this.servers) {
                     this.set('servers', []);
                 }
-                var server = {};
+                let server = {};
                 this.push('servers', server);
     //                console.log('data', JSON.stringify(this.data));
             }
 
             _deleteServer(e) {
                 //var index = this.servers.indexOf(server);
-                var index = e.model.index;
+                let index = e.model.index;
                 //console.log('delete server ', e.model.index);
                 this.splice('servers', index, 1);
             }

@@ -22,6 +22,10 @@
             <paper-tab on-tap="_openProd">PRODUCTION</paper-tab>
         </paper-tabs>
 
+        <!--TODO Use <iron-pages selected="0">-->
+        <!--TODO Earch Detail sould be component to not repeat-->
+        <!--TODO or bind a properies to data.quali-->
+
         <div id="quali" class="tab">
             <h3>Softwares</h3>
             <template is="dom-repeat" items="[[data.quali.softwares]]" as="it">
@@ -119,10 +123,7 @@
             static get properties() {
                 return {
                     data: {
-                        type: Object,
-                        value: function () {
-                            return {};
-                        }
+                        type: Object
                     }
                 };
             }

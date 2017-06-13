@@ -38,10 +38,6 @@
 
             static get properties() {
                 return {
-                    prop1: {
-                        type: String,
-                        value: 'dory-sam-dyn-list'
-                    },
                     list: {
                         type: Array,
                         value: function() { return []; }
@@ -71,7 +67,7 @@
                 this.push('list', {value:''});
             }
             _deleteElt(e) {
-                var index = e.model.index;
+                let index = e.model.index;
                 this.splice('list', index, 1);
             }
             _add(op1, op2) {
