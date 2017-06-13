@@ -15,9 +15,9 @@
             }
         </style>
 
-        <iron-list items="[[items]]" as="it" grid>
+        <iron-list id="list" items="[[items]]" as="it" on-tap="_handleListSelect" on-selected-item-changed="_handleSelectItemChanged" selected-item="{{itemSelected}}" selection-enabled  grid>
             <template>
-                <dory-sam-card data="[[it]]"></dory-sam-card>
+                <dory-sam-card data="[[it]]" tabindex$="[[tabIndex]]" on-tap="_handleCardTap"></dory-sam-card>
             </template>
         </iron-list>
 
@@ -41,8 +41,40 @@
                 return {
                     items : {
                         type : Array,
+                    },
+                    itemSelected: {
+                        type:Object,
+                        observer: '_itemSelectedChanged'
+
                     }
                 };
+            }
+            _handleCardTap(e){
+                let item = e.model.it;
+                if (item) {
+                    console.log("on tap item", item.app);
+                }
+            }
+
+            _itemSelectedChanged() {
+                let model =this.itemSelected;
+                if (model) {
+                    console.log('Property Change', model.app);
+                }
+            }
+
+            _handleSelectItemChanged(e){
+                let model = e.detail.value;
+                if (model) {
+                    console.log("Handle Event Changed", model.app);
+                }
+            }
+            _handleListSelectItem(e) {
+                let tplInstance = this.$.list.modelForElement(e.target);
+                let model = tplInstance.it;
+                if (model) {
+                    console.log("List Event", model.app);
+                }
             }
         }
 
