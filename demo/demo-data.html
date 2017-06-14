@@ -1,4 +1,4 @@
-<link rel="import" href="../polymer/polymer-element.html">
+<link rel="import" href="../../polymer/polymer-element.html">
 
 <dom-module id="demo-data">
     <template>
@@ -59,15 +59,13 @@
 
             _generateDataLine(i) {
                 let model = {
-                    _source: {
+                        id: ''+i,
                         app: 'Oura' + i,
                         description: 'Description of application n°' + i + '. Please note that all of these applications are the same',
-                    }
-
                 };
-                model._source.quali = this._generateDataLineServer(i, "Qualif");
-                model._source.rec = this._generateDataLineServer(i, "Recette");
-                model._source.prod = this._generateDataLineServer(i, "Prod");
+                model.quali = this._generateDataLineServer(i, "Qualif");
+                model.rec = this._generateDataLineServer(i, "Recette");
+                model.prod = this._generateDataLineServer(i, "Prod");
                 return model;
             }
 

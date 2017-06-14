@@ -46,7 +46,7 @@
         <iron-list id="list" items="[[items]]" as="it"  grid>
             <template>
                 <div class="card">
-                    <dory-sam-card data="[[it._source]]" tabindex$="[[tabIndex]]"></dory-sam-card>
+                    <dory-sam-card data="[[it]]" tabindex$="[[tabIndex]]"></dory-sam-card>
                     <paper-fab mini icon="create" on-tap="_handleEditTap"></paper-fab>
                 </div>
             </template>
@@ -54,9 +54,7 @@
 
         <paper-fab  icon="add-circle-outline" on-tap="_openEditCreate"></paper-fab>
 
-        <paper-dialog id="maineditor" class="editor-dialog"
-                      entry-animation="scale-up-animation"
-                      exit-animation="fade-out-animation">
+        <paper-dialog id="maineditor" class="editor-dialog" >
             <dory-sam-editor entity-id="{{entityId}}" data="[[itemSelected]]"></dory-sam-editor>
             <div class="buttons">
                 <paper-icon-button icon="delete" on-tap="_delete"></paper-icon-button>

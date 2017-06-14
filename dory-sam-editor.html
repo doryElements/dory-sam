@@ -21,10 +21,10 @@
         </style>
 
         <air-cruddy-elasticsearch id="cruddy"  mode="cors" url="http://localhost:9200/sam/sam"
-                                  elastic-refresh="true"
+                                  elastic-refresh="true" debug
                                   data="{{data}}" entity-id="{{entityId}}">
 
-            <dory-sam-editor-form data="{{data._source}}"></dory-sam-editor-form>
+            <dory-sam-editor-form data="{{data}}"></dory-sam-editor-form>
 
 
             <div class="buttons">
@@ -64,6 +64,11 @@
                 super();
             }
 
+            _delete() {
+                console.log(this.entityId);
+                console.log(this.$.cruddy.data);
+//                this.$.cruddy.retrieve(this.entityId);
+            }
             _save() {
                 console.log(this.data);
                 console.log(this.$.cruddy.save());
