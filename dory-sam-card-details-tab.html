@@ -1,0 +1,65 @@
+<link rel="import" href="../polymer/polymer-element.html">
+
+<link rel="import" href="../iron-icons/iron-icons.html">
+<link rel="import" href="../iron-icons/device-icons.html">
+<link rel="import" href="../iron-icon/iron-icon.html">
+
+<dom-module id="dory-sam-card-details-tab">
+    <template>
+        <style>
+            :host {
+                display: block;
+            }
+        </style>
+
+        <h3>Softwares</h3>
+        <template is="dom-repeat" items="[[data.softwares]]" as="it">
+            <p>[[it.value]]</p>
+        </template>
+        <h3>Servers</h3>
+        <template is="dom-repeat" items="[[data.servers]]" as="it">
+            <p>
+                <iron-icon icon="dns"></iron-icon>
+                <label>[[it.zone]] - [[it.value]]</label>
+            </p>
+        </template>
+        <h3>Bases de données</h3>
+        <template is="dom-repeat" items="[[data.bdds]]" as="it">
+            <p><iron-icon icon="device:storage"></iron-icon> [[it.value]] </p>
+        </template>
+        <h3>URLs</h3>
+        <template is="dom-repeat" items="[[data.urls]]" as="it">
+            <p><iron-icon icon="cloud"></iron-icon> [[it.value]] </p>
+        </template>
+        <h3>VIPs</h3>
+        <template is="dom-repeat" items="[[data.vips]]" as="it">
+            <p><iron-icon icon="face"></iron-icon> [[it.value]] </p>
+        </template>
+    </template>
+
+    <script>
+        /**
+         * `dory-sam-card-details-tab`
+         *
+         *
+         * @customElement
+         * @polymer
+         * @demo demo/index.html
+         */
+        class DorySamCardDetailsTab extends Polymer.Element {
+            static get is() {
+                return 'dory-sam-card-details-tab';
+            }
+
+            static get properties() {
+                return {
+                    data: {
+                        type: Object
+                    }
+                };
+            }
+        }
+
+        window.customElements.define(DorySamCardDetailsTab.is, DorySamCardDetailsTab);
+    </script>
+</dom-module>

@@ -4,6 +4,9 @@
 <link rel="import" href="../iron-icons/iron-icons.html">
 <link rel="import" href="../iron-icons/device-icons.html">
 <link rel="import" href="../iron-icon/iron-icon.html">
+<link rel="import" href="../iron-pages/iron-pages.html">
+
+<link rel="import" href="dory-sam-card-details-tab.html">
 
 <dom-module id="dory-sam-card-details">
     <template>
@@ -22,88 +25,17 @@
             <paper-tab on-tap="_openProd">PRODUCTION</paper-tab>
         </paper-tabs>
 
-        <!--TODO Use <iron-pages selected="0">-->
-        <!--TODO Earch Detail sould be component to not repeat-->
-        <!--TODO or bind a properies to data.quali-->
-
-        <div id="quali" class="tab">
-            <h3>Softwares</h3>
-            <template is="dom-repeat" items="[[data.quali.softwares]]" as="it">
-                <p>[[it.value]]</p>
-            </template>
-            <h3>Servers</h3>
-            <template is="dom-repeat" items="[[data.quali.servers]]" as="it">
-                <p>
-                    <iron-icon icon="dns"></iron-icon>
-                    <label>[[it.zone]] - [[it.value]]</label>
-                </p>
-            </template>
-            <h3>Bases de données</h3>
-            <template is="dom-repeat" items="[[data.quali.bdds]]" as="it">
-                <p><iron-icon icon="device:storage"></iron-icon> [[it.value]] </p>
-            </template>
-            <h3>URLs</h3>
-            <template is="dom-repeat" items="[[data.quali.urls]]" as="it">
-                <p><iron-icon icon="cloud"></iron-icon> [[it.value]] </p>
-            </template>
-            <h3>VIPs</h3>
-            <template is="dom-repeat" items="[[data.quali.vips]]" as="it">
-                <p><iron-icon icon="face"></iron-icon> [[it.value]] </p>
-            </template>
-        </div>
-
-        <div id="rec" class="closed-tab">
-            <h3>Softwares</h3>
-            <template is="dom-repeat" items="[[data.rec.softwares]]" as="it">
-                <p>[[it.value]]</p>
-            </template>
-            <h3>Servers</h3>
-            <template is="dom-repeat" items="[[data.rec.servers]]" as="it">
-                <p>
-                    <iron-icon icon="dns"></iron-icon>
-                    <label>[[it.zone]] - [[it.value]]</label>
-                </p>
-            </template>
-            <h3>Bases de données</h3>
-            <template is="dom-repeat" items="[[data.rec.bdds]]" as="it">
-                <p><iron-icon icon="device:storage"></iron-icon><label> [[it.value]] </label></p>
-            </template>
-            <h3>URLs</h3>
-            <template is="dom-repeat" items="[[data.rec.urls]]" as="it">
-                <p><iron-icon icon="cloud"></iron-icon><label> [[it.value]] </label></p>
-            </template>
-            <h3>VIPs</h3>
-            <template is="dom-repeat" items="[[data.rec.vips]]" as="it">
-                <p><iron-icon icon="face"></iron-icon> [[it.value]] </p>
-            </template>
-        </div>
-
-        <div id="prod" class="closed-tab">
-            <h3>Softwares</h3>
-            <template is="dom-repeat" items="[[data.prod.softwares]]" as="it">
-                <p>[[it.value]]</p>
-            </template>
-            <h3>Servers</h3>
-            <template is="dom-repeat" items="[[data.prod.servers]]" as="it">
-                <p>
-                    <iron-icon icon="dns"></iron-icon>
-                    <label>[[it.zone]] - [[it.value]]</label>
-                </p>
-            </template>
-            <h3>Bases de données</h3>
-            <template is="dom-repeat" items="[[data.prod.bdds]]" as="it">
-                <p><iron-icon icon="device:storage"></iron-icon><label> [[it.value]]  </label></p>
-            </template>
-            <h3>URLs</h3>
-            <template is="dom-repeat" items="[[data.prod.urls]]" as="it">
-                <p><iron-icon icon="cloud"></iron-icon><label> [[it.value]] </label></p>
-            </template>
-            <h3>VIPs</h3>
-            <template is="dom-repeat" items="[[data.prod.vips]]" as="it">
-                <p><iron-icon icon="face"></iron-icon> [[it.value]] </p>
-            </template>
-        </div>
-
+        <iron-pages selected="[[pageName]]" attr-for-selected="page-name" fallback-selection="fallback">
+            <div page-name="quali">
+                <dory-sam-card-details-tab data="[[data.quali]]"></dory-sam-card-details-tab>
+            </div>
+            <div page-name="rec">
+                <dory-sam-card-details-tab data="[[data.rec]]"></dory-sam-card-details-tab>
+            </div>
+            <div page-name="prod">
+                <dory-sam-card-details-tab data="[[data.prod]]"></dory-sam-card-details-tab>
+            </div>
+        </iron-pages>
     </template>
 
     <script>
@@ -124,26 +56,24 @@
                 return {
                     data: {
                         type: Object
+                    },
+                    pageName:{
+                        type: String,
+                        value : 'quali'
                     }
                 };
             }
 
             _openQuali() {
-                this.$.rec.classList.add("closed-tab");
-                this.$.prod.classList.add("closed-tab");
-                this.$.quali.classList.remove("closed-tab");
+                this.pageName = 'quali';
             }
 
             _openRec() {
-                this.$.quali.classList.add("closed-tab");
-                this.$.prod.classList.add("closed-tab");
-                this.$.rec.classList.remove("closed-tab");
+                this.pageName = 'rec';
             }
 
             _openProd() {
-                this.$.rec.classList.add("closed-tab");
-                this.$.quali.classList.add("closed-tab");
-                this.$.prod.classList.remove("closed-tab");
+                this.pageName = 'prod';
             }
         }
 
