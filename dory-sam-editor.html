@@ -1,9 +1,5 @@
 <link rel="import" href="../polymer/polymer-element.html">
 
-<link rel="import" href="../paper-tabs/paper-tabs.html">
-<link rel="import" href="../paper-icon-button/paper-icon-button.html">
-<link rel="import" href="../iron-icons/iron-icons.html">
-<link rel="import" href="../iron-pages/iron-pages.html">
 
 
 <link rel="import" href="dory-sam-editor-form.html">
@@ -27,30 +23,9 @@
         <air-cruddy-elasticsearch id="cruddy"  mode="cors" url="http://localhost:9200/sam/sam"
                                   elastic-refresh="true"
                                   data="{{data}}" entity-id="{{entityId}}">
-            <!-- Nom -->
-            <paper-input value="{{data._source.app}}" label="Nom"></paper-input>
 
-            <!-- Description -->
-            <paper-textarea char-counter maxlength="1000" label="Description" rows="3"
-                            value="{{data._source.description}}"></paper-textarea>
+            <dory-sam-editor-form data="{{data._source}}"></dory-sam-editor-form>
 
-            <paper-tabs selected="0" fit-container>
-                <paper-tab on-tap="_openFormQuali">QUALIFICATION</paper-tab>
-                <paper-tab on-tap="_openFormRec">RECETTE</paper-tab>
-                <paper-tab on-tap="_openFormProd">PRODUCTION</paper-tab>
-            </paper-tabs>
-
-            <iron-pages selected="[[pageName]]" attr-for-selected="page-name" fallback-selection="fallback">
-                <div page-name="editQuali">
-                    <dory-sam-editor-form data="{{data._source.quali}}"></dory-sam-editor-form>
-                </div>
-                <div page-name="editRec">
-                    <dory-sam-editor-form data="{{data._source.rec}}"></dory-sam-editor-form>
-                </div>
-                <div page-name="editProd">
-                    <dory-sam-editor-form data="{{data._source.prod}}"></dory-sam-editor-form>
-                </div>
-            </iron-pages>
 
             <div class="buttons">
                 <paper-icon-button icon="save" on-tap="_save"></paper-icon-button>
@@ -80,14 +55,7 @@
                     },
                     data: {
                         type: Object,
-                        notify: true,
-                        value: function () {
-                            return {};
-                        }
-                    },
-                    pageName:{
-                        type: String,
-                        value : 'editQuali'
+                        notify: true
                     }
                 };
             }
@@ -101,17 +69,7 @@
                 console.log(this.$.cruddy.save());
             }
 
-            _openFormQuali() {
-                this.pageName = 'editQuali';
-            }
 
-            _openFormRec() {
-                this.pageName = 'editRec';
-            }
-
-            _openFormProd() {
-                this.pageName = 'editProd';
-            }
 
         }
         window.customElements.define(DorySamEditor.is, DorySamEditor);

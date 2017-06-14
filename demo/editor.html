@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+
+    <title>dory-sam demo</title>
+
+    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+
+    <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
+    <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
+    <link rel="import" href="../dory-sam-editor-form.html">
+
+    <link rel="import" href="demo-data.html">
+
+    <custom-style>
+      <style is="custom-style" include="demo-pages-shared-styles">
+      </style>
+    </custom-style>
+  </head>
+  <body>
+    <div>
+        <dom-bind id="demo">
+          <template>
+            <demo-data data="{{datas}}" count="1"></demo-data>
+            <dory-sam-editor-form data="[[datas.0._source]]"></dory-sam-editor-form>
+          </template>
+        </dom-bind>
+    </div>
+  </body>
+</html>

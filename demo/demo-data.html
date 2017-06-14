@@ -27,19 +27,67 @@
             static get properties() {
                 return {
                     count: {
-                        type: Integer,
+                        type: Number,
                         value: 25
                     },
-                    datas: {
+                    data: {
                         type: Array,
-                        computed:  '_generatedData'
+                        notify: true
                     }
                 };
             }
 
-            _generatedData() {
-
+            static get observers() {
+                return [
+                    '_generatedCountData(count)'
+                ]
             }
+            _generatedCountData(count) {
+                let items =  this._generatedData(count);
+                this.data = items;
+                console.log('generated data : ', items);
+            }
+
+            _generatedData(totalCount) {
+                let result = [];
+                for (let i=0; i <totalCount; i++) {
+                    let data = this._generateDataLine(i+1);
+                    result.push(data);
+                }
+                return result;
+            }
+
+            _generateDataLine(i) {
+                let model = {
+                    _source: {
+                        app: 'Oura' + i,
+                        description: 'Description of application n°' + i + '. Please note that all of these applications are the same',
+                    }
+
+                };
+                model._source.quali = this._generateDataLineServer(i, "Qualif");
+                model._source.rec = this._generateDataLineServer(i, "Recette");
+                model._source.prod = this._generateDataLineServer(i, "Prod");
+                return model;
+            }
+
+            _generateDataLineServer(i, env) {
+                let server = {
+                    servers: [
+                        {value: 'serv1', zone: 'LAN'},
+                        {value: 'serv2', zone: 'DMZ'}
+                    ],
+                    urls: [
+                        {value: 'http://uneUrlSuperLongue.pcq.desFois/onenrecontre1'},
+                        {value: 'http://uneUrlSuperLongue.pcq.desFois/onenrecontre0'}
+                    ],
+                    bdds: [
+                        {value: 'nomDatabase'+env}
+                    ],
+                }
+                return server;
+            }
+
         }
 
         window.customElements.define(DemoData.is, DemoData);

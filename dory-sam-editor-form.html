@@ -1,11 +1,14 @@
 <link rel="import" href="../polymer/polymer-element.html">
 
-<link rel="import" href="../paper-input/paper-input.html">
-<link rel="import" href="../paper-input/paper-textarea.html">
-<link rel="import" href="../paper-dialog-scrollable/paper-dialog-scrollable.html">
 
-<link rel="import" href="dory-sam-dyn-list.html">
-<link rel="import" href="dory-sam-dyn-list-serveurs.html">
+<link rel="import" href="../paper-tabs/paper-tabs.html">
+<link rel="import" href="../paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../iron-icons/iron-icons.html">
+<link rel="import" href="../iron-pages/iron-pages.html">
+
+
+<link rel="import" href="dory-sam-editor-env.html">
+
 
 <dom-module id="dory-sam-editor-form">
     <template>
@@ -15,46 +18,25 @@
             }
         </style>
 
-        <paper-dialog-scrollable>
-            <!-- Sofrwares -->
-            <dory-sam-dyn-list class="dynbox" title="Softwares"
-                               list="{{data.softwares}}"
-                               button-label="Ajouter un soft"
-                               label-item="Software">
-            </dory-sam-dyn-list>
+        <!-- Nom -->
+        <paper-input value="{{data.app}}" label="Nom"></paper-input>
 
-            <!-- Serveurs -->
-            <dory-sam-dyn-list-serveurs class="dynbox">
+        <!-- Description -->
+        <paper-textarea label="Description" char-counter maxlength="1000"
+                        always-float-label rows="5"
+                        value="{{data.description}}"></paper-textarea>
 
-            </dory-sam-dyn-list-serveurs>
+        <paper-tabs selected="{{tabSelected}}" fit-container>
+            <paper-tab>QUALIFICATION</paper-tab>
+            <paper-tab>RECETTE</paper-tab>
+            <paper-tab>PRODUCTION</paper-tab>
+        </paper-tabs>
 
-            <!-- URLs -->
-            <dory-sam-dyn-list class="dynbox" title="URLs"
-                               list="{{data.urls}}"
-                               button-label="Ajouter une URL"
-                               label-item="URL"
-                               placeholder="http://">
-            </dory-sam-dyn-list>
-
-            <!-- DBs -->
-            <dory-sam-dyn-list class="dynbox" title="Bases de données"
-                               list="{{data.bdds}}"
-                               button-label="Ajouter une BDD"
-                               label-item="BDD">
-            </dory-sam-dyn-list>
-
-            <!-- VIPs -->
-            <dory-sam-dyn-list class="dynbox" title="VIPs"
-                               list="{{data.vips}}"
-                               button-label="Ajouter un VIP"
-                               label-item="VIP">
-            </dory-sam-dyn-list>
-        </paper-dialog-scrollable>
-
-        <script>
-            var scrollable = Polymer.dom(maineditor).querySelector('paper-dialog-scrollable');
-            scrollable.dialogElement = maineditor;
-        </script>
+        <iron-pages selected="[[tabSelected]]"   fallback-selection="fallback">
+                <dory-sam-editor-env data="{{data.quali}}"></dory-sam-editor-env>
+                <dory-sam-editor-env data="{{data.rec}}"></dory-sam-editor-env>
+                <dory-sam-editor-env data="{{data.prod}}"></dory-sam-editor-env>
+        </iron-pages>
     </template>
 
     <script>
@@ -73,17 +55,34 @@
 
             static get properties() {
                 return {
-                    entityId: {
-                        type: String
-                    },
                     data: {
                         type: Object,
-                        notify: true,
-                        value: function () {
-                            return {};
-                        }
+                        notify: true
+                    },
+                    tabSelected: {
+                      type: Number,
+                      value: 0
+                    },
+                    pageName: {
+                        type: String,
+                        value: 'editQuali'
                     }
                 };
+            }
+
+            // FIXME Too expensive : one method by menu
+            _openFormQuali() {
+                this.pageName = 'editQuali';
+            }
+
+            // FIXME Too expensive : one method by menu
+            _openFormRec() {
+                this.pageName = 'editRec';
+            }
+
+            // FIXME Too expensive : one method by menu
+            _openFormProd() {
+                this.pageName = 'editProd';
             }
         }
 
