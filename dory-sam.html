@@ -1,6 +1,7 @@
 <link rel="import" href="../polymer/polymer-element.html">
 
 <link rel="import" href="../paper-fab/paper-fab.html">
+<link rel="import" href="../iron-ajax/iron-ajax.html">
 <link rel="import" href="../app-layout/app-layout.html">
 <link rel="import" href="../app-layout/app-toolbar/app-toolbar.html">
 
@@ -48,21 +49,14 @@
       </app-toolbar>
     </app-header>
 
-    <paper-fab  icon="add-circle-outline" on-tap="_openEdit"></paper-fab>
-
     <iron-ajax auto id="request" url="http://localhost:9200/sam/sam/_search" handle-as="json"
-               content-type="application/json" body="[[queryBody]]" method="get"
+               content-type="application/json" body="[[queryBody]]" method="post"
                last-response="{{listData}}" on-response="_handleResponse"></iron-ajax>
 
-    <!--<dom-bind id="demo">-->
       <template is="dom-if" if="[[dataloaded]]">
         <dory-sam-list items="[[listData.hits.hits]]"></dory-sam-list>
       </template>
-    <!--</dom-bind>-->
 
-    <paper-dialog id="maineditor" class="editor-dialog">
-      <dory-sam-editor></dory-sam-editor>
-    </paper-dialog>
 
   </template>
 
@@ -91,7 +85,7 @@
                 type: Object,
                 value: function () {
                     return {
-                        "query" : {  "match_all" : {} },
+                        "query" : {  "match_all" : {} }
                     }
                 }
             },
@@ -109,7 +103,6 @@
 
       search() {
           console.log('Do Search text ', this.searchText);
-          console.log(JSON.stringify(this.listData));
           this.queryBody = this._createRequest(this.searchText);
       }
 
@@ -125,12 +118,8 @@
       }
 
       _handleResponse(e) {
+          console.log('Response');
           this.dataloaded = true;
-      }
-
-      _openEdit() {
-          this.$.maineditor.open();
-
       }
     }
 

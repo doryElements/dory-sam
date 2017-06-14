@@ -1,0 +1,47 @@
+<link rel="import" href="../polymer/polymer-element.html">
+
+<dom-module id="demo-data">
+    <template>
+        <style>
+            :host {
+                display: block;
+            }
+        </style>
+
+    </template>
+
+    <script>
+        /**
+         * `demo-data`
+         *
+         *
+         * @customElement
+         * @polymer
+         * @demo demo/index.html
+         */
+        class DemoData extends Polymer.Element {
+            static get is() {
+                return 'demo-data';
+            }
+
+            static get properties() {
+                return {
+                    count: {
+                        type: Integer,
+                        value: 25
+                    },
+                    datas: {
+                        type: Array,
+                        computed:  '_generatedData'
+                    }
+                };
+            }
+
+            _generatedData() {
+
+            }
+        }
+
+        window.customElements.define(DemoData.is, DemoData);
+    </script>
+</dom-module>

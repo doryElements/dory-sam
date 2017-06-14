@@ -2,12 +2,7 @@
 
 <link rel="import" href="../paper-input/paper-input.html">
 <link rel="import" href="../paper-input/paper-textarea.html">
-<link rel="import" href="../paper-button/paper-button.html">
-<link rel="import" href="../paper-dropdown-menu/paper-dropdown-menu.html">
-<link rel="import" href="../paper-listbox/paper-listbox.html">
-<link rel="import" href="../paper-item/paper-item.html">
-
-<link rel="import" href="../iron-form/iron-form.html">
+<link rel="import" href="../paper-dialog-scrollable/paper-dialog-scrollable.html">
 
 <link rel="import" href="dory-sam-dyn-list.html">
 <link rel="import" href="dory-sam-dyn-list-serveurs.html">
@@ -20,39 +15,46 @@
             }
         </style>
 
-        <!-- Sofrwares -->
-        <dory-sam-dyn-list class="dynbox" title="Softwares"
-                           list="{{data.softwares}}"
-                           button-label="Ajouter un soft"
-                           label-item="Software">
-        </dory-sam-dyn-list>
+        <paper-dialog-scrollable>
+            <!-- Sofrwares -->
+            <dory-sam-dyn-list class="dynbox" title="Softwares"
+                               list="{{data.softwares}}"
+                               button-label="Ajouter un soft"
+                               label-item="Software">
+            </dory-sam-dyn-list>
 
-        <!-- Serveurs -->
-        <dory-sam-dyn-list-serveurs class="dynbox">
+            <!-- Serveurs -->
+            <dory-sam-dyn-list-serveurs class="dynbox">
 
-        </dory-sam-dyn-list-serveurs>
+            </dory-sam-dyn-list-serveurs>
 
-        <!-- URLs -->
-        <dory-sam-dyn-list class="dynbox" title="URLs"
-                           list="{{data.urls}}"
-                           button-label="Ajouter une URL"
-                           label-item="URL"
-                           placeholder="http://">
-        </dory-sam-dyn-list>
+            <!-- URLs -->
+            <dory-sam-dyn-list class="dynbox" title="URLs"
+                               list="{{data.urls}}"
+                               button-label="Ajouter une URL"
+                               label-item="URL"
+                               placeholder="http://">
+            </dory-sam-dyn-list>
 
-        <!-- DBs -->
-        <dory-sam-dyn-list class="dynbox" title="Bases de données"
-                           list="{{data.bdds}}"
-                           button-label="Ajouter une BDD"
-                           label-item="BDD">
-        </dory-sam-dyn-list>
+            <!-- DBs -->
+            <dory-sam-dyn-list class="dynbox" title="Bases de données"
+                               list="{{data.bdds}}"
+                               button-label="Ajouter une BDD"
+                               label-item="BDD">
+            </dory-sam-dyn-list>
 
-        <!-- VIPs -->
-        <dory-sam-dyn-list class="dynbox" title="VIPs"
-                           list="{{data.vips}}"
-                           button-label="Ajouter un VIP"
-                           label-item="VIP">
-        </dory-sam-dyn-list>
+            <!-- VIPs -->
+            <dory-sam-dyn-list class="dynbox" title="VIPs"
+                               list="{{data.vips}}"
+                               button-label="Ajouter un VIP"
+                               label-item="VIP">
+            </dory-sam-dyn-list>
+        </paper-dialog-scrollable>
+
+        <script>
+            var scrollable = Polymer.dom(maineditor).querySelector('paper-dialog-scrollable');
+            scrollable.dialogElement = maineditor;
+        </script>
     </template>
 
     <script>
