@@ -55,12 +55,11 @@
         <paper-fab  icon="add-circle-outline" on-tap="_openEditCreate"></paper-fab>
 
         <paper-dialog id="maineditor" class="editor-dialog" >
-            <dory-sam-editor entity-id="{{entityId}}" data="[[itemSelected]]"></dory-sam-editor>
-            <div class="buttons">
-                <paper-icon-button icon="delete" on-tap="_delete"></paper-icon-button>
-                <!--<paper-button dialog-dismiss>Cancel</paper-button>-->
-                <paper-icon-button icon="save" dialog-confirm autofocus on-tap="_save">Accept</paper-icon-button>
-            </div>
+                <dory-sam-editor id="doryEditor" entity-id="{{entityId}}"></dory-sam-editor>
+                <div class="buttons">
+                    <paper-icon-button icon="delete" dialog-confirm on-tap="_delete"></paper-icon-button>
+                    <paper-icon-button icon="save" dialog-confirm on-tap="_save"></paper-icon-button>
+                </div>
         </paper-dialog>
 
     </template>
@@ -84,7 +83,7 @@
                     items : {
                         type : Array,
                     },
-                    itemSelected: {
+                    data: {
                         type:Object
                     },
                     entityId: {
@@ -95,18 +94,26 @@
             _handleEditTap(e){
                 let item = e.model.it;
                 if(item){
-                    this.itemSelected = item;
-                    this.entityId= item.id;
+                    //this.itemSelected = item;
+                    this.entityId= item._id;
                     this._openEdit();
                 }
             }
             _openEditCreate(){
-                this.itemSelected = null;
+                //this.itemSelected = null;
                 this.entityId= null;
                 this._openEdit();
             }
             _openEdit() {
                 this.$.maineditor.open();
+            }
+            _delete() {
+                this.$.doryEditor._delete();
+
+            }
+            _save() {
+                this.$.doryEditor._save();
+
             }
         }
 

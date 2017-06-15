@@ -25,13 +25,6 @@
                                   data="{{data}}" entity-id="{{entityId}}">
 
             <dory-sam-editor-form data="{{data}}"></dory-sam-editor-form>
-
-
-            <div class="buttons">
-                <paper-icon-button icon="save" on-tap="_save"></paper-icon-button>
-                <paper-icon-button icon="delete" on-tap="_delete"></paper-icon-button>
-            </div>
-
         </air-cruddy-elasticsearch>
     </template>
 
@@ -65,12 +58,10 @@
             }
 
             _delete() {
-                console.log(this.entityId);
-                console.log(this.$.cruddy.data);
-//                this.$.cruddy.retrieve(this.entityId);
+                let elt = this;
+                this.$.cruddy.delete().then(function(){elt._requestList();});
             }
             _save() {
-                console.log(this.data);
                 console.log(this.$.cruddy.save());
             }
 

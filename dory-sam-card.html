@@ -17,12 +17,6 @@
                 padding: 10px;
                 z-index: 1;
             }
-            paper-dialog.editor-dialog {
-                position: absolute;
-                min-width : 400px;
-                max-width : 50%;
-                z-index: 10000;
-            }
 
             paper-dialog.details-dialog{
                 position : fixed;
@@ -44,9 +38,9 @@
 
         </style>
 
-        <paper-card heading="[[data.app]]">
+        <paper-card heading="[[data._source.app]]">
             <div class="card-content">
-                [[data.description]]
+                [[data._source.description]]
             </div>
             <div class="card-actions">
                 <paper-icon-button icon="visibility" on-tap="openDetails"></paper-icon-button>
@@ -54,7 +48,7 @@
         </paper-card>
 
         <paper-dialog id="details" class="details-dialog">
-            <dory-sam-card-details data="[[data]]"></dory-sam-card-details>
+            <dory-sam-card-details data="[[data._source]]"></dory-sam-card-details>
         </paper-dialog>
     </template>
 
