@@ -38,9 +38,9 @@
 
         </style>
 
-        <paper-card heading="[[data._source.app]]">
+        <paper-card heading="[[data.app]]">
             <div class="card-content">
-                [[data._source.description]]
+                [[data.description]]
             </div>
             <div class="card-actions">
                 <paper-icon-button icon="visibility" on-tap="openDetails"></paper-icon-button>
@@ -48,7 +48,7 @@
         </paper-card>
 
         <paper-dialog id="details" class="details-dialog">
-            <dory-sam-card-details data="[[data._source]]"></dory-sam-card-details>
+            <dory-sam-card-details data="[[data]]"></dory-sam-card-details>
         </paper-dialog>
     </template>
 

@@ -18,6 +18,7 @@
                 <div>Total</div>
                 <paper-slider name="total" value="{{count}}" class="flex" max="5000" pin editable ></paper-slider>
             </div>
+            <div on-tap="_exportElasticsearch">Export</div>
         </template>
 
     </template>
@@ -78,10 +79,13 @@
 
             _generateDataLine(i) {
                 let name = chance.name({ middle: false });
+                let desc = chance.paragraph();
                 let model = {
                         id: `${i}`,
                         app: `${name} - ${i}`,
-                        description: 'Description of application n°' + i + '. Please note that all of these applications are the same',
+                        description: `Description of application n°${i}:
+                        ${desc}
+                        `,
                 };
                 model.quali = this._generateDataLineServer(i, "Qualif");
                 model.rec = this._generateDataLineServer(i, "Recette");
@@ -104,6 +108,19 @@
                     ],
                 }
                 return server;
+            }
+            _exportElasticsearch(){
+                let result = this.data.map( b =>  this._exportLineAsElasticsearch(b));
+                result.forEach(elt => console.log(elt));
+            }
+            _exportLineAsElasticsearch(line){
+                let dataModel = Object.assign({}, line);
+                delete dataModel.id;
+                let exportData = JSON.stringify(dataModel);
+                let id = line.id;
+                let exportEs = `{"index":{"_index" : "sam", "_type": "sam", "_id" : "${id}"}}
+${exportData}`;
+                return exportEs;
             }
 
         }

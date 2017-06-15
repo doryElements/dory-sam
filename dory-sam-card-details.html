@@ -19,22 +19,16 @@
             }
         </style>
 
-        <paper-tabs selected="0" fit-container>
-            <paper-tab on-tap="_openQuali">QUALIFICATION</paper-tab>
-            <paper-tab on-tap="_openRec">RECETTE</paper-tab>
-            <paper-tab on-tap="_openProd">PRODUCTION</paper-tab>
+        <paper-tabs selected="{{tabSelected}}" fit-container>
+            <paper-tab>QUALIFICATION</paper-tab>
+            <paper-tab>RECETTE</paper-tab>
+            <paper-tab>PRODUCTION</paper-tab>
         </paper-tabs>
 
-        <iron-pages selected="[[pageName]]" attr-for-selected="page-name" fallback-selection="fallback">
-            <div page-name="quali">
+        <iron-pages selected="[[tabSelected]]"  fallback-selection="fallback">
                 <dory-sam-card-details-tab data="[[data.quali]]"></dory-sam-card-details-tab>
-            </div>
-            <div page-name="rec">
                 <dory-sam-card-details-tab data="[[data.rec]]"></dory-sam-card-details-tab>
-            </div>
-            <div page-name="prod">
                 <dory-sam-card-details-tab data="[[data.prod]]"></dory-sam-card-details-tab>
-            </div>
         </iron-pages>
     </template>
 
@@ -57,24 +51,14 @@
                     data: {
                         type: Object
                     },
-                    pageName:{
-                        type: String,
-                        value : 'quali'
+                    tabSelected:{
+                        type: Number,
+                        value : 0
                     }
                 };
             }
 
-            _openQuali() {
-                this.pageName = 'quali';
-            }
 
-            _openRec() {
-                this.pageName = 'rec';
-            }
-
-            _openProd() {
-                this.pageName = 'prod';
-            }
         }
 
         window.customElements.define(DorySamCardDetails.is, DorySamCardDetails);

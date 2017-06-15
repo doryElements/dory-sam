@@ -42,10 +42,10 @@
 
     <iron-ajax auto id="request" url="http://localhost:9200/sam/sam/_search" handle-as="json"
                content-type="application/json" body="[[queryBody]]" method="post"
-               last-response="{{listData}}" on-response="_handleResponse"></iron-ajax>
+              on-response="_handleResponse"></iron-ajax>
 
-      <template is="dom-if" if="[[dataloaded]]">
-        <dory-sam-list items="[[listData.hits.hits]]"></dory-sam-list>
+      <template is="dom-if" if="[[listData]]">
+        <dory-sam-list items="[[listData]]"></dory-sam-list>
       </template>
 
 
@@ -79,11 +79,6 @@
                         "query" : {  "match_all" : {} }
                     }
                 }
-            },
-
-            dataloaded: {
-                type: Boolean,
-                value: false
             }
         };
       };
@@ -98,10 +93,15 @@
       }
 
       _createRequest(searchText) {
-          let request = {"query":{"match-all":{}}};
+          let request = {'query':{'match-all':{}}};
           if(searchText) {
               request={
-                  "query":{"simple_query_string":{"fields":["app"], "query":this.searchText+'*'}}
+                  'query':{
+                      'simple_query_string':{
+                            'fields':['app'],
+                            'query': `${searchText}*`
+                      }
+                  }
               };
           };
 
@@ -109,9 +109,14 @@
       }
 
       _handleResponse(e) {
-          console.log('Response');
-          this.dataloaded = true;
+          let response =  e.detail.response.hits;
+          let total = response.total;
+          let result = response.hits;
+          let items = result.map( x => Object.assign( x._source, { id:x._id} ));
+          console.log('Response items', items);
+          this.listData = items;
       }
+
     }
 
     window.customElements.define(DorySam.is, DorySam);
