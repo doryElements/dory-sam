@@ -8,7 +8,7 @@
 
 
 <link rel="import" href="dory-sam-editor-env.html">
-
+<link rel="import" href="../water-marked-editor/water-marked-editor.html">
 
 <dom-module id="dory-sam-editor-form">
     <template>
@@ -22,9 +22,11 @@
         <paper-input value="{{data.app}}" label="Nom"></paper-input>
 
         <!-- Description -->
-        <paper-textarea label="Description" char-counter maxlength="1000"
-                        always-float-label rows="5"
-                        value="{{data.description}}"></paper-textarea>
+        <water-marked-editor value="{{data.description}}">
+            <paper-textarea label="Description" char-counter maxlength="1000"
+                            always-float-label rows="5"
+                            value="{{data.description}}"></paper-textarea>
+        </water-marked-editor>
 
         <paper-tabs selected="{{tabSelected}}" fit-container>
             <paper-tab>QUALIFICATION</paper-tab>
@@ -62,28 +64,10 @@
                     tabSelected: {
                       type: Number,
                       value: 0
-                    },
-                    pageName: {
-                        type: String,
-                        value: 'editQuali'
                     }
                 };
             }
 
-            // FIXME Too expensive : one method by menu
-            _openFormQuali() {
-                this.pageName = 'editQuali';
-            }
-
-            // FIXME Too expensive : one method by menu
-            _openFormRec() {
-                this.pageName = 'editRec';
-            }
-
-            // FIXME Too expensive : one method by menu
-            _openFormProd() {
-                this.pageName = 'editProd';
-            }
         }
 
         window.customElements.define(DorySamEditorForm.is, DorySamEditorForm);

@@ -1,12 +1,24 @@
 <link rel="import" href="../../polymer/polymer-element.html">
 
+<link rel="import" href="../../paper-slider/paper-slider.html">
+<link rel="import" href="../../iron-flex-layout/iron-flex-layout-classes.html">
+
+<script type="text/javascript" src="../../chance/chance.js"></script>
+
 <dom-module id="demo-data">
     <template>
-        <style>
+        <style include="iron-flex iron-flex-alignment">
             :host {
                 display: block;
             }
         </style>
+
+        <template is="dom-if" if="{{!noOptions}}">
+            <div class="layout horizontal wrap">
+                <div>Total</div>
+                <paper-slider name="total" value="{{count}}" class="flex" max="5000" pin editable ></paper-slider>
+            </div>
+        </template>
 
     </template>
 
@@ -26,6 +38,10 @@
 
             static get properties() {
                 return {
+                    noOptions: {
+                        type: Boolean,
+                        value: false
+                    },
                     count: {
                         type: Number,
                         value: 25
@@ -43,9 +59,12 @@
                 ]
             }
             _generatedCountData(count) {
-                let items =  this._generatedData(count);
-                this.data = items;
-                console.log('generated data : ', items);
+                return new Promise( (resolve, error) => { resolve( this._generatedData(count)) } )
+                   .then( (items) =>  {
+                       this.data = items;
+                       return items}
+                       )
+                   .catch ( error => console.log(error));
             }
 
             _generatedData(totalCount) {
@@ -58,9 +77,10 @@
             }
 
             _generateDataLine(i) {
+                let name = chance.name({ middle: false });
                 let model = {
-                        id: ''+i,
-                        app: 'Oura' + i,
+                        id: `${i}`,
+                        app: `${name} - ${i}`,
                         description: 'Description of application n°' + i + '. Please note that all of these applications are the same',
                 };
                 model.quali = this._generateDataLineServer(i, "Qualif");
