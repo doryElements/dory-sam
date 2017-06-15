@@ -1,9 +1,13 @@
 <link rel="import" href="../polymer/polymer-element.html">
 
 <link rel="import" href="../iron-list/iron-list.html">
-<link rel="import" href="../paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../iron-icons/iron-icons.html">
+
+<link rel="import" href="../paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../paper-fab/paper-fab.html">
+
+<link rel="import" href="../paper-dialog/paper-dialog.html">
+<link rel="import" href="../paper-dialog-scrollable/paper-dialog-scrollable.html">
 
 <link rel="import" href="../neon-animation/web-animations.html">
 <link rel="import" href="../neon-animation/animations/scale-up-animation.html">
@@ -55,7 +59,9 @@
         <paper-fab  icon="add-circle-outline" on-tap="_openEditCreate"></paper-fab>
 
         <paper-dialog id="maineditor" class="editor-dialog" >
-            <dory-sam-editor id="doryEditor" entity-id="{{entityId}}"></dory-sam-editor>
+            <paper-dialog-scrollable>
+                <dory-sam-editor id="doryEditor" entity-id="{{entityId}}"></dory-sam-editor>
+            </paper-dialog-scrollable>
             <div class="buttons">
                 <paper-icon-button icon="delete" dialog-confirm on-tap="_delete"></paper-icon-button>
                 <paper-icon-button icon="save" dialog-confirm on-tap="_save"></paper-icon-button>
@@ -95,7 +101,8 @@
                 let item = e.model.it;
                 if(item){
                     //this.itemSelected = item;
-                    this.entityId= item._id;
+                    this.entityId= item.id;
+                    console.log('_handleEditTap entityId : ',  this.entityId);
                     this._openEdit();
                 }
             }
