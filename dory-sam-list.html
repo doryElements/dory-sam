@@ -60,7 +60,7 @@
                 width:90%;
             }
         </style>
-        <dory-sam-editor-control></dory-sam-editor-control>
+
         <iron-list id="list" items="[[items]]" as="it"  grid>
             <template>
                 <div class="card">
@@ -79,6 +79,7 @@
             <div class="buttons">
                 <paper-icon-button icon="delete" dialog-confirm on-tap="_delete"></paper-icon-button>
                 <paper-icon-button icon="save" dialog-confirm on-tap="_save"></paper-icon-button>
+                <!--<dory-sam-editor-control></dory-sam-editor-control>-->
             </div>
         </paper-dialog>
 

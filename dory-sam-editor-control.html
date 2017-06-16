@@ -12,21 +12,21 @@
             }
         </style>
         <div class="control">
-            <paper-icon-button icon=":create-new-folder" disabled$="[[status.isDirty]]"
-                               action="newEntity"
-                               on-tap="_handleEditorControl"></paper-icon-button>
+            <!--<paper-icon-button icon=":create-new-folder" disabled$="[[status.isDirty]]"-->
+                               <!--action="newEntity"-->
+                               <!--on-tap="_handleEditorControl"></paper-icon-button>-->
 
 
             <paper-icon-button icon="check" disabled$="[[!status.isDirty]]"
-                               action="save"
+                               action="save" alt="Save"
                                on-tap="_handleEditorControl"></paper-icon-button>
 
             <paper-icon-button icon="restore" disabled$="[[!status.isDirty]]"
-                               action="reset"
+                               action="reset"  alt="Reset"
                                on-tap="_handleEditorControl"></paper-icon-button>
 
             <paper-icon-button icon="delete" disabled$="[[!_isCrudModeUpdate(status.mode)]]"
-                               action="delete"
+                               action="delete" alt="Delete"
                                on-tap="_handleEditorControl"></paper-icon-button>
 
         </div>
