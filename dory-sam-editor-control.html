@@ -1,0 +1,65 @@
+<link rel="import" href="../polymer/polymer-element.html">
+
+<link rel="import" href="../iron-icons/iron-icons.html">
+
+<link rel="import" href="../paper-icon-button/paper-icon-button.html">
+
+<dom-module id="dory-sam-editor-control">
+    <template>
+        <style>
+            :host {
+                display: block;
+            }
+        </style>
+        <div class="control">
+            <paper-icon-button icon=":create-new-folder" disabled$="[[status.isDirty]]"
+                               action="newEntity"
+                               on-tap="_handleEditorControl"></paper-icon-button>
+
+
+            <paper-icon-button icon="check" disabled$="[[!status.isDirty]]"
+                               action="save"
+                               on-tap="_handleEditorControl"></paper-icon-button>
+
+            <paper-icon-button icon="restore" disabled$="[[!status.isDirty]]"
+                               action="reset"
+                               on-tap="_handleEditorControl"></paper-icon-button>
+
+            <paper-icon-button icon="delete" disabled$="[[!_isCrudModeUpdate(status.mode)]]"
+                               action="delete"
+                               on-tap="_handleEditorControl"></paper-icon-button>
+
+        </div>
+
+    </template>
+
+    <script>
+        /**
+         * `dory-sam-editor-control`
+         *
+         *
+         * @customElement
+         * @polymer
+         * @demo demo/index.html
+         */
+        class DorySamEditorControl extends Polymer.Element {
+            static get is() {
+                return 'dory-sam-editor-control';
+            }
+
+            static get properties() {
+                return {
+                    status: {
+                        type: Object
+                    },
+                };
+            }
+
+            _handleEditorControl(e){
+                console.log(event, e);
+            }
+        }
+
+        window.customElements.define(DorySamEditorControl.is, DorySamEditorControl);
+    </script>
+</dom-module>

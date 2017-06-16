@@ -15,6 +15,7 @@
 
 <link rel="import" href="dory-sam-card.html">
 <link rel="import" href="dory-sam-editor.html">
+<link rel="import" href="dory-sam-editor-control.html">
 
 <link rel="import" href="../air-cruddy/air-cruddy-elasticsearch.html">
 
@@ -46,7 +47,7 @@
                 height:100vh;
             }
         </style>
-
+        <dory-sam-editor-control></dory-sam-editor-control>
         <iron-list id="list" items="[[items]]" as="it"  grid>
             <template>
                 <div class="card">
