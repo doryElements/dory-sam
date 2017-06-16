@@ -1,6 +1,7 @@
 <link rel="import" href="../polymer/polymer-element.html">
 
 <link rel="import" href="../iron-list/iron-list.html">
+<link rel="import" href="../paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../iron-icons/iron-icons.html">
 
 <link rel="import" href="../paper-icon-button/paper-icon-button.html">
@@ -38,12 +39,24 @@
                 position: fixed;
                 bottom:16px;
                 right: 5px;
-                min-height : 700px;
-                min-width : 600px;
+                height  : 800px;
+            }
+
+            paper-dialog paper-dialog-scrollable {
+                --paper-dialog-scrollable: {
+                    box-sizing: border-box;
+                    width: 700px;
+                    height: 725px;
+                }
             }
 
             iron-list{
                 height:100vh;
+            }
+            .buttons{
+                position : absolute;
+                bottom  : 0;
+                width:90%;
             }
         </style>
 
@@ -59,7 +72,7 @@
         <paper-fab  icon="add-circle-outline" on-tap="_openEditCreate"></paper-fab>
 
         <paper-dialog id="maineditor" class="editor-dialog" >
-            <paper-dialog-scrollable>
+            <paper-dialog-scrollable class="scrollable-dialog">
                 <dory-sam-editor id="doryEditor" entity-id="{{entityId}}"></dory-sam-editor>
             </paper-dialog-scrollable>
             <div class="buttons">
@@ -100,14 +113,12 @@
             _handleEditTap(e){
                 let item = e.model.it;
                 if(item){
-                    //this.itemSelected = item;
                     this.entityId= item.id;
                     console.log('_handleEditTap entityId : ',  this.entityId);
                     this._openEdit();
                 }
             }
             _openEditCreate(){
-                //this.itemSelected = null;
                 this.entityId= null;
                 this._openEdit();
             }

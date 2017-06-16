@@ -12,19 +12,13 @@
             :host {
                 display: block;
             }
-
-            .buttons {
-                position:fixed;
-                bottom : 50px;
-                right:50px;
-            }
         </style>
 
         <air-cruddy-elasticsearch id="cruddy"  mode="cors" url="http://localhost:9200/sam/sam"
                                   elastic-refresh="true" debug
                                   data="{{data}}" entity-id="{{entityId}}">
 
-            <dory-sam-editor-form data="{{data}}"></dory-sam-editor-form>
+            <dory-sam-editor-form id="editor-form" data="{{data}}"></dory-sam-editor-form>
         </air-cruddy-elasticsearch>
     </template>
 
