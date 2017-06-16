@@ -109,12 +109,16 @@
       }
 
       _handleResponse(e) {
-          let response =  e.detail.response.hits;
-          let total = response.total;
-          let result = response.hits;
-          let items = result.map( x => Object.assign( x._source, { id:x._id} ));
-          console.log('Response items', items);
-          this.listData = items;
+          new Promise( (resolve, error) => {
+              let response =  e.detail.response.hits;
+              let total = response.total;
+              let result = response.hits;
+              let items = result.map( x => Object.assign( x._source, { id:x._id} ));
+              resolve( items);
+          }).then( items => {
+              this.listData = items;
+              return items;
+          });
       }
 
     }
