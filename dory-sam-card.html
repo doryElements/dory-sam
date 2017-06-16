@@ -39,6 +39,16 @@
             div.card-content{
                 overflow: hidden;
                 height : 150px;
+                text-overflow: ellipsis;
+            }
+            .ellipsis{
+                background: -webkit-gradient(linear, left top, left bottom, from(rgba(255,255,255,0)), to(#fff));
+                position : absolute;
+                width : 100%;
+                bottom:0;
+                height : 50px;
+                left:0;
+                z-index: 2;
             }
 
 
@@ -46,7 +56,10 @@
 
         <paper-card heading="[[data.app]]">
             <div class="card-content">
-                [[data.description]]
+                <div class="content">
+                    [[data.description]]
+                </div>
+                <div class="ellipsis"></div>
             </div>
             <div class="card-actions">
                 <paper-icon-button icon="visibility" on-tap="openDetails"></paper-icon-button>
