@@ -13,23 +13,84 @@
         <style>
             :host {
                 display: block;
+                --details-label-color : #D7CCC8;
+                --details-h2-color :#80CBC4;
+                --details-h3-color :#FFAB40 ;
+                --dory-background-color : #EFEBE9;
             }
-            .closed-tab{
-                display : none;
+            label{
+                color: var(--details-label-color);
+            }
+            h2{
+                color: var(--details-h2-color);
+                text-align: center;
+                padding : 20px;
+            }
+            h3{
+                color: var(--details-h3-color);
+            }
+            .details-content{
+                margin:20px;
+                padding:15px;
+                background-color: white;
+                <!-- --paper-tab-ink : #EF5350; -->
+            }
+            .info{
+                margin:10px;
+            }
+            .details{
+                background-color: var(--dory-background-color);
+                padding : 10px;
             }
         </style>
+        <air-cruddy-elasticsearch id="cruddy"  mode="cors" url="http://localhost:9200/sam/sam"
+                                  elastic-refresh="true" debug
+                                  data="{{data}}" entity-id="{{entityId}}">
 
-        <paper-tabs selected="{{tabSelected}}" fit-container>
-            <paper-tab>QUALIFICATION</paper-tab>
-            <paper-tab>RECETTE</paper-tab>
-            <paper-tab>PRODUCTION</paper-tab>
-        </paper-tabs>
+            <div class="details">
+                <h2>[[data.app]]</h2>
+                <div class="details-content">
+                    <h3>Informations</h3>
 
-        <iron-pages selected="[[tabSelected]]"  fallback-selection="fallback">
-                <dory-sam-card-details-tab data="[[data.quali]]"></dory-sam-card-details-tab>
-                <dory-sam-card-details-tab data="[[data.rec]]"></dory-sam-card-details-tab>
-                <dory-sam-card-details-tab data="[[data.prod]]"></dory-sam-card-details-tab>
-        </iron-pages>
+                    <div class="info">
+                        <label>Nom : </label>
+                        [[data.name]]
+                    </div>
+                    <div class="info">
+                        <label>Type : </label>
+                        [[data.type]]
+                    </div>
+                    <div class="info">
+                        <label>Departement propriétaire : </label>
+                        [[data.dpt]]
+                    </div>
+                    <div class="info">
+                        <label>Description : </label>
+                        [[data.description]]
+                    </div>
+                    <div class="info">
+                        <label>Documentation : </label>
+                        [[data.doc]]
+                    </div>
+                </div>
+
+                <div class="details-content">
+                    <h3>Environnements Disponibles</h3>
+                    <paper-tabs selected="{{tabSelected}}" fit-container>
+                        <paper-tab>QUALIFICATION</paper-tab>
+                        <paper-tab>RECETTE</paper-tab>
+                        <paper-tab>PRODUCTION</paper-tab>
+                    </paper-tabs>
+
+                    <iron-pages selected="[[tabSelected]]"  fallback-selection="fallback">
+                        <dory-sam-card-details-tab data="[[data.quali]]"></dory-sam-card-details-tab>
+                        <dory-sam-card-details-tab data="[[data.rec]]"></dory-sam-card-details-tab>
+                        <dory-sam-card-details-tab data="[[data.prod]]"></dory-sam-card-details-tab>
+                    </iron-pages>
+                </div>
+            </div>
+
+        </air-cruddy-elasticsearch>
     </template>
 
     <script>
@@ -48,17 +109,15 @@
 
             static get properties() {
                 return {
-                    data: {
-                        type: Object
-                    },
                     tabSelected:{
                         type: Number,
-                        value : 0
+                        value : 2
+                    },
+                    entityId: {
+                        type : String
                     }
                 };
             }
-
-
         }
 
         window.customElements.define(DorySamCardDetails.is, DorySamCardDetails);

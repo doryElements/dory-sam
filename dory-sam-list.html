@@ -3,6 +3,7 @@
 <link rel="import" href="../iron-list/iron-list.html">
 <link rel="import" href="../paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../iron-icons/iron-icons.html">
+<link rel="import" href="../iron-pages/iron-pages.html">
 
 <link rel="import" href="../paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../paper-fab/paper-fab.html">
@@ -27,13 +28,13 @@
             :host {
                 display: block;
                 height: 100vh;
+                --paper-fab-background: #4285f4;
             }
 
             paper-fab{
                 position:fixed;
                 bottom : 16px;
                 right:16px;
-                background-color: #4285f4;
             }
 
             paper-dialog.editor-dialog{
@@ -54,23 +55,47 @@
             iron-list{
                 height:100vh;
             }
+
             .buttons{
                 position : absolute;
                 bottom  : 0;
                 width:90%;
             }
+
+            .details-container{
+                position : relative;
+            }
+
+            #close-button{
+                position : absolute;
+                top : 25px;
+                right: 15px;
+            }
         </style>
 
-        <iron-list id="list" items="[[items]]" as="it"  grid>
-            <template>
-                <div class="card">
-                    <dory-sam-card data="[[it]]" tabindex$="[[tabIndex]]"></dory-sam-card>
-                    <paper-fab mini icon="create" on-tap="_handleEditTap"></paper-fab>
-                </div>
-            </template>
-        </iron-list>
+        <iron-pages selected="[[tabSelected]]"  fallback-selection="fallback">
+            <div>
+                <h2>Mes Applications</h2>
+                <iron-list id="list" items="[[items]]" as="it"  grid>
+                    <template>
+                        <div class="card">
+                            <dory-sam-card data="[[it]]" tabindex$="[[tabIndex]]" on-tap="_openDetails"></dory-sam-card>
+                            <paper-fab mini icon="create" on-tap="_handleEditTap"></paper-fab>
+                        </div>
+                    </template>
+                </iron-list>
 
-        <paper-fab  icon="add-circle-outline" on-tap="_openEditCreate"></paper-fab>
+                <paper-fab  icon="add-circle-outline" on-tap="_openEditCreate"></paper-fab>
+            </div>
+
+            <div class="details-container">
+                <dory-sam-card-details entity-id="[[entityId]]"></dory-sam-card-details>
+                <paper-icon-button id="close-button" icon="close" on-tap="_closeDetails"></paper-icon-button>
+            </div>
+
+        </iron-pages>
+
+
 
         <paper-dialog id="maineditor" class="editor-dialog" >
             <paper-dialog-scrollable class="scrollable-dialog">
@@ -79,7 +104,6 @@
             <div class="buttons">
                 <paper-icon-button icon="delete" dialog-confirm on-tap="_delete"></paper-icon-button>
                 <paper-icon-button icon="save" dialog-confirm on-tap="_save"></paper-icon-button>
-                <!--<dory-sam-editor-control></dory-sam-editor-control>-->
             </div>
         </paper-dialog>
 
@@ -109,6 +133,10 @@
                     },
                     entityId: {
                         type:String
+                    },
+                    tabSelected : {
+                        type: Number,
+                        value : 0
                     }
                 };
             }
@@ -134,6 +162,18 @@
             _save() {
                 this.$.doryEditor._save();
 
+            }
+            _openDetails(e){
+                let item= e.model.it;
+                if(item){
+                    this.entityId= item.id;
+                    this.tabSelected = 1;
+                }
+            }
+
+            _closeDetails(e){
+                this.entityId = null;
+                this.tabSelected = 0;
             }
         }
 

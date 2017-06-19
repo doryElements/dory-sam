@@ -21,6 +21,11 @@
         color: #fff;
       }
 
+      .logo{
+        padding: 10px;
+        text-align: center;
+      }
+
       paper-fab {
         right: 30px;
         bottom: 28px;
@@ -29,24 +34,42 @@
         --paper-fab-background: var(--primary-color);
       }
 
+      .search{
+        padding : 10px;
+      }
     </style>
-
-    <app-header reveals>
-      <app-toolbar>
-        <div main-title>Dory Initiative</div>
-        <paper-input value="{{searchText}}"  placeholder="Search">
-          <paper-icon-button slot="suffix" icon="search" on-tap="search"></paper-icon-button>
-        </paper-input>
-      </app-toolbar>
-    </app-header>
 
     <iron-ajax auto id="request" url="http://localhost:9200/sam/sam/_search" handle-as="json"
                content-type="application/json" body="[[queryBody]]" method="post"
               on-response="_handleResponse"></iron-ajax>
 
-      <template is="dom-if" if="[[listData]]">
-        <dory-sam-list items="[[listData]]"></dory-sam-list>
-      </template>
+    <app-drawer-layout>
+      <app-drawer opened slot="drawer">
+        <div class="logo">
+          <img src="../imgs/agrica.png" alt="Agrica">
+        </div>
+        <div class="search">
+          <paper-input value="{{searchText}}"  placeholder="Application">
+            <paper-icon-button slot="suffix" icon="search" on-tap="search"></paper-icon-button>
+          </paper-input>
+        </div>
+      </app-drawer>
+
+      <app-header-layout>
+        <app-header slot="header">
+          <app-toolbar>
+            <div main-title>DORY - Cartographie des Applications Agrica</div>
+          </app-toolbar>
+        </app-header>
+      </app-header-layout>
+
+      <div>
+        <template is="dom-if" if="[[listData]]">
+          <dory-sam-list items="[[listData]]"></dory-sam-list>
+        </template>
+      </div>
+    </app-drawer-layout>
+
 
 
   </template>

@@ -81,11 +81,15 @@
                 let name = chance.name({ middle: false });
                 let desc = chance.paragraph();
                 let model = {
-                        id: `${i}`,
-                        app: `${name} - ${i}`,
-                        description: `Description of application n°${i}:
-                        ${desc}
+                    id: `${i}`,
+                    app: `${name} - ${i}`,
+                    description: `Description of application n°${i}:
+                         ${desc}
                         `,
+                    name:`Site groupe Agrica`,
+                    type:`Application`,
+                    dpt:`DITW`,
+                    doc:`http://wiki-dei/`,
                 };
                 model.quali = this._generateDataLineServer(i, "Qualif");
                 model.rec = this._generateDataLineServer(i, "Recette");
