@@ -11,32 +11,51 @@
 <dom-module id="dory-sam">
   <template>
     <style>
-      :host {
-        display: block;
+        :host {
+            display: block;
+            --dory-h1-color : #FFD54F;
+            --dory-logo-color : #FF6F00;
+            --dory-sidebar-color : #795548;
+        }
 
-      }
+        h1{
+            color: var(--dory-h1-color);
+            font : 40px "Roboto";
+            margin-bottom : 5px;
+        }
+        .title{
+            text-align : center;
+        }
+        app-toolbar {
+            height:auto;
+        }
 
-      app-toolbar {
-        background-color: #4285f4;
-        color: #fff;
-      }
+        .logo{
+            padding: 10px;
+            text-align: center;
+            background-color: var(--dory-logo-color);
+        }
 
-      .logo{
-        padding: 10px;
-        text-align: center;
-      }
+        paper-fab {
+            right: 30px;
+            bottom: 28px;
+            position: fixed;
+            z-index: 10;
+            --paper-fab-background: var(--primary-color);
+        }
 
-      paper-fab {
-        right: 30px;
-        bottom: 28px;
-        position: fixed;
-        z-index: 10;
-        --paper-fab-background: var(--primary-color);
-      }
+        app-drawer {
+            --app-drawer-content-container: {
+              background-color: var(--dory-sidebar-color);
+            }
+        }
 
-      .search{
-        padding : 10px;
-      }
+        .search{
+            color: white;
+            --paper-input-container-input-color: white;
+            --paper-input-container-color: white;
+            padding:10px;
+        }
     </style>
 
     <iron-ajax auto id="request" url="http://localhost:9200/sam/sam/_search" handle-as="json"
@@ -44,12 +63,12 @@
               on-response="_handleResponse"></iron-ajax>
 
     <app-drawer-layout>
-      <app-drawer opened slot="drawer">
+      <app-drawer opened slot="drawer" class="sidebar">
         <div class="logo">
           <img src="../imgs/agrica.png" alt="Agrica">
         </div>
         <div class="search">
-          <paper-input value="{{searchText}}"  placeholder="Application">
+          <paper-input class="search" value="{{searchText}}"  placeholder="Application">
             <paper-icon-button slot="suffix" icon="search" on-tap="search"></paper-icon-button>
           </paper-input>
         </div>
@@ -58,7 +77,7 @@
       <app-header-layout>
         <app-header slot="header">
           <app-toolbar>
-            <div main-title>DORY - Cartographie des Applications Agrica</div>
+              <div main-title class="title"><h1>DORY</h1>Cartographie des Applications Agrica</div>
           </app-toolbar>
         </app-header>
       </app-header-layout>

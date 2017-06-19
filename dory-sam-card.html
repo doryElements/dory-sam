@@ -13,24 +13,16 @@
                 display: inline-block;
                 padding: 10px;
                 z-index: 1;
-            }
-
-            paper-dialog.details-dialog{
-                position : fixed;
-                z-index: 1000;
-                top:16px;
+                --details-h2-color: #80CBC4;
             }
 
             paper-card{
                 width: 300px;
                 height: 300px;
-            }
-
-            .card-actions{
-                position:fixed;
-                bottom:5px;
-                width:280px;
-                padding:10px;
+                --paper-card-header-color: var(--details-h2-color);
+                --paper-card-header-text : {
+                    text-align: center;
+                }
             }
 
             div.card-content{
@@ -38,6 +30,7 @@
                 height : 150px;
                 text-overflow: ellipsis;
             }
+
             .ellipsis{
                 background: -webkit-gradient(linear, left top, left bottom, from(rgba(255,255,255,0)), to(#fff));
                 position : absolute;
@@ -47,8 +40,6 @@
                 left:0;
                 z-index: 2;
             }
-
-
         </style>
 
         <paper-card heading="[[data.app]]">
