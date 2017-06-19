@@ -5,6 +5,7 @@
 <link rel="import" href="dory-sam-editor-form.html">
 
 <link rel="import" href="../air-cruddy/air-cruddy-elasticsearch.html">
+<link rel="import" href="../air-cascade-validator/air-cascade-validator.html">
 
 <dom-module id="dory-sam-editor">
     <template>
@@ -17,8 +18,9 @@
         <air-cruddy-elasticsearch id="cruddy"  mode="cors" url="http://localhost:9200/sam/sam"
                                   elastic-refresh="true" debug
                                   data="{{data}}" entity-id="{{entityId}}">
-
-            <dory-sam-editor-form id="editor-form" data="{{data}}"></dory-sam-editor-form>
+            <air-cascade-validator>
+                <dory-sam-editor-form id="editor-form" data="{{data}}"></dory-sam-editor-form>
+            </air-cascade-validator>
         </air-cruddy-elasticsearch>
     </template>
 
