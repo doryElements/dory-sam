@@ -6,6 +6,8 @@
 
 <link rel="import" href="../air-cruddy/air-cruddy-elasticsearch.html">
 <link rel="import" href="../air-cascade-validator/air-cascade-validator.html">
+<link rel="import" href="../app-layout/app-layout.html">
+<link rel="import" href="../app-layout/app-toolbar/app-toolbar.html">
 
 <dom-module id="dory-sam-editor">
     <template>
@@ -22,11 +24,6 @@
                 position:fixed;
             }
         </style>
-        <app-header>
-            <app-toolbar>
-                <dory-sam-editor-control></dory-sam-editor-control>
-            </app-toolbar>
-        </app-header>
         <air-cruddy-elasticsearch id="cruddy"  mode="cors" url="http://localhost:9200/sam/sam"
                                   elastic-refresh="true" debug
                                   data="{{data}}" entity-id="{{entityId}}">
@@ -34,6 +31,7 @@
                 <div class="editor-form">
                     <dory-sam-editor-form id="editor-form" data="{{data}}"></dory-sam-editor-form>
                 </div>
+                <dory-sam-editor-control id="controller"></dory-sam-editor-control>
             </air-cascade-validator>
         </air-cruddy-elasticsearch>
     </template>
@@ -51,6 +49,11 @@
                 return 'dory-sam-editor';
             }
 
+            ready(){
+                super.ready();
+                this.$.controller.addEventListener('dory-control-editor', e => this._handleController(e));
+            }
+
             static get properties() {
                 return {
                     entityId: {
@@ -63,20 +66,10 @@
                 };
             }
 
-            constructor() {
-                super();
+            _handleController(e){
+                console.log(e.detail.command);
+                this.$.cruddy.command=e.detail.command;
             }
-
-            _delete() {
-                let elt = this;
-                this.$.cruddy.delete().then(function(){elt._requestList();});
-            }
-            _save() {
-                console.log(this.$.cruddy.save());
-            }
-
-
-
         }
         window.customElements.define(DorySamEditor.is, DorySamEditor);
     </script>

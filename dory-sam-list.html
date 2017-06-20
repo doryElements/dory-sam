@@ -5,6 +5,7 @@
 <link rel="import" href="../iron-icons/iron-icons.html">
 <link rel="import" href="../iron-pages/iron-pages.html">
 
+<link rel="import" href="../paper-button/paper-button.html">
 <link rel="import" href="../paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../paper-fab/paper-fab.html">
 
@@ -39,30 +40,10 @@
                 right:16px;
             }
 
-            paper-dialog.editor-dialog{
-                height  : 90vh;
-                width : 70vw;
-                min-width : 300px;
-            }
-
-            paper-dialog paper-dialog-scrollable {
-                --paper-dialog-scrollable: {
-                    box-sizing: border-box;
-                    width: 70vw;
-                    height: 85vh;
-                }
-            }
-
             .list{
                 background-color: var(--dory-background-color);
                 height:100vh;
                 position : relative;
-            }
-
-            .buttons{
-                position : absolute;
-                bottom  : 0;
-                width:90%;
             }
 
             .details-container{
@@ -92,8 +73,6 @@
                         </div>
                     </template>
                 </iron-list>
-
-                <paper-fab  icon="add-circle-outline" on-tap="_openEditCreate"></paper-fab>
             </div>
 
             <div class="details-container">
@@ -102,19 +81,6 @@
             </div>
 
         </iron-pages>
-
-
-
-        <paper-dialog id="maineditor" class="editor-dialog" modal>
-            <paper-dialog-scrollable class="scrollable-dialog">
-                <dory-sam-editor id="doryEditor" entity-id="{{entityId}}"></dory-sam-editor>
-            </paper-dialog-scrollable>
-            <div class="buttons">
-                <paper-icon-button icon="delete" dialog-confirm on-tap="_delete"></paper-icon-button>
-                <paper-icon-button icon="save" dialog-confirm on-tap="_save"></paper-icon-button>
-            </div>
-        </paper-dialog>
-
     </template>
 
     <script>
@@ -148,29 +114,16 @@
                     }
                 };
             }
+
             _handleEditTap(e){
                 let item = e.model.it;
                 if(item){
                     this.entityId= item.id;
                     console.log('_handleEditTap entityId : ',  this.entityId);
-                    this._openEdit();
+                    this.dispatchEvent(new CustomEvent('dory-open-editor',{detail:{id:this.entityId}}));
                 }
             }
-            _openEditCreate(){
-                this.entityId= null;
-                this._openEdit();
-            }
-            _openEdit() {
-                this.$.maineditor.open();
-            }
-            _delete() {
-                this.$.doryEditor._delete();
 
-            }
-            _save() {
-                this.$.doryEditor._save();
-
-            }
             _openDetails(e){
                 let item= e.model.it;
                 if(item){

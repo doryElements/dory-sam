@@ -4,6 +4,8 @@
 <link rel="import" href="../iron-ajax/iron-ajax.html">
 <link rel="import" href="../app-layout/app-layout.html">
 <link rel="import" href="../app-layout/app-toolbar/app-toolbar.html">
+<link rel="import" href="../paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../iron-icons/iron-icons.html">
 
 <link rel="import" href="dory-sam-editor.html">
 <link rel="import" href="dory-sam-list.html">
@@ -14,8 +16,10 @@
         :host {
             display: block;
             --dory-h1-color : #FFD54F;
-            --dory-logo-color : #FF6F00;
-            --dory-sidebar-color : #795548;
+            --dory-logo-color : #FB8C00;
+            --dory-sidebar-color : #424242;
+            --dory-sidebar-text-color: white;
+            --dory-background-color : #EFEBE9;
         }
 
         body{
@@ -44,7 +48,6 @@
             right: 30px;
             bottom: 28px;
             position: fixed;
-            z-index: 10;
             --paper-fab-background: var(--primary-color);
         }
 
@@ -55,11 +58,36 @@
         }
 
         .search{
-            color: white;
-            --paper-input-container-input-color: white;
-            --paper-input-container-color: white;
+            color: var(--dory-sidebar-text-color);
+            --paper-input-container-input-color: var(--dory-sidebar-text-color);
+            --paper-input-container-color: var(--dory-sidebar-text-color);
             padding:10px;
         }
+
+        paper-dialog.editor-dialog{
+          background-color: var(--dory-background-color);
+          height  : 90vh;
+          width : 70vw;
+          min-width : 300px;
+        }
+
+        paper-dialog paper-dialog-scrollable {
+          --paper-dialog-scrollable: {
+            box-sizing: border-box;
+            width: 70vw;
+            height: 80vh;
+          }
+        }
+
+        .main-content{
+          background-color: var(--dory-background-color);
+          width : 100%;
+          position : absolute;
+        }
+
+      .buttons{
+        margin-top:0;
+      }
     </style>
 
     <iron-ajax auto id="request" url="http://localhost:9200/sam/sam/_search" handle-as="json"
@@ -69,7 +97,7 @@
     <app-drawer-layout>
       <app-drawer opened slot="drawer" class="sidebar">
         <div class="logo">
-          <img src="../imgs/agrica.png" alt="Agrica">
+          <img src="../imgs/agrica-white.png" alt="Agrica">
         </div>
         <div class="search">
           <paper-input class="search" value="{{searchText}}"  placeholder="Application">
@@ -86,14 +114,20 @@
         </app-header>
       </app-header-layout>
 
-      <div>
-        <template is="dom-if" if="[[listData]]">
-          <dory-sam-list items="[[listData]]"></dory-sam-list>
-        </template>
+      <div class="main-content">
+        <dory-sam-list id="doryList" items="[[listData]]" entity-id="{{entityId}}"></dory-sam-list>
+        <paper-fab  icon="add-circle-outline" on-tap="_openEditor"></paper-fab>
       </div>
     </app-drawer-layout>
 
-
+    <paper-dialog id="maineditor" class="editor-dialog" modal>
+      <div class="buttons">
+        <paper-icon-button dialog-confirm icon="close"></paper-icon-button>
+      </div>
+      <paper-dialog-scrollable class="scrollable-dialog">
+        <dory-sam-editor id="doryEditor" entity-id="{{entityId}}"></dory-sam-editor>
+      </paper-dialog-scrollable>
+    </paper-dialog>
 
   </template>
 
@@ -108,11 +142,20 @@
      */
     class DorySam extends Polymer.Element {
       static get is() { return 'dory-sam'; }
+
+      ready() {
+          super.ready();
+          this.$.doryList.addEventListener('dory-open-editor', e => this._handleEdit(e));
+      }
+
       static get properties() {
         return {
-          items:{
-            type:Object,
-          },
+            items:{
+              type:Object,
+            },
+            listData:{
+              type:Array
+            },
             searchText:{
                 type:String,
                 observer :'_searchTextChanged',
@@ -125,10 +168,21 @@
                         "query" : {  "match_all" : {} }
                     }
                 }
+            },
+            entityId : {
+              type : String
             }
         };
       };
 
+      _handleEdit(e){
+          let itemId = e.detail.id;
+          this.entityId = itemId;
+          this._openEditor();
+      }
+      _openEditor(){
+          this.$.maineditor.open();
+      }
       _searchTextChanged (newValue) {
         this.search();
       }
