@@ -11,14 +11,28 @@
         <style>
             :host {
                 display: block;
+                --dory-background-color: #EFEBE9;
+            }
+
+            .editor-form{
+                background-color: var(--dory-background-color);
+            }
+            app-header{
+                position:fixed;
             }
         </style>
-
+        <app-header>
+            <app-toolbar>
+                <dory-sam-editor-control></dory-sam-editor-control>
+            </app-toolbar>
+        </app-header>
         <air-cruddy-elasticsearch id="cruddy"  mode="cors" url="http://localhost:9200/sam/sam"
                                   elastic-refresh="true" debug
                                   data="{{data}}" entity-id="{{entityId}}">
+            <div class="editor-form">
+                <dory-sam-editor-form id="editor-form" data="{{data}}"></dory-sam-editor-form>
+            </div>
 
-            <dory-sam-editor-form id="editor-form" data="{{data}}"></dory-sam-editor-form>
         </air-cruddy-elasticsearch>
     </template>
 

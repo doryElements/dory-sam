@@ -30,6 +30,7 @@
                 height: 100vh;
                 --paper-fab-background: #4285f4;
                 --dory-h2-color :#FF6F00 ;
+                --dory-background-color : #EFEBE9;
             }
 
             paper-fab{
@@ -39,22 +40,23 @@
             }
 
             paper-dialog.editor-dialog{
-                position: fixed;
-                bottom:16px;
-                right: 5px;
-                height  : 800px;
+                height  : 90vh;
+                width : 70vw;
+                min-width : 300px;
             }
 
             paper-dialog paper-dialog-scrollable {
                 --paper-dialog-scrollable: {
                     box-sizing: border-box;
-                    width: 700px;
-                    height: 725px;
+                    width: 70vw;
+                    height: 85vh;
                 }
             }
 
-            iron-list{
+            .list{
+                background-color: var(--dory-background-color);
                 height:100vh;
+                position : relative;
             }
 
             .buttons{
@@ -75,11 +77,12 @@
             h2{
                 color: var(--dory-h2-color);
                 font : 30px "Roboto";
+                padding : 30px;
             }
         </style>
 
-        <iron-pages selected="[[tabSelected]]"  fallback-selection="fallback">
-            <div>
+        <iron-pages selected="[[tabSelected]]" fallback-selection="fallback">
+            <div class="list">
                 <h2>Mes Applications</h2>
                 <iron-list id="list" items="[[items]]" as="it"  grid>
                     <template>
@@ -102,7 +105,7 @@
 
 
 
-        <paper-dialog id="maineditor" class="editor-dialog" >
+        <paper-dialog id="maineditor" class="editor-dialog" modal>
             <paper-dialog-scrollable class="scrollable-dialog">
                 <dory-sam-editor id="doryEditor" entity-id="{{entityId}}"></dory-sam-editor>
             </paper-dialog-scrollable>
