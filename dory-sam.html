@@ -9,6 +9,7 @@
 
 <link rel="import" href="dory-sam-editor.html">
 <link rel="import" href="dory-sam-list.html">
+<link rel="import" href="dory-cruddy-event.html">
 
 <dom-module id="dory-sam">
   <template>
@@ -120,14 +121,17 @@
       </div>
     </app-drawer-layout>
 
+    <dory-cruddy-event>
     <paper-dialog id="maineditor" class="editor-dialog" modal>
       <div class="buttons">
         <paper-icon-button dialog-confirm icon="close"></paper-icon-button>
       </div>
       <paper-dialog-scrollable class="scrollable-dialog">
+
         <dory-sam-editor id="doryEditor" entity-id="{{entityId}}"></dory-sam-editor>
       </paper-dialog-scrollable>
     </paper-dialog>
+</dory-cruddy-event>
 
   </template>
 
