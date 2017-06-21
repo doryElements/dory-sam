@@ -19,7 +19,6 @@
             :host {
                 display: block;
                 @apply --layout-vertical;
-                --dory-h3-color: #FFAB40;
             }
 
             .form{
@@ -49,13 +48,14 @@
             <h3>Informations</h3>
             <paper-input value="{{data.app}}" label="Application" required></paper-input>
             <paper-input value="{{data.name}}" label="Nom" required></paper-input>
+            <paper-input value="{{data.email}}" label="Email" type="email" required></paper-input>
             <paper-input value="{{data.dpt}}" label="Département propriétaire" required></paper-input>
             <paper-input value="{{data.type}}" label="Type" required></paper-input>
-            <!--<water-marked-editor value="{{data.description}}">-->
+            <water-marked-editor value="{{data.description}}">
                 <paper-textarea label="Description" char-counter maxlength="1000"
                                 always-float-label rows="5"
                                 value="{{data.description}}"></paper-textarea>
-            <!--</water-marked-editor>-->
+            </water-marked-editor>
             <paper-input value="{{data.doc}}" label="Documentation" required></paper-input>
         </div>
 

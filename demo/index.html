@@ -1,33 +1,44 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
 
-    <title>dory-sam demo</title>
+        <title>dory-sam demo</title>
 
-    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+        <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
 
-    <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
-    <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
-    <link rel="import" href="../dory-sam.html">
+        <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
+        <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
+        <link rel="import" href="../dory-sam.html">
 
-    <custom-style>
-      <style is="custom-style" include="demo-pages-shared-styles">
-        body{
-          padding : 0;
-        }
-      </style>
-    </custom-style>
-  </head>
-  <body>
-    <div>
-        <dom-bind id="demo">
-          <template>
-            <dory-sam></dory-sam>
-          </template>
-        </dom-bind>
-
-    </div>
-  </body>
+        <custom-style>
+            <style is="custom-style" include="demo-pages-shared-styles">
+                html{
+                    --dory-h1-color : #FFD54F;
+                    --dory-logo-color : #FB8C00;
+                    --dory-sidebar-color : #424242;
+                    --dory-sidebar-text-color: white;
+                    --dory-background-color : #EFEBE9;
+                    --dory-h3-color: #FFAB40;
+                    --dory-h4-color:#80CBC4;
+                    --paper-fab-background: #4285f4;
+                    --dory-h2-color :#FF6F00 ;
+                    --dory-background-color : #EFEBE9;
+                }
+                body{
+                    padding : 0;
+                }
+            </style>
+        </custom-style>
+    </head>
+    <body>
+        <div>
+            <dom-bind id="demo">
+                <template>
+                    <dory-sam></dory-sam>
+                </template>
+            </dom-bind>
+        </div>
+    </body>
 </html>
