@@ -70,10 +70,13 @@
 
             _generatedData(totalCount) {
                 let result = [];
+                const beginTime = Date.now();
                 for (let i=0; i <totalCount; i++) {
                     let data = this._generateDataLine(i+1);
                     result.push(data);
                 }
+                const endTime = Date.now();
+                console.log('Generate data in ', endTime-beginTime, 'ms');
                 return result;
             }
 

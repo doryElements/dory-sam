@@ -24,7 +24,7 @@
         <label>[[title]]</label>
         <div>
             <template is="dom-repeat" items="{{list}}" as="it">
-                <paper-input value="{{it.value}}"  label="[[labelItem]] [[_add(index,1)]]">
+                <paper-input value="{{it.value}}"  label="[[labelItem]] [[_add(index,1)]]" required >
                     <paper-icon-button slot="suffix" icon="clear" on-tap="_deleteElt"></paper-icon-button>
                 </paper-input>
             </template>
