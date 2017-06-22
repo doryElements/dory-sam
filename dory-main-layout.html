@@ -9,11 +9,19 @@
 
 <link rel="import" href="dory-sam-editor-control.html">
 
-<dom-module id="dory-editor-layout">
+<dom-module id="dory-main-layout">
     <template>
         <style>
             :host {
                 display: block;
+            }
+            h1{
+                color: var(--h1-color);
+                font : 40px "Roboto";
+                margin-bottom : 5px;
+            }
+            .title{
+                text-align : center;
             }
             .logo{
                 padding: 10px;
@@ -33,16 +41,12 @@
                 width : 100%;
                 position : absolute;
             }
-            .control{
-                position:fixed;
-                right:15px;
-            }
             app-drawer-layout:not([narrow]) [drawer-toggle] {
                 display: none;
             }
         </style>
 
-        <app-drawer-layout>
+        <app-drawer-layout fullbleed>
             <app-drawer opened slot="drawer" class="sidebar">
                 <div class="logo">
                     <img src="../imgs/agrica-white.png" alt="Agrica">
@@ -56,53 +60,38 @@
                 <app-header reveals fixed>
                     <app-toolbar>
                         <paper-icon-button drawer-toggle icon="menu"></paper-icon-button>
-                        <paper-icon-button on-tap="_back" icon="arrow-back"></paper-icon-button>
-                        <h2><slot name="title"></slot></h2>
-                        <div class="control">
-                            <dory-sam-editor-control id="controller"></dory-sam-editor-control>
+                        <div class="title" main-title>
+                            <h1>DORY</h1>
+                            Dépendances des applications
                         </div>
                     </app-toolbar>
                 </app-header>
             </app-header-layout>
             <div class="content">
-                <slot name="editor"></slot>
+                <slot name="content"></slot>
             </div>
         </app-drawer-layout>
     </template>
 
     <script>
         /**
-         * `dory-editor-layout`
+         * `dory-main-layout`
          *
          *
          * @customElement
          * @polymer
          * @demo demo/index.html
          */
-        class DoryEditorLayout extends Polymer.Element {
+        class DoryMainLayout extends Polymer.Element {
             static get is() {
-                return 'dory-editor-layout';
+                return 'dory-main-layout';
             }
 
             static get properties() {
-                return {
-
-                };
-            }
-
-            ready(){
-                super.ready();
-                this.$.controller.addEventListener('dory-control-editor', e => this._handleController(e));
-            }
-
-            _back() {
-                this.dispatchEvent(new CustomEvent('editor-close'));
-            }
-            _handleController(e){
-                this.dispatchEvent(new CustomEvent('editor-control',{detail:{command:e.detail.command}}))
+                return {};
             }
         }
 
-        window.customElements.define(DoryEditorLayout.is, DoryEditorLayout);
+        window.customElements.define(DoryMainLayout.is, DoryMainLayout);
     </script>
 </dom-module>

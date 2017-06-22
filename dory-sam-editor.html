@@ -30,7 +30,6 @@
                 <div class="editor-form">
                     <dory-sam-editor-form id="editor-form" data="{{data}}"></dory-sam-editor-form>
                 </div>
-                <dory-sam-editor-control id="controller"></dory-sam-editor-control>
             </air-cascade-validator>
         </air-cruddy-elasticsearch>
     </template>
@@ -48,11 +47,6 @@
                 return 'dory-sam-editor';
             }
 
-            ready(){
-                super.ready();
-                this.$.controller.addEventListener('dory-control-editor', e => this._handleController(e));
-            }
-
             static get properties() {
                 return {
                     entityId: {
@@ -65,9 +59,9 @@
                 };
             }
 
-            _handleController(e){
-                console.log(e.detail.command);
-                this.$.cruddy.command=e.detail.command;
+            _handleCommand(command){
+                console.log(command);
+                this.$.cruddy.command=command;
             }
         }
         window.customElements.define(DorySamEditor.is, DorySamEditor);

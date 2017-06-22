@@ -1,24 +1,10 @@
 <link rel="import" href="../polymer/polymer-element.html">
 
 <link rel="import" href="../iron-list/iron-list.html">
-<link rel="import" href="../paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../iron-icons/iron-icons.html">
-<link rel="import" href="../iron-pages/iron-pages.html">
-
-<link rel="import" href="../paper-button/paper-button.html">
-<link rel="import" href="../paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../paper-fab/paper-fab.html">
 
-<link rel="import" href="../paper-dialog/paper-dialog.html">
-<link rel="import" href="../paper-dialog-scrollable/paper-dialog-scrollable.html">
-
-<link rel="import" href="../neon-animation/web-animations.html">
-<link rel="import" href="../neon-animation/animations/scale-up-animation.html">
-<link rel="import" href="../neon-animation/animations/fade-out-animation.html">
-
 <link rel="import" href="dory-sam-card.html">
-<link rel="import" href="dory-sam-editor.html">
-<link rel="import" href="dory-sam-editor-control.html">
 
 <link rel="import" href="../air-cruddy/air-cruddy-elasticsearch.html">
 
@@ -37,48 +23,21 @@
                 right:16px;
             }
 
-            .list{
-                background-color: var(--dory-background-color);
-                height:100vh;
-                position : relative;
-            }
-
-            .details-container{
-                position : relative;
-            }
-
-            #close-button{
-                position : absolute;
-                top : 25px;
-                right: 15px;
-            }
             h2{
-                color: var(--dory-h2-color);
+                color: var(--h2-color);
                 font : 30px "Roboto";
                 padding : 30px;
             }
         </style>
-
-        <iron-pages selected="[[tabSelected]]" fallback-selection="fallback">
-
-            <div class="list">
-                <h2>Mes Applications</h2>
-                <iron-list id="list" items="[[items]]" as="it"  grid>
-                    <template>
-                        <div class="card">
-                            <dory-sam-card data="[[it]]" tabindex$="[[tabIndex]]" on-tap="_openDetails"></dory-sam-card>
-                            <paper-fab mini icon="create" on-tap="_handleEditTap"></paper-fab>
-                        </div>
-                    </template>
-                </iron-list>
-            </div>
-
-            <div class="details-container">
-                <dory-sam-card-details entity-id="[[entityId]]"></dory-sam-card-details>
-                <paper-icon-button id="close-button" icon="close" on-tap="_closeDetails"></paper-icon-button>
-            </div>
-
-        </iron-pages>
+        <h2>Mes Applications</h2>
+        <iron-list id="list" items="[[items]]" as="it"  grid>
+            <template>
+                <div class="card">
+                    <dory-sam-card data="[[it]]" tabindex$="[[tabIndex]]" on-tap="_openDetails"></dory-sam-card>
+                    <paper-fab mini icon="create" on-tap="_handleEditTap"></paper-fab>
+                </div>
+            </template>
+        </iron-list>
     </template>
 
     <script>
@@ -100,15 +59,8 @@
                     items : {
                         type : Array,
                     },
-                    data: {
-                        type:Object
-                    },
                     entityId: {
                         type:String
-                    },
-                    tabSelected : {
-                        type: Number,
-                        value : 0
                     }
                 };
             }
@@ -117,7 +69,6 @@
                 let item = e.model.it;
                 if(item){
                     this.entityId= item.id;
-                    console.log('_handleEditTap entityId : ',  this.entityId);
                     this.dispatchEvent(new CustomEvent('dory-open-editor',{detail:{id:this.entityId}}));
                 }
             }
@@ -126,13 +77,8 @@
                 let item= e.model.it;
                 if(item){
                     this.entityId= item.id;
-                    this.tabSelected = 1;
+                    this.dispatchEvent(new CustomEvent('dory-open-details',{detail:{id:this.entityId}}));
                 }
-            }
-
-            _closeDetails(e){
-                this.entityId = null;
-                this.tabSelected = 0;
             }
         }
 

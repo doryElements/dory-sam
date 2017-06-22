@@ -4,18 +4,32 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
 
-    <title>dory-sam demo</title>
+    <title>Demo liste</title>
 
     <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
 
     <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
     <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
     <link rel="import" href="../dory-sam-list.html">
-
+    <link rel="import" href="../dory-main-layout.html">
     <link rel="import" href="demo-data.html">
 
     <custom-style>
       <style is="custom-style" include="demo-pages-shared-styles">
+        html{
+          --h1-color : #FFD54F;
+          --logo-background-color : #FB8C00;
+          --sidebar-background-color : #424242;
+          --sidebar-text-color: white;
+          --background-color : #EFEBE9;
+          --h3-color: #FFAB40;
+          --h4-color:#80CBC4;
+          --paper-fab-background: #4285f4;
+          --h2-color :#FF6F00 ;
+        }
+        body{
+          padding : 0;
+        }
       </style>
     </custom-style>
   </head>
@@ -23,8 +37,12 @@
     <div>
         <dom-bind id="demo">
           <template>
-            <demo-data data="{{data}}" count="25"></demo-data>
-            <dory-sam-list items="[[data]]"></dory-sam-list>
+            <demo-data no-options data="{{data}}" count="25"></demo-data>
+            <dory-main-layout>
+              <label slot="title">DORY</label>
+              <label slot="subtitle">Dépendances des applications</label>
+              <dory-sam-list items="[[data]]" slot="content"></dory-sam-list>
+            </dory-main-layout>
           </template>
         </dom-bind>
     </div>

@@ -6,237 +6,222 @@
 <link rel="import" href="../app-layout/app-toolbar/app-toolbar.html">
 <link rel="import" href="../paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../iron-icons/iron-icons.html">
+<link rel="import" href="../iron-pages/iron-pages.html">
 
+<link rel="import" href="dory-main-layout.html">
+<link rel="import" href="dory-editor-layout.html">
 <link rel="import" href="dory-sam-editor.html">
 <link rel="import" href="dory-sam-list.html">
 <link rel="import" href="dory-cruddy-event.html">
 
 <dom-module id="dory-sam">
-  <template>
-    <style>
-        :host {
-            display: block;
-        }
+    <template>
+        <style>
+            :host {
+                display: block;
+            }
 
-        body{
-            padding:0;
-        }
+            h1{
+                color: var(--dory-h1-color);
+                font : 40px "Roboto";
+                margin-bottom : 5px;
+            }
 
-        h1{
-            color: var(--dory-h1-color);
-            font : 40px "Roboto";
-            margin-bottom : 5px;
-        }
-        .title{
-            text-align : center;
-        }
-        app-toolbar {
-            height:122px;
-        }
+            paper-fab {
+                right: 30px;
+                bottom: 28px;
+                position: fixed;
+                --paper-fab-background: var(--primary-color);
+            }
 
-        .logo{
-            padding: 10px;
-            text-align: center;
-            background-color: var(--dory-logo-color);
-        }
+            .search{
+                color: var(--sidebar-text-color);
+                --paper-input-container-input-color: var(--sidebar-text-color);
+                --paper-input-container-color: var(--sidebar-text-color);
+                padding:10px;
+            }
 
-        paper-fab {
-            right: 30px;
-            bottom: 28px;
-            position: fixed;
-            --paper-fab-background: var(--primary-color);
-        }
+            .main-content{
+                background-color: var(--background-color);
+                width : 100%;
+                position : absolute;
+            }
+            .side{
+                color:var(--sidebar-text-color);
+                font : 16px Roboto;
+                text-align:center;
+                padding : 10px;
+                margin-top: 50px;
+            }
+        </style>
 
-        app-drawer {
-            --app-drawer-content-container: {
-              background-color: var(--dory-sidebar-color);
+        <iron-ajax auto id="request" url="http://localhost:9200/sam/sam/_search?size=[[querySize]]" handle-as="json"
+            content-type="application/json" body="[[queryBody]]" method="post"
+            on-response="_handleResponse"></iron-ajax>
+
+        <iron-pages selected="[[tabSelected]]" fallback-selection="fallback">
+
+            <!-- LISTE -->
+            <dory-main-layout>
+                <div class="search" slot="sidebar">
+                    <paper-input class="search" value="{{searchText}}"  placeholder="Application">
+                        <paper-icon-button slot="suffix" icon="search" on-tap="search"></paper-icon-button>
+                    </paper-input>
+                </div>
+                <div class="main-content" slot="content">
+                    <dory-sam-list id="doryList" items="[[listData]]" entity-id="{{entityId}}"></dory-sam-list>
+                    <paper-fab  icon="add-circle-outline" on-tap="_openEditorCreate"></paper-fab>
+                </div>
+            </dory-main-layout>
+
+            <!-- EDITOR -->
+            <dory-editor-layout id="edit">
+                <dory-cruddy-event slot="editor">
+                    <dory-sam-editor id="doryEditor" entity-id="{{entityId}}"></dory-sam-editor>
+                </dory-cruddy-event>
+            </dory-editor-layout>
+
+            <!-- DETAILS VIEW -->
+            <dory-main-layout>
+                <div class="main-content" slot="content">
+                    <dory-sam-card-details entity-id="[[entityId]]"></dory-sam-card-details>
+                </div>
+                <div  slot="sidebar" class="side" on-tap="_close">
+                    <iron-icon icon="arrow-back"></iron-icon>
+                    <label>Retour à la liste</label>
+                </div>
+            </dory-main-layout>
+
+        </iron-pages>
+    </template>
+
+    <script>
+        /**
+         * `dory-sam`
+         *
+         *
+         * @customElement
+         * @polymer
+         * @demo demo/index.html
+         */
+        class DorySam extends Polymer.Element {
+            static get is() { return 'dory-sam'; }
+
+            ready() {
+                super.ready();
+                this.$.doryList.addEventListener('dory-open-editor', e => this._handleEdit(e));
+                this.$.doryList.addEventListener('dory-open-details', e => this._handleDetails(e));
+                this.$.edit.addEventListener('editor-close', e => this._close(e));
+                this.$.edit.addEventListener('editor-control', e => this._handleController(e));
+            }
+
+            static get properties() {
+                return {
+                    items:{
+                        type:Object,
+                    },
+                    listData:{
+                        type:Array
+                    },
+                    searchText:{
+                        type:String,
+                        observer :'_searchTextChanged',
+                        notify: true
+                    },
+                    queryFrom: {
+                        type:Number,
+                        value:0
+                    },
+                    querySize : {
+                        type: Number,
+                        value:25
+                    },
+                    queryBody: {
+                        type: Object,
+                        readonly: true
+                    },
+                    entityId : {
+                        type : String
+                    },
+                    tabSelected : {
+                        type: Number,
+                        value : 0
+                    }
+                };
+            };
+
+            static get observers() {
+                return  [
+                    '_handleQuerySearch(searchText, querySize)'
+                ]
+            }
+
+            _handleEdit(e){
+                let itemId = e.detail.id;
+                this.entityId = itemId;
+                this._openEditor();
+            }
+            _handleDetails(e){
+                let itemId = e.detail.id;
+                this.entityId = itemId;
+                this.tabSelected=2;
+            }
+            _handleController(e){
+                this.$.doryEditor._handleCommand(e.detail.command);
+            }
+            _openEditorCreate(){
+                this.entityId = null;
+                this._openEditor();
+            }
+            _openEditor(){
+                this.tabSelected = 1;
+            }
+            _close(){
+                this.tabSelected = 0;
+            }
+            _searchTextChanged (newValue) {
+                this.search();
+            }
+
+            search() {
+                console.log('Do Search text ', this.searchText);
+                this.queryBody = this._createRequest(this.searchText);
+            }
+            _handleQuerySearch(searchText, size) {
+
+                this.queryBody = this._createRequest(searchText);
+            }
+
+            _createRequest(searchText) {
+                let request = {   "query" : {  "match_all" : {} } };
+                if(searchText) {
+                    request={
+                        'query':{
+                            'simple_query_string':{
+                                'fields':['app'],
+                                'query': `${searchText}*`
+                            }
+                        }
+                    };
+                };
+                console.log('_createRequest : ',  request);
+                return request;
+            }
+
+            _handleResponse(e) {
+                new Promise( (resolve, error) => {
+                    let response =  e.detail.response.hits;
+                    let total = response.total;
+                    let result = response.hits;
+                    let items = result.map( x => Object.assign( x._source, { id:x._id} ));
+                    resolve( items);
+                }).then( items => {
+                    this.listData = items;
+                    console.log('List items total : ', items.length);
+                    return items;
+                });
             }
         }
-
-        .search{
-            color: var(--dory-sidebar-text-color);
-            --paper-input-container-input-color: var(--dory-sidebar-text-color);
-            --paper-input-container-color: var(--dory-sidebar-text-color);
-            padding:10px;
-        }
-
-        paper-dialog.editor-dialog{
-          background-color: var(--dory-background-color);
-          height  : 90vh;
-          width : 70vw;
-          min-width : 300px;
-        }
-
-        paper-dialog paper-dialog-scrollable {
-          --paper-dialog-scrollable: {
-            box-sizing: border-box;
-            width: 70vw;
-            height: 80vh;
-          }
-        }
-
-        .main-content{
-          background-color: var(--dory-background-color);
-          width : 100%;
-          position : absolute;
-        }
-
-      .buttons{
-        margin-top:0;
-      }
-    </style>
-
-    <iron-ajax auto id="request" url="http://localhost:9200/sam/sam/_search?size=[[querySize]]" handle-as="json"
-               content-type="application/json" body="[[queryBody]]" method="post"
-              on-response="_handleResponse"></iron-ajax>
-
-    <app-drawer-layout>
-      <app-drawer opened slot="drawer" class="sidebar">
-        <div class="logo">
-          <img src="../imgs/agrica-white.png" alt="Agrica">
-        </div>
-        <div class="search">
-          <paper-input class="search" value="{{searchText}}"  placeholder="Application">
-            <paper-icon-button slot="suffix" icon="search" on-tap="search"></paper-icon-button>
-          </paper-input>
-        </div>
-      </app-drawer>
-
-      <app-header-layout>
-        <app-header slot="header">
-          <app-toolbar>
-              <div main-title class="title"><h1>DORY</h1>Dépendances des applications</div>
-          </app-toolbar>
-        </app-header>
-      </app-header-layout>
-
-      <div class="main-content">
-        <dory-sam-list id="doryList" items="[[listData]]" entity-id="{{entityId}}"></dory-sam-list>
-        <paper-fab  icon="add-circle-outline" on-tap="_openEditor"></paper-fab>
-      </div>
-    </app-drawer-layout>
-
-    <dory-cruddy-event>
-    <paper-dialog id="maineditor" class="editor-dialog" modal>
-      <div class="buttons">
-        <paper-icon-button dialog-confirm icon="close"></paper-icon-button>
-      </div>
-      <paper-dialog-scrollable class="scrollable-dialog">
-
-        <dory-sam-editor id="doryEditor" entity-id="{{entityId}}"></dory-sam-editor>
-      </paper-dialog-scrollable>
-    </paper-dialog>
-</dory-cruddy-event>
-
-  </template>
-
-  <script>
-    /**
-     * `dory-sam`
-     *
-     *
-     * @customElement
-     * @polymer
-     * @demo demo/index.html
-     */
-    class DorySam extends Polymer.Element {
-      static get is() { return 'dory-sam'; }
-
-      ready() {
-          super.ready();
-          this.$.doryList.addEventListener('dory-open-editor', e => this._handleEdit(e));
-      }
-
-      static get properties() {
-        return {
-            items:{
-              type:Object,
-            },
-            listData:{
-              type:Array
-            },
-            searchText:{
-                type:String,
-                observer :'_searchTextChanged',
-                notify: true
-            },
-            queryFrom: {
-              type:Number,
-                value:0
-            },
-            querySize : {
-                type: Number,
-                value:25
-            },
-            queryBody: {
-                type: Object,
-                readonly: true
-            },
-            entityId : {
-              type : String
-            }
-        };
-      };
-
-        static get observers() {
-         return  [
-              '_handleQuerySearch(searchText, querySize)'
-          ]
-        }
-
-      _handleEdit(e){
-          let itemId = e.detail.id;
-          this.entityId = itemId;
-          this._openEditor();
-      }
-      _openEditor(){
-          this.$.maineditor.open();
-      }
-      _searchTextChanged (newValue) {
-        this.search();
-      }
-
-      search() {
-          console.log('Do Search text ', this.searchText);
-          this.queryBody = this._createRequest(this.searchText);
-      }
-        _handleQuerySearch(searchText, size) {
-
-            this.queryBody = this._createRequest(searchText);
-        }
-
-      _createRequest(searchText) {
-          let request = {   "query" : {  "match_all" : {} } };
-          if(searchText) {
-              request={
-                  'query':{
-                      'simple_query_string':{
-                            'fields':['app'],
-                            'query': `${searchText}*`
-                      }
-                  }
-              };
-          };
-          console.log('_createRequest : ',  request);
-          return request;
-      }
-
-      _handleResponse(e) {
-          new Promise( (resolve, error) => {
-              let response =  e.detail.response.hits;
-              let total = response.total;
-              let result = response.hits;
-              let items = result.map( x => Object.assign( x._source, { id:x._id} ));
-              resolve( items);
-          }).then( items => {
-              this.listData = items;
-              console.log('List items total : ', items.length);
-              return items;
-          });
-      }
-
-    }
-
-    window.customElements.define(DorySam.is, DorySam);
-  </script>
+        window.customElements.define(DorySam.is, DorySam);
+    </script>
 </dom-module>
