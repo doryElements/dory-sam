@@ -1,32 +1,49 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
 
-    <title>dory-sam demo</title>
+        <title>dory-sam demo</title>
 
-    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+        <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
 
-    <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
-    <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
-    <link rel="import" href="../dory-sam-editor-form.html">
+        <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
+        <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
+        <link rel="import" href="../dory-sam-editor-form.html">
+        <link rel="import" href="../dory-editor-layout.html">
 
-    <link rel="import" href="demo-data.html">
+        <link rel="import" href="demo-data.html">
 
-    <custom-style>
-      <style is="custom-style" include="demo-pages-shared-styles">
-      </style>
-    </custom-style>
-  </head>
-  <body>
-    <div>
-        <dom-bind id="demo">
-          <template>
-            <demo-data no-options data="{{datas}}" count="1"></demo-data>
-            <dory-sam-editor-form data="[[datas.0]]"></dory-sam-editor-form>
-          </template>
-        </dom-bind>
-    </div>
-  </body>
+        <custom-style>
+            <style is="custom-style" include="demo-pages-shared-styles">
+                html{
+                    --h1-color : #FFD54F;
+                    --logo-background-color : #FB8C00;
+                    --sidebar-background-color : #424242;
+                    --sidebar-text-color: white;
+                    --background-color : #EFEBE9;
+                    --h3-color: #FFAB40;
+                    --h4-color:#80CBC4;
+                    --paper-fab-background: #4285f4;
+                    --h2-color :#FF6F00 ;
+                }
+                body{
+                    padding : 0;
+                }
+            </style>
+        </custom-style>
+    </head>
+    <body>
+        <div>
+            <dom-bind id="demo">
+                <template>
+                    <demo-data no-options data="{{datas}}" count="1"></demo-data>
+                    <dory-editor-layout>
+                        <dory-sam-editor-form data="[[datas.0]]" slot="editor"></dory-sam-editor-form>
+                    </dory-editor-layout>
+                </template>
+            </dom-bind>
+        </div>
+    </body>
 </html>
