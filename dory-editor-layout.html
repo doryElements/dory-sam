@@ -5,6 +5,9 @@
 
 <link rel="import" href="../paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../iron-icons/iron-icons.html">
+<link rel="import" href="../iron-icons/app-icons.html">
+
+<link rel="import" href="dory-sam-editor-control.html">
 
 <dom-module id="dory-editor-layout">
     <template>
@@ -12,25 +15,59 @@
             :host {
                 display: block;
             }
+            .logo{
+                padding: 10px;
+                text-align: center;
+                background-color: var(--logo-background-color);
+            }
+            app-drawer {
+                --app-drawer-content-container: {
+                    background-color: var(--sidebar-background-color);
+                }
+            }
+            app-toolbar {
+                height:122px;
+            }
+            .content{
+                background-color: var(--background-color);
+                width : 100%;
+                position : absolute;
+            }
+            .control{
+                position:fixed;
+                right:15px;
+            }
+            app-drawer-layout:not([narrow]) [drawer-toggle] {
+                display: none;
+            }
         </style>
 
         <app-drawer-layout>
             <app-drawer opened slot="drawer" class="sidebar">
-
                 <div class="logo">
                     <img src="../imgs/agrica-white.png" alt="Agrica">
                 </div>
-
                 <div class="sidebar">
-
+                    <slot name="sidebar"></slot>
                 </div>
             </app-drawer>
+
+            <app-header-layout>
+                <app-header reveals fixed>
+                    <app-toolbar>
+                        <paper-icon-button drawer-toggle icon="menu"></paper-icon-button>
+                        <paper-icon-button on-tap="_back" icon="arrow-back"></paper-icon-button>
+                        <h2><slot name="title"></slot></h2>
+                        <div class="control">
+                            <dory-sam-editor-control></dory-sam-editor-control>
+                        </div>
+                    </app-toolbar>
+                </app-header>
+            </app-header-layout>
+            <div class="content">
+                <slot name="editor"></slot>
+            </div>
         </app-drawer-layout>
-        <paper-icon-button drawer-toggle icon="app:menu"></paper-icon-button>
-        <app-header-layout>
-
-        </app-header-layout>
-
     </template>
 
     <script>
@@ -51,6 +88,10 @@
                 return {
 
                 };
+            }
+
+            _back() {
+                this.dispatchEvent(new CustomEvent('editor-close'));
             }
         }
 
