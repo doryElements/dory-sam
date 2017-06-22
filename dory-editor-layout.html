@@ -1,0 +1,59 @@
+<link rel="import" href="../polymer/polymer-element.html">
+
+<link rel="import" href="../app-layout/app-layout.html">
+<link rel="import" href="../app-layout/app-toolbar/app-toolbar.html">
+
+<link rel="import" href="../paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../iron-icons/iron-icons.html">
+
+<dom-module id="dory-editor-layout">
+    <template>
+        <style>
+            :host {
+                display: block;
+            }
+        </style>
+
+        <app-drawer-layout>
+            <app-drawer opened slot="drawer" class="sidebar">
+
+                <div class="logo">
+                    <img src="../imgs/agrica-white.png" alt="Agrica">
+                </div>
+
+                <div class="sidebar">
+
+                </div>
+            </app-drawer>
+        </app-drawer-layout>
+        <paper-icon-button drawer-toggle icon="app:menu"></paper-icon-button>
+        <app-header-layout>
+
+        </app-header-layout>
+
+    </template>
+
+    <script>
+        /**
+         * `dory-editor-layout`
+         *
+         *
+         * @customElement
+         * @polymer
+         * @demo demo/index.html
+         */
+        class DoryEditorLayout extends Polymer.Element {
+            static get is() {
+                return 'dory-editor-layout';
+            }
+
+            static get properties() {
+                return {
+
+                };
+            }
+        }
+
+        window.customElements.define(DoryEditorLayout.is, DoryEditorLayout);
+    </script>
+</dom-module>
