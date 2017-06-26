@@ -123,7 +123,10 @@
                         type:Object,
                     },
                     listData:{
-                        type:Array
+                        type:Array,
+                        value: () => {
+                            return [];
+                        }
                     },
                     searchText:{
                         type:String,
@@ -141,6 +144,15 @@
                     queryBody: {
                         type: Object,
                         readonly: true
+                    },
+                    queryResult: {
+                        type: Object,
+                        value: () => {
+                            return {
+                                total : 0,
+                                items: []
+                            }
+                        }
                     },
                     entityId : {
                         type : String
@@ -217,15 +229,14 @@
 
             _handleResponse(e) {
                 new Promise( (resolve, error) => {
-                    let response =  e.detail.response.hits;
-                    let result = response.hits;
-                    let total = response.total;
-                    let items = result.map( x => Object.assign( x._source, { id:x._id} ));
+                    const response =  e.detail.response.hits;
+                    const result = response.hits;
+                    const total = response.total;
+                    const items = result.map( x => Object.assign( x._source, { id:x._id} ));
                     resolve( items);
                 }).then( items => {
-                    Array.prototype.push.apply(this.listData, items);
-//                    this.listData = items;
-//                    console.log('Liste :' + JSON.stringify(this.listData));
+                    let newResult = [...this.listData, ...items];
+                    this.listData = newResult;
                     return items;
                 });
             }
