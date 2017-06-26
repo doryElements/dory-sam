@@ -22,7 +22,7 @@
             }
 
             h1{
-                color: var(--dory-h1-color);
+                color: var(--h1-color);
                 font : 40px "Roboto";
                 margin-bottom : 5px;
             }
@@ -69,7 +69,7 @@
                     </paper-input>
                 </div>
                 <div class="main-content" slot="content">
-                    <dory-sam-list id="doryList" items="[[listData]]" entity-id="{{entityId}}"></dory-sam-list>
+                    <dory-sam-list id="doryList" items="{{listData}}" entity-id="{{entityId}}"></dory-sam-list>
                     <paper-fab  icon="add-circle-outline" on-tap="_openEditorCreate"></paper-fab>
                 </div>
             </dory-main-layout>
@@ -109,8 +109,10 @@
 
             ready() {
                 super.ready();
+                this.listData = new Array();
                 this.$.doryList.addEventListener('dory-open-editor', e => this._handleEdit(e));
                 this.$.doryList.addEventListener('dory-open-details', e => this._handleDetails(e));
+                this.$.doryList.addEventListener('dory-load-data', e => this._loadMoreData(e));
                 this.$.edit.addEventListener('editor-close', e => this._close(e));
                 this.$.edit.addEventListener('editor-control', e => this._handleController(e));
             }
@@ -134,7 +136,7 @@
                     },
                     querySize : {
                         type: Number,
-                        value:25
+                        value:10
                     },
                     queryBody: {
                         type: Object,
@@ -180,7 +182,12 @@
                 this.tabSelected = 0;
             }
             _searchTextChanged (newValue) {
-                this.search();
+//                this.search();
+                this._debouncer = Polymer.Debouncer.debounce(
+                    this._debouncer,
+                    Polymer.Async.timeOut.after(2000),
+                    this.search()
+                );
             }
 
             search() {
@@ -211,15 +218,21 @@
             _handleResponse(e) {
                 new Promise( (resolve, error) => {
                     let response =  e.detail.response.hits;
-                    let total = response.total;
                     let result = response.hits;
+                    let total = response.total;
                     let items = result.map( x => Object.assign( x._source, { id:x._id} ));
                     resolve( items);
                 }).then( items => {
-                    this.listData = items;
-                    console.log('List items total : ', items.length);
+                    Array.prototype.push.apply(this.listData, items);
+//                    this.listData = items;
+//                    console.log('Liste :' + JSON.stringify(this.listData));
                     return items;
                 });
+            }
+
+            _loadMoreData(){
+                this.queryFrom += this.querySize;
+                this.$.doryList.clearTriggers();
             }
         }
         window.customElements.define(DorySam.is, DorySam);

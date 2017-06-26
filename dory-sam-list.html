@@ -3,6 +3,7 @@
 <link rel="import" href="../iron-list/iron-list.html">
 <link rel="import" href="../iron-icons/iron-icons.html">
 <link rel="import" href="../paper-fab/paper-fab.html">
+<link rel="import" href="../iron-scroll-threshold/iron-scroll-threshold.html">
 
 <link rel="import" href="dory-sam-card.html">
 
@@ -30,14 +31,17 @@
             }
         </style>
         <h2>Mes Applications</h2>
-        <iron-list id="list" items="[[items]]" as="it"  grid>
-            <template>
-                <div class="card">
-                    <dory-sam-card data="[[it]]" tabindex$="[[tabIndex]]" on-tap="_openDetails"></dory-sam-card>
-                    <paper-fab mini icon="create" on-tap="_handleEditTap"></paper-fab>
-                </div>
-            </template>
-        </iron-list>
+        <iron-scroll-threshold id="scrollThreshold" lower-threshold="50" on-lower-threshold="_loadMoreData">
+            <iron-list id="list" scroll-target="scrollThreshold" items="[[items]]" as="it"  grid>
+                <template>
+                    <div class="card">
+                        <dory-sam-card data="[[it]]" tabindex$="[[tabIndex]]" on-tap="_openDetails"></dory-sam-card>
+                        <paper-fab mini icon="create" on-tap="_handleEditTap"></paper-fab>
+                    </div>
+                </template>
+            </iron-list>
+        </iron-scroll-threshold>
+
     </template>
 
     <script>
@@ -79,6 +83,15 @@
                     this.entityId= item.id;
                     this.dispatchEvent(new CustomEvent('dory-open-details',{detail:{id:this.entityId}}));
                 }
+            }
+
+            _loadMoreData(){
+                this.dispatchEvent(new CustomEvent('dory-load-data'));
+            }
+
+            clearTriggers(){
+                this.$.scrollThreshold.clearTriggers();
+                console.log('Triggers cleared');
             }
         }
 
