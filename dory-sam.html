@@ -1,4 +1,5 @@
 <link rel="import" href="../polymer/polymer-element.html">
+<link rel="import" href="../polymer/polymer.html">
 
 <link rel="import" href="../paper-fab/paper-fab.html">
 <link rel="import" href="../iron-ajax/iron-ajax.html">
@@ -7,6 +8,8 @@
 <link rel="import" href="../paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../iron-icons/iron-icons.html">
 <link rel="import" href="../iron-pages/iron-pages.html">
+
+<link rel="import" href="../polymer/lib/utils/debounce.html">
 
 <link rel="import" href="dory-main-layout.html">
 <link rel="import" href="dory-editor-layout.html">
@@ -115,6 +118,7 @@
                 this.$.doryList.addEventListener('dory-load-data', e => this._loadMoreData(e));
                 this.$.edit.addEventListener('editor-close', e => this._close(e));
                 this.$.edit.addEventListener('editor-control', e => this._handleController(e));
+                this.search();
             }
 
             static get properties() {
@@ -152,12 +156,6 @@
                 };
             };
 
-            static get observers() {
-                return  [
-                    '_handleQuerySearch(searchText, querySize)'
-                ]
-            }
-
             _handleEdit(e){
                 let itemId = e.detail.id;
                 this.entityId = itemId;
@@ -182,21 +180,15 @@
                 this.tabSelected = 0;
             }
             _searchTextChanged (newValue) {
-//                this.search();
                 this._debouncer = Polymer.Debouncer.debounce(
                     this._debouncer,
-                    Polymer.Async.timeOut.after(2000),
-                    this.search()
-                );
+                    Polymer.Async.timeOut.after(500),
+                    () => { this.search()});
             }
 
             search() {
                 console.log('Do Search text ', this.searchText);
                 this.queryBody = this._createRequest(this.searchText);
-            }
-            _handleQuerySearch(searchText, size) {
-
-                this.queryBody = this._createRequest(searchText);
             }
 
             _createRequest(searchText) {
@@ -223,8 +215,8 @@
                     let items = result.map( x => Object.assign( x._source, { id:x._id} ));
                     resolve( items);
                 }).then( items => {
-                    Array.prototype.push.apply(this.listData, items);
-//                    this.listData = items;
+//                    Array.prototype.push.apply(this.listData, items);
+                    this.listData = items;
 //                    console.log('Liste :' + JSON.stringify(this.listData));
                     return items;
                 });
