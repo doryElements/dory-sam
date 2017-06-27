@@ -29,19 +29,42 @@
                 font : 30px "Roboto";
                 padding : 30px;
             }
+
+            .loadBar{
+                width : 80%;
+                padding: 10px;
+                margin : 70px auto 15px auto;
+                background-color: var(--h1-color);
+                border-radius : 5px;
+            }
+
+            h4{
+                color : var(--sidebar-text-color);
+                text-align : center;
+                font : 15px "Roboto" bold;
+            }
         </style>
         <h2>Mes Applications</h2>
-        <iron-scroll-threshold id="scrollThreshold" lower-threshold="50" on-lower-threshold="_loadMoreData">
-            <iron-list id="list" scroll-target="scrollThreshold" items="[[items]]" as="it"  grid>
-                <template>
-                    <div class="card">
-                        <dory-sam-card data="[[it]]" tabindex$="[[tabIndex]]" on-tap="_openDetails"></dory-sam-card>
-                        <paper-fab mini icon="create" on-tap="_handleEditTap"></paper-fab>
-                    </div>
-                </template>
-            </iron-list>
-        </iron-scroll-threshold>
+        <!--<iron-scroll-threshold id="scrollThreshold" lower-threshold="50" on-lower-threshold="_loadMoreData">-->
+            <!--<iron-list id="list" scroll-target="scrollThreshold" items="[[items]]" as="it"  grid>-->
+                <!--<template>-->
+                    <!--<div class="card">-->
+                        <!--<dory-sam-card data="[[it]]" tabindex$="[[tabIndex]]" on-tap="_openDetails"></dory-sam-card>-->
+                        <!--<paper-fab mini icon="create" on-tap="_handleEditTap"></paper-fab>-->
+                    <!--</div>-->
+                <!--</template>-->
+            <!--</iron-list>-->
+        <!--</iron-scroll-threshold>-->
 
+        <iron-list id="list"  items="[[items]]" as="it"  grid>
+            <template>
+                <div class="card">
+                    <dory-sam-card data="[[it]]" tabindex$="[[tabIndex]]" on-tap="_openDetails"></dory-sam-card>
+                    <paper-fab mini icon="create" on-tap="_handleEditTap"></paper-fab>
+                </div>
+            </template>
+        </iron-list>
+        <div class="loadBar" on-tap="_loadMoreData"><h4>Montrer plus d'applications</h4></div>
     </template>
 
     <script>
@@ -90,7 +113,7 @@
             }
 
             clearTriggers(){
-                this.$.scrollThreshold.clearTriggers();
+                //this.$.scrollThreshold.clearTriggers();
                 console.log('Triggers cleared');
             }
         }

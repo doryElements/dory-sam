@@ -1,5 +1,4 @@
 <link rel="import" href="../polymer/polymer-element.html">
-<link rel="import" href="../polymer/polymer.html">
 
 <link rel="import" href="../paper-fab/paper-fab.html">
 <link rel="import" href="../iron-ajax/iron-ajax.html">
@@ -9,13 +8,14 @@
 <link rel="import" href="../iron-icons/iron-icons.html">
 <link rel="import" href="../iron-pages/iron-pages.html">
 
-<link rel="import" href="../polymer/lib/utils/debounce.html">
+<!--<link rel="import" href="../polymer/lib/utils/debounce.html">-->
 
 <link rel="import" href="dory-main-layout.html">
 <link rel="import" href="dory-editor-layout.html">
 <link rel="import" href="dory-sam-editor.html">
 <link rel="import" href="dory-sam-list.html">
 <link rel="import" href="dory-cruddy-event.html">
+<link rel="import" href="dory-search-bar.html">
 
 <dom-module id="dory-sam">
     <template>
@@ -37,13 +37,6 @@
                 --paper-fab-background: var(--primary-color);
             }
 
-            .search{
-                color: var(--sidebar-text-color);
-                --paper-input-container-input-color: var(--sidebar-text-color);
-                --paper-input-container-color: var(--sidebar-text-color);
-                padding:10px;
-            }
-
             .main-content{
                 background-color: var(--background-color);
                 width : 100%;
@@ -58,7 +51,7 @@
             }
         </style>
 
-        <iron-ajax auto id="request" url="http://localhost:9200/sam/sam/_search?size=[[querySize]]" handle-as="json"
+        <iron-ajax auto id="request" url="http://localhost:9200/sam/sam/_search?" handle-as="json"
             content-type="application/json" body="[[queryBody]]" method="post"
             on-response="_handleResponse"></iron-ajax>
 
@@ -66,11 +59,7 @@
 
             <!-- LISTE -->
             <dory-main-layout>
-                <div class="search" slot="sidebar">
-                    <paper-input class="search" value="{{searchText}}"  placeholder="Application">
-                        <paper-icon-button slot="suffix" icon="search" on-tap="search"></paper-icon-button>
-                    </paper-input>
-                </div>
+                <dory-search-bar id="searchBar"placeholder="Application" slot="sidebar" search-text="{{searchText}}"></dory-search-bar>
                 <div class="main-content" slot="content">
                     <dory-sam-list id="doryList" items="{{listData}}" entity-id="{{entityId}}"></dory-sam-list>
                     <paper-fab  icon="add-circle-outline" on-tap="_openEditorCreate"></paper-fab>
@@ -118,6 +107,7 @@
                 this.$.doryList.addEventListener('dory-load-data', e => this._loadMoreData(e));
                 this.$.edit.addEventListener('editor-close', e => this._close(e));
                 this.$.edit.addEventListener('editor-control', e => this._handleController(e));
+                this.$.searchBar.addEventListener('search',e => this._handleSearch(e));
                 this.search();
             }
 
@@ -131,11 +121,6 @@
                         value: () => {
                             return [];
                         }
-                    },
-                    searchText:{
-                        type:String,
-                        observer :'_searchTextChanged',
-                        notify: true
                     },
                     queryFrom: {
                         type:Number,
@@ -191,20 +176,23 @@
             _close(){
                 this.tabSelected = 0;
             }
-            _searchTextChanged (newValue) {
-                this._debouncer = Polymer.Debouncer.debounce(
-                    this._debouncer,
-                    Polymer.Async.timeOut.after(500),
-                    () => { this.search()});
-            }
 
+            _handleSearch(e){
+                this.listData=[];
+                this.queryFrom=0;
+                this.queryBody=this._createRequest(e.detail.searchText);
+            }
             search() {
                 console.log('Do Search text ', this.searchText);
                 this.queryBody = this._createRequest(this.searchText);
             }
 
             _createRequest(searchText) {
-                let request = {   "query" : {  "match_all" : {} } };
+                let request = {   "query" : {
+                    "match_all" : {} },
+                    "size": this.querySize,
+                    "from": this.queryFrom
+                };
                 if(searchText) {
                     request={
                         'query':{
@@ -235,6 +223,7 @@
 
             _loadMoreData(){
                 this.queryFrom += this.querySize;
+                this.search();
                 this.$.doryList.clearTriggers();
             }
         }
