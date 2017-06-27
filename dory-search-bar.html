@@ -1,8 +1,8 @@
 <link rel="import" href="../polymer/polymer-element.html">
 
-<link rel="import" href ="../paper-input/paper-input.html">
-<link rel="import" href ="../paper-icon-button/paper-icon-button.html">
-<link rel="import" href ="../iron-icon/iron-icons.html">
+<link rel="import" href="../paper-input/paper-input.html">
+<link rel="import" href="../paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../iron-icon/iron-icons.html">
 
 <link rel="import" href="../polymer/lib/utils/debounce.html">
 
@@ -13,15 +13,15 @@
                 display: block;
             }
 
-            .search{
+            .search {
                 color: var(--sidebar-text-color);
                 --paper-input-container-input-color: var(--sidebar-text-color);
                 --paper-input-container-color: var(--sidebar-text-color);
-                padding:10px;
+                padding: 10px;
             }
         </style>
 
-        <paper-input class="search" value="{{searchText}}"  placeholder="[[placeholder]]">
+        <paper-input class="search" value="{{searchText}}" placeholder="[[placeholder]]">
             <paper-icon-button slot="suffix" icon="search" on-tap="search"></paper-icon-button>
         </paper-input>
     </template>
@@ -42,28 +42,48 @@
 
             static get properties() {
                 return {
-                    searchText:{
-                        type:String,
-                        observer :'_searchTextChanged',
+                    /**
+                     *  {number} delay Time to wait before validate the input string
+                     */
+                    delay: {
+                        type: Number,
+                        value: 500
+                    },
+                    /**
+                     * The delayed {string} value of search
+                     */
+                    value: {
+                        type: String
+                    },
+                    /**
+                     * The instant value of Search Fields
+                     */
+                    searchText: {
+                        type: String,
+                        observer: '_searchTextChanged',
                         notify: true
                     },
-                    placeholder : {
-                        type : String
+                    /**
+                     * The placeholder
+                     */
+                    placeholder: {
+                        type: String
                     }
                 };
             }
 
-            _searchTextChanged (newValue) {
+            _searchTextChanged(newValue) {
                 this._debouncer = Polymer.Debouncer.debounce(
                     this._debouncer,
-                    Polymer.Async.timeOut.after(500),
+                    Polymer.Async.timeOut.after(this.delay),
                     () => {
                         this.search();
                     });
             }
 
-            search(){
-                this.dispatchEvent(new CustomEvent('search',{detail:{searchText:this.searchText}}));
+            search() {
+                this.value = this.searchText;
+                this.dispatchEvent(new CustomEvent('search', {detail: {searchText: this.searchText}}));
             }
         }
 
