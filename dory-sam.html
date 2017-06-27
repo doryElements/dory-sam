@@ -8,8 +8,6 @@
 <link rel="import" href="../iron-icons/iron-icons.html">
 <link rel="import" href="../iron-pages/iron-pages.html">
 
-<!--<link rel="import" href="../polymer/lib/utils/debounce.html">-->
-
 <link rel="import" href="dory-main-layout.html">
 <link rel="import" href="dory-editor-layout.html">
 <link rel="import" href="dory-sam-editor.html">
@@ -43,6 +41,10 @@
                 padding : 10px;
                 margin-top: 50px;
             }
+
+            .main-content{
+                height : calc(100vh - 122px);
+            }
         </style>
 
         <iron-ajax auto id="request" url="http://localhost:9200/sam/sam/_search?" handle-as="json"
@@ -53,7 +55,7 @@
 
             <!-- LISTE -->
             <dory-main-layout>
-                <dory-search-bar id="searchBar"placeholder="Application" slot="sidebar" search-text="{{searchText}}"></dory-search-bar>
+                <dory-search-bar id="searchBar"placeholder="Application" slot="sidebar" result="{{listData}}" search-text="{{searchText}}"></dory-search-bar>
                 <div class="main-content" slot="content">
                     <dory-sam-list id="doryList" items="{{listData}}" entity-id="{{entityId}}"></dory-sam-list>
                     <paper-fab  icon="add-circle-outline" on-tap="_openEditorCreate"></paper-fab>
@@ -100,7 +102,7 @@
                 this.$.doryList.addEventListener('dory-open-details', e => this._handleDetails(e));
                 this.$.doryList.addEventListener('dory-load-data', e => this._loadMoreData(e));
                 this.$.edit.addEventListener('editor-close', e => this._close(e));
-                this.$.edit.addEventListener('editor-control', e => this._handleController(e));
+                this.$.edit.addEventListener('editor-control', e => this.$.doryEditor._handleCommand(e.detail.command));
                 this.$.searchBar.addEventListener('search',e => this._handleSearch(e));
                 this.search();
             }
@@ -128,15 +130,15 @@
                         type: Object,
                         readonly: true
                     },
-                    queryResult: {
-                        type: Object,
-                        value: () => {
-                            return {
-                                total : 0,
-                                items: []
-                            }
-                        }
-                    },
+//                    queryResult: {
+//                        type: Object,
+//                        value: () => {
+//                            return {
+//                                total : 0,
+//                                items: []
+//                            }
+//                        }
+//                    },
                     entityId : {
                         type : String
                     },
@@ -157,9 +159,6 @@
                 this.entityId = itemId;
                 this.tabSelected=2;
             }
-            _handleController(e){
-                this.$.doryEditor._handleCommand(e.detail.command);
-            }
             _openEditorCreate(){
                 this.entityId = null;
                 this._openEditor();
@@ -176,8 +175,8 @@
                 this.queryFrom=0;
                 this.queryBody=this._createRequest(e.detail.searchText);
             }
+
             search() {
-                console.log('Do Search text ', this.searchText);
                 this.queryBody = this._createRequest(this.searchText);
             }
 
