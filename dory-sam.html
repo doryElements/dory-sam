@@ -132,6 +132,9 @@
                             return [];
                         }
                     },
+                    listDataTotal:{
+                      type: Number
+                    },
                     searchText:{
                         type:String,
                         observer :'_searchTextChanged',
@@ -148,15 +151,6 @@
                     queryBody: {
                         type: Object,
                         readonly: true
-                    },
-                    queryResult: {
-                        type: Object,
-                        value: () => {
-                            return {
-                                total : 0,
-                                items: []
-                            }
-                        }
                     },
                     entityId : {
                         type : String
@@ -225,11 +219,12 @@
                     const result = response.hits;
                     const total = response.total;
                     const items = result.map( x => Object.assign( x._source, { id:x._id} ));
-                    resolve( items);
-                }).then( items => {
+                    resolve( [items, total] );
+                }).then( ([items, total]) => {
                     let newResult = [...this.listData, ...items];
                     this.listData = newResult;
-                    return items;
+                    this.listDataTotal = total;
+                    return [items, total];
                 });
             }
 
