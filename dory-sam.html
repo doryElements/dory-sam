@@ -119,14 +119,12 @@
                         }
                     },
                     listDataTotal:{
-                      type: Number
+                        type: Number,
+                        value : 0
                     },
                     searchText:{
-                        type:String,
-                        observer :'_searchTextChanged',
-                        notify: true
+                        type:String
                     },
-
                     queryFrom: {
                         type:Number,
                         value:0
@@ -139,7 +137,6 @@
                         type: Object,
                         readonly: true
                     },
-
                     entityId : {
                         type : String
                     },
@@ -182,8 +179,8 @@
             }
 
             _createRequest(searchText) {
-                let request = {   "query" : {
-                    "match_all" : {} },
+                let request = {
+                    "query" : {"match_all" : {} },
                     "size": this.querySize,
                     "from": this.queryFrom
                 };
@@ -211,7 +208,14 @@
                 }).then( ([items, total]) => {
                     let newResult = [...this.listData, ...items];
                     this.listData = newResult;
-                    this.listDataTotal = total;
+                    console.log(total,this.listDataTotal);
+                    if(total>this.listDataTotal){
+                        this.listDataTotal = total;
+                        this.$.doryList.clearTriggers();
+                    }
+                    else{
+                        this.$.doryList.clearProgressBar();
+                    }
                     return [items, total];
                 });
             }
@@ -219,7 +223,6 @@
             _loadMoreData(){
                 this.queryFrom += this.querySize;
                 this.search();
-                this.$.doryList.clearTriggers();
             }
         }
         window.customElements.define(DorySam.is, DorySam);

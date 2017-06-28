@@ -56,7 +56,7 @@
         </style>
 
         <iron-scroll-threshold id="scrollThreshold"
-                               lower-threshold="10"
+                               lower-threshold="500"
                                on-lower-threshold="_loadMoreData">
 
             <iron-list id="list"  items="[[items]]" as="it" grid >
@@ -127,6 +127,10 @@
 
             clearTriggers(){
                 this.$.scrollThreshold.clearTriggers();
+                this.fetching = false;
+            }
+
+            clearProgressBar(){
                 this.fetching = false;
             }
         }
