@@ -15,13 +15,6 @@
             :host {
                 display: block;
             }
-
-            .editor-form{
-                background-color: var(--dory-background-color);
-            }
-            app-header{
-                position:fixed;
-            }
         </style>
         <air-cruddy-elasticsearch id="cruddy"  mode="cors" url="http://localhost:9200/sam/sam"
                                   elastic-refresh="true" debug auto-save
@@ -60,7 +53,6 @@
             }
 
             _handleCommand(command){
-                console.log(command);
                 this.$.cruddy.command=command;
             }
         }

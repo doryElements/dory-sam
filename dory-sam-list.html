@@ -4,6 +4,8 @@
 <link rel="import" href="../iron-icons/iron-icons.html">
 <link rel="import" href="../paper-fab/paper-fab.html">
 <link rel="import" href="../iron-scroll-threshold/iron-scroll-threshold.html">
+<link rel="import" href="../paper-progress/paper-progress.html">
+
 
 <link rel="import" href="dory-sam-card.html">
 
@@ -15,7 +17,7 @@
         <style>
             :host {
                 display: block;
-                height: 100vh;
+                height : 100%;
             }
 
             paper-fab{
@@ -29,10 +31,35 @@
                 font : 30px "Roboto";
                 padding : 30px;
             }
+
+            h4{
+                color : var(--sidebar-text-color);
+                text-align : center;
+                font : 15px "Roboto" bold;
+            }
+
+            iron-scroll-threshold {
+                height: 100%;
+                overflow: auto;
+            }
+
+            paper-progress {
+                display: block;
+                width: 95%;
+                margin: 10px auto 0 auto;
+            }
+
+            paper-progress.blue {
+                --paper-progress-active-color: var(--paper-light-blue-500);
+                --paper-progress-secondary-color: var(--paper-light-blue-100);
+            }
         </style>
-        <h2>Mes Applications</h2>
-        <iron-scroll-threshold id="scrollThreshold" lower-threshold="50" on-lower-threshold="_loadMoreData">
-            <iron-list id="list" scroll-target="scrollThreshold" items="[[items]]" as="it"  grid>
+
+        <iron-scroll-threshold id="scrollThreshold"
+                               lower-threshold="10"
+                               on-lower-threshold="_loadMoreData">
+
+            <iron-list id="list"  items="[[items]]" as="it" grid >
                 <template>
                     <div class="card">
                         <dory-sam-card data="[[it]]" tabindex$="[[tabIndex]]" on-tap="_openDetails"></dory-sam-card>
@@ -40,7 +67,12 @@
                     </div>
                 </template>
             </iron-list>
+            <template is="dom-if" if="[[fetching]]">
+                <paper-progress indeterminate class="blue"></paper-progress>
+            </template>
+
         </iron-scroll-threshold>
+
 
     </template>
 
@@ -65,6 +97,9 @@
                     },
                     entityId: {
                         type:String
+                    },
+                    fetching : {
+                        type : Boolean
                     }
                 };
             }
@@ -86,12 +121,13 @@
             }
 
             _loadMoreData(){
+                this.fetching = true;
                 this.dispatchEvent(new CustomEvent('dory-load-data'));
             }
 
             clearTriggers(){
                 this.$.scrollThreshold.clearTriggers();
-                console.log('Triggers cleared');
+                this.fetching = false;
             }
         }
 
