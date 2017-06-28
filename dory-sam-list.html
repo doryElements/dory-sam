@@ -4,6 +4,8 @@
 <link rel="import" href="../iron-icons/iron-icons.html">
 <link rel="import" href="../paper-fab/paper-fab.html">
 <link rel="import" href="../iron-scroll-threshold/iron-scroll-threshold.html">
+<link rel="import" href="../paper-progress/paper-progress.html">
+
 
 <link rel="import" href="dory-sam-card.html">
 
@@ -40,10 +42,21 @@
                 height: 100%;
                 overflow: auto;
             }
+
+            paper-progress {
+                display: block;
+                width: 95%;
+                margin: 10px auto 0 auto;
+            }
+
+            paper-progress.blue {
+                --paper-progress-active-color: var(--paper-light-blue-500);
+                --paper-progress-secondary-color: var(--paper-light-blue-100);
+            }
         </style>
 
         <iron-scroll-threshold id="scrollThreshold"
-                               lower-threshold="500"
+                               lower-threshold="10"
                                on-lower-threshold="_loadMoreData">
 
             <iron-list id="list"  items="[[items]]" as="it" grid >
@@ -54,8 +67,13 @@
                     </div>
                 </template>
             </iron-list>
+            <template is="dom-if" if="[[fetching]]">
+                <paper-progress indeterminate class="blue"></paper-progress>
+            </template>
 
         </iron-scroll-threshold>
+
+
     </template>
 
     <script>
@@ -79,6 +97,9 @@
                     },
                     entityId: {
                         type:String
+                    },
+                    fetching : {
+                        type : Boolean
                     }
                 };
             }
@@ -100,12 +121,13 @@
             }
 
             _loadMoreData(){
+                this.fetching = true;
                 this.dispatchEvent(new CustomEvent('dory-load-data'));
             }
 
             clearTriggers(){
                 this.$.scrollThreshold.clearTriggers();
-                console.log('Triggers cleared');
+                this.fetching = false;
             }
         }
 
