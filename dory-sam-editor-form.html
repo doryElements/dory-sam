@@ -23,7 +23,7 @@
 
             .form{
                 margin  : 25px;
-                background-color: var(--dory-background-color);
+                background-color: var(--background-color);
             }
 
             paper-input{
@@ -39,7 +39,7 @@
             }
 
             h3{
-                color: var(--dory-h3-color);
+                color: var(--h3-color);
             }
 
 
@@ -48,7 +48,6 @@
             <h3>Informations</h3>
             <paper-input value="{{data.app}}" label="Application" required></paper-input>
             <paper-input value="{{data.name}}" label="Nom" required></paper-input>
-            <paper-input value="{{data.email}}" label="Email" type="email" required></paper-input>
             <paper-input value="{{data.dpt}}" label="Département propriétaire" required></paper-input>
             <paper-input value="{{data.type}}" label="Type" required></paper-input>
             <water-marked-editor value="{{data.description}}">
