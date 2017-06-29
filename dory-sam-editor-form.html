@@ -102,6 +102,38 @@
                     }
                 };
             }
+
+            createEmptyEntityModel() {
+                return {
+                    app: '',
+                    description :'',
+                    name : '',
+                    dpt : '',
+                    type : '',
+                    doc : '',
+                    quali : {
+                        softwares:[],
+                        urls:[],
+                        bdds:[],
+                        vips:[],
+                        serveurs :[]
+                    },
+                    rec : {
+                        softwares:[],
+                        urls:[],
+                        bdds:[],
+                        vips:[],
+                        serveurs :[]
+                    },
+                    prod : {
+                        softwares:[],
+                        urls:[],
+                        bdds:[],
+                        vips:[],
+                        serveurs :[]
+                    }
+                }
+            }
         }
 
         window.customElements.define(DorySamEditorForm.is, DorySamEditorForm);
