@@ -25,7 +25,8 @@
     "water-marked-editor": "FiveElements/water-marked-editor",
     "paper-toast": "PolymerElements/paper-toast#2.0.0",
     "iron-scroll-threshold":"PolymerElements/iron-scroll-threshold#^2.0.0",
-    "paper-progress":"PolymerElements/paper-progress#^2.0.0"
+    "paper-progress":"PolymerElements/paper-progress#^2.0.0",
+    "tags-input":"jifalops/tags-input"
   },
   "devDependencies": {
     "iron-demo-helpers": "PolymerElements/iron-demo-helpers#^2.0.0",

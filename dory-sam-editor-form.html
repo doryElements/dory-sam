@@ -8,6 +8,7 @@
 
 <link rel="import" href="../paper-tabs/paper-tabs.html">
 <link rel="import" href="../paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../tags-input/tags-input.html">
 
 
 <link rel="import" href="dory-sam-editor-env.html">
@@ -42,6 +43,11 @@
                 color: var(--h3-color);
             }
 
+            tags-input{
+                width : 40%;
+                min-width : 300px;
+                padding : 10px;
+            }
 
         </style>
         <div class="form">
@@ -56,6 +62,7 @@
                                 value="{{data.description}}"></paper-textarea>
             </water-marked-editor>
             <paper-input value="{{data.doc}}" label="Documentation" required></paper-input>
+            <tags-input tags="{{data.tags}}"></tags-input>
         </div>
 
 
@@ -99,6 +106,12 @@
                     tabSelected: {
                       type: Number,
                       value: 0
+                    },
+                    tags : {
+                        type : Array,
+                        value : function(){
+                            return [];
+                        }
                     }
                 };
             }
@@ -111,6 +124,7 @@
                     dpt : '',
                     type : '',
                     doc : '',
+                    tags : [],
                     quali : {
                         softwares:[],
                         urls:[],
