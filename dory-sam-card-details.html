@@ -5,6 +5,7 @@
 <link rel="import" href="../iron-icons/device-icons.html">
 <link rel="import" href="../iron-icon/iron-icon.html">
 <link rel="import" href="../iron-pages/iron-pages.html">
+<link rel="import" href="../tags-input/tags-input.html">
 
 <link rel="import" href="dory-sam-card-details-tab.html">
 
@@ -42,6 +43,13 @@
                 background-color: var(--dory-background-color);
                 padding : 10px;
             }
+            tags-input{
+                display : inline-block;
+                --tags-existing-tag: {
+                    border-radius : 4px;
+                    padding : 5px;
+                }
+            }
         </style>
         <air-cruddy-elasticsearch id="cruddy"  mode="cors" url="http://localhost:9200/sam/sam"
                                   elastic-refresh="true" debug
@@ -71,6 +79,10 @@
                     <div class="info">
                         <label>Documentation : </label>
                         [[data.doc]]
+                    </div>
+                    <div class="info">
+                        <label>Tags : </label>
+                        <tags-input no-edit tags="[[data.tags]]" ></tags-input>
                     </div>
                 </div>
 
