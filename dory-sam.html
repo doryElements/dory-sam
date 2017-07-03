@@ -55,7 +55,7 @@
 
             <!-- LISTE -->
             <dory-main-layout>
-                <dory-search-bar id="searchBar"placeholder="Application" slot="sidebar" result="{{listData}}" search-text="{{searchText}}"></dory-search-bar>
+                <dory-search-bar id="searchBar"placeholder="Application/Tag" slot="sidebar" result="{{listData}}" search-text="{{searchText}}"></dory-search-bar>
                 <div class="main-content" slot="content">
                     <dory-sam-list id="doryList" items="{{listData}}" entity-id="{{entityId}}"></dory-sam-list>
                     <paper-fab  icon="add-circle-outline" on-tap="_openEditorCreate"></paper-fab>

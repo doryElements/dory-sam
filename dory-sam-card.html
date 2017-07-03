@@ -1,6 +1,9 @@
 <link rel="import" href="../polymer/polymer-element.html">
 
 <link rel="import" href="../paper-card/paper-card.html">
+<link rel="import" href="../iron-icon/iron-icon.html">
+<link rel="import" href="../iron-icon/iron-icons.html">
+<link rel="import" href="../iron-icons/device-icons.html">
 
 <link rel="import" href="dory-sam.html">
 <link rel="import" href="dory-sam-editor.html">
@@ -29,22 +32,57 @@
                 text-overflow: ellipsis;
             }
 
-            .ellipsis{
-                background: -webkit-gradient(linear, left top, left bottom, from(rgba(255,255,255,0)), to(#fff));
+            .right-ellipsis{
+                background: -webkit-gradient(linear, left top, right top, from(rgba(255,255,255,0)), to(#fff));
                 position : absolute;
-                width : 100%;
-                bottom:0;
-                height : 50px;
-                left:0;
+                height : 100%;
+                right : 0;
+                top : 0;
+                width : 60px;
+            }
+
+            h4{
+                color : var(--h4-color);
+                font : 14px 'Roboto';
+            }
+
+            .info{
+                padding : 5px;
+            }
+
+            #url{
+                --iron-icon-fill-color: #B2EBF2;
+            }
+            #servers{
+                --iron-icon-fill-color: #FFE0B2;
+            }
+            #bdds{
+                --iron-icon-fill-color: #FF8A65;
+            }
+            span{
+                position : absolute;
+                margin-left : 4px;
             }
         </style>
 
         <paper-card heading="[[data.app]]">
             <div class="card-content">
                 <div class="content">
-                    [[data.description]]
+                    <h4>Production</h4>
+                    <div class="info">
+                        <iron-icon id="url" icon="cloud"></iron-icon>
+                        <span>[[data.prod.urls.0.value]]</span>
+                    </div>
+                    <div class="info">
+                        <iron-icon id="servers" icon="dns"></iron-icon>
+                        [[servers]]
+                    </div>
+                    <div class="info">
+                        <iron-icon id="bdds" icon="device:storage"></iron-icon>
+                        [[bdds]]
+                    </div>
+                    <div class="right-ellipsis"></div>
                 </div>
-                <div class="ellipsis"></div>
             </div>
         </paper-card>
     </template>
@@ -66,13 +104,39 @@
             static get properties() {
                 return {
                     data: {
-                        type: Object
+                        type: Object,
+                        notify : true,
+                        observer : '_handleListsDisplay'
+                    },
+                    servers : {
+                        type : String
+                    },
+                    bdds : {
+                        type : String
                     }
                 };
             }
 
-            openDetails () {
-                this.$.details.open();
+            /**
+             * Fill out servers and DBs strings with the content of their arrays in the data object.
+             */
+            _handleListsDisplay(){
+                let result = "";
+                if(this.data.prod.servers){
+                    this.data.prod.servers.forEach(function(e){
+                        result = result+" / "+e.value;
+                    });
+                }
+                result = result.substr(3);
+                this.servers = result;
+                result ="";
+                if(this.data.prod.bdds){
+                    this.data.prod.bdds.forEach(function(e){
+                        result = result+" / "+e.value;
+                    });
+                }
+                result = result.substr(3);
+                this.bdds = result;
             }
         }
 
