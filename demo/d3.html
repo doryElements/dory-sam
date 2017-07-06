@@ -1,44 +1,46 @@
 <!doctype html>
 <html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
 
-    <title>Demo D3.js</title>
+        <title>Demo D3.js</title>
 
-    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+        <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
 
-    <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
-    <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
+        <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
+        <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
 
-    <link rel="import" href="../dory-d3-relationship-graph.html">
+        <link rel="import" href="../dory-d3-relationship-graph.html">
+        <link rel="import" href="demo-graph-data.html">
 
-    <custom-style>
-        <style is="custom-style" include="demo-pages-shared-styles">
-            html{
-                --h1-color : #FFD54F;
-                --logo-background-color : #FB8C00;
-                --sidebar-background-color : #424242;
-                --sidebar-text-color: white;
-                --background-color : #EFEBE9;
-                --h3-color: #FFAB40;
-                --h4-color:#80CBC4;
-                --paper-fab-background: #4285f4;
-                --h2-color :#FF6F00 ;
-            }
-            body{
-                padding : 0;
-            }
-        </style>
-    </custom-style>
-</head>
-<body>
-<div>
-    <dom-bind id="demo">
-        <template>
-            <dory-d3-relationship-graph></dory-d3-relationship-graph>
-        </template>
-    </dom-bind>
-</div>
-</body>
+        <custom-style>
+            <style is="custom-style" include="demo-pages-shared-styles">
+                html{
+                    --h1-color : #FFD54F;
+                    --logo-background-color : #FB8C00;
+                    --sidebar-background-color : #424242;
+                    --sidebar-text-color: white;
+                    --background-color : #EFEBE9;
+                    --h3-color: #FFAB40;
+                    --h4-color:#80CBC4;
+                    --paper-fab-background: #4285f4;
+                    --h2-color :#FF6F00 ;
+                }
+                body{
+                    padding : 0;
+                }
+            </style>
+        </custom-style>
+    </head>
+    <body>
+    <div>
+        <dom-bind id="demo">
+            <template>
+                <demo-graph-data data="{{data}}"></demo-graph-data>
+                <dory-d3-relationship-graph data="[[data]]"></dory-d3-relationship-graph>
+            </template>
+        </dom-bind>
+    </div>
+    </body>
 </html>
