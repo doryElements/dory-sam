@@ -20,38 +20,71 @@
             h4{
                 color : var(--h4-color);
             }
+
+            .dyn-list{
+                display : inline-table;
+                width  : 33%;
+                min-width : 300px;
+            }
+
+            .scheme{
+                width : 100%;
+            }
         </style>
 
-        <h4>Softwares</h4>
-        <template is="dom-repeat" items="[[data.softwares]]" as="it">
-            <p>[[it.value]]</p>
+        <template is="dom-if" if="[[servers]]">
+            <div class="dyn-list">
+                <h4>Servers</h4>
+                <template is="dom-repeat" items="[[data.servers]]" as="it">
+                    <p>
+                        <iron-icon icon="dns" style="--iron-icon-fill-color:#FFE0B2"></iron-icon>
+                        <label>[[it.zone]] - [[it.value]]</label>
+                    </p>
+                </template>
+            </div>
         </template>
 
-        <h4>Servers</h4>
-        <template is="dom-repeat" items="[[data.servers]]" as="it">
-            <p>
-                <iron-icon icon="dns"></iron-icon>
-                <label>[[it.zone]] - [[it.value]]</label>
-            </p>
+        <template is="dom-if" if="[[bdds]]">
+            <div class="dyn-list">
+                <h4>Bases de données</h4>
+                <template is="dom-repeat" items="[[data.bdds]]" as="it">
+                    <p><iron-icon icon="device:storage" style="--iron-icon-fill-color:#FF8A65"></iron-icon> [[it.value]] </p>
+                </template>
+            </div>
         </template>
 
-        <h4>Bases de données</h4>
-        <template is="dom-repeat" items="[[data.bdds]]" as="it">
-            <p><iron-icon icon="device:storage"></iron-icon> [[it.value]] </p>
+        <template is="dom-if" if="[[urls]]">
+            <div class="dyn-list">
+                <h4>URLs</h4>
+                <template is="dom-repeat" items="[[data.urls]]" as="it">
+                    <p><iron-icon icon="cloud" style="--iron-icon-fill-color:#B2EBF2"></iron-icon> [[it.value]] </p>
+                </template>
+            </div>
         </template>
 
-        <h4>URLs</h4>
-        <template is="dom-repeat" items="[[data.urls]]" as="it">
-            <p><iron-icon icon="cloud"></iron-icon> [[it.value]] </p>
+        <template is="dom-if" if="[[softwares]]">
+            <div class="dyn-list">
+                <h4>Softwares</h4>
+                <template is="dom-repeat" items="[[data.softwares]]" as="it">
+                    <p>[[it.value]]</p>
+                </template>
+            </div>
         </template>
 
-        <h4>VIPs</h4>
-        <template is="dom-repeat" items="[[data.vips]]" as="it">
-            <p><iron-icon icon="face"></iron-icon> [[it.value]] </p>
+        <template is="dom-if" if="[[vips]]">
+            <div class="dyn-list">
+                <h4>VIPs</h4>
+                <template is="dom-repeat" items="[[data.vips]]" as="it">
+                    <p><iron-icon icon="face" style="--iron-icon-fill-color:#FFE0B2"></iron-icon> [[it.value]] </p>
+                </template>
+            </div>
         </template>
 
-        <h3>Schéma Infrastructure</h3>
-        <dory-d3-relationship-graph id ="graph" data="[[graphData]]" width="500" height="500"></dory-d3-relationship-graph>
+        <div class="scheme">
+            <h3>Schéma Infrastructure</h3>
+            <dory-d3-relationship-graph id ="graph" data="[[graphData]]" width="720" height="480"></dory-d3-relationship-graph>
+        </div>
+
     </template>
 
     <script>
@@ -71,11 +104,32 @@
             static get properties() {
                 return {
                     app:{
-                        type : String
+                        type : String,
+                        observer : '_setArraysDisplay'
                     },
                     data: {
                         type: Object,
-                        observer : '_createGraphData'
+                        observer : '_createGraph'
+                    },
+                    servers:{
+                        type : Boolean,
+                        value : false
+                    },
+                    bdds:{
+                        type: Boolean,
+                        value : false
+                    },
+                    vips:{
+                        type: Boolean,
+                        value : false
+                    },
+                    softwares:{
+                        type: Boolean,
+                        value : false
+                    },
+                    urls:{
+                        type: Boolean,
+                        value : false
                     },
                     graphData:{
                         type : Object,
@@ -84,7 +138,32 @@
                 };
             }
 
-            _createGraphData(){
+            /**
+             * Set booleans related to arrays to True if the arrays are not empty
+             * @private
+             */
+            _setArraysDisplay(){
+                if(this.data){
+                    if(this.data.softwares && this.data.softwares.length>0){
+                        this.set('softwares',true);
+                    }
+                    if(this.data.bdds && this.data.bdds.length>0){
+                        this.set('bdds',true);
+                    }
+                    if(this.data.urls && this.data.urls.length>0){
+                        this.set('urls',true);
+                    }
+                    if(this.data.servers && this.data.servers.length>0){
+                        this.set('servers',true);
+                    }
+                    if(this.data.vips && this.data.vips.length>0){
+                        this.set('vips',true);
+                    }
+                    console.log('Data',this.data);
+                }
+            }
+
+            _createGraph(){
                 if(this.data){
                     console.log('Creating graph with ',this.app,this.data)
                     let app = this.app;

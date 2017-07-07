@@ -34,6 +34,11 @@
             iron-icon{
                 --iron-icon-fill-color: white;
             }
+
+            #svgcontainer{
+                margin-right : auto;
+                margin-left : auto;
+            }
         </style>
 
         <div id="svgcontainer" style$='width: [[width]]px; height: [[height]]px'></div>
@@ -103,7 +108,7 @@
                     .data(this.data.links)
                     .enter()
                     .append('line')
-                        .attr('stroke-width',1);
+                        .attr('stroke-width',2);
 
                 let node = svg.append('g')
                     .attr('class','node')

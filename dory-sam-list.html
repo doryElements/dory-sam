@@ -59,10 +59,10 @@
                                lower-threshold="500"
                                on-lower-threshold="_loadMoreData">
 
-            <iron-list id="list"  items="[[items]]" as="it" grid >
+            <iron-list id="list"  items="[[items]]" grid >
                 <template>
                     <div class="card">
-                        <dory-sam-card data="[[it]]" tabindex$="[[tabIndex]]" on-tap="_openDetails"></dory-sam-card>
+                        <dory-sam-card data="[[item]]" on-tap="_openDetails"></dory-sam-card>
                         <paper-fab mini icon="create" on-tap="_handleEditTap"></paper-fab>
                     </div>
                 </template>
@@ -105,7 +105,7 @@
             }
 
             _handleEditTap(e){
-                let item = e.model.it;
+                let item = e.model.item;
                 if(item){
                     this.entityId= item.id;
                     this.dispatchEvent(new CustomEvent('dory-open-editor',{detail:{id:this.entityId}}));
@@ -113,7 +113,7 @@
             }
 
             _openDetails(e){
-                let item= e.model.it;
+                let item= e.model.item;
                 if(item){
                     this.entityId= item.id;
                     this.dispatchEvent(new CustomEvent('dory-open-details',{detail:{id:this.entityId}}));
