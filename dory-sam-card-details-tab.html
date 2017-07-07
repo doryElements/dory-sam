@@ -13,6 +13,10 @@
                 display: block;
             }
 
+            h3{
+                color : var(--h3-color);
+            }
+
             h4{
                 color : var(--h4-color);
             }
@@ -46,7 +50,8 @@
             <p><iron-icon icon="face"></iron-icon> [[it.value]] </p>
         </template>
 
-        <!--<dory-d3-relationship-graph data="[[graphData]]" width="500" height="500"></dory-d3-relationship-graph>-->
+        <h3>Schéma Infrastructure</h3>
+        <dory-d3-relationship-graph id ="graph" data="[[graphData]]" width="500" height="500"></dory-d3-relationship-graph>
     </template>
 
     <script>
@@ -80,34 +85,37 @@
             }
 
             _createGraphData(){
-//                if(this.data){
-//                    console.log('Creating graph with ',this.app,this.data)
-//
-//                    this.graphData = {};
-//                    let nodes = [];
-//                    let links = [];
-//
-//                    nodes.push({'name':this.app,'color':'#FFCC80','icon':'tab'});
-//
-//                    if(this.data.servers){
-//                        this.data.servers.forEach(function(server){
-//                            nodes.push({'name':server.value,'color':'#B0BEC5','icon':'dns'});
-//                            links.push({'source':this.app,'target':server.value});
-//                        });
-//                    }
-//
-//                    if(this.data.bdds){
-//                        this.data.bdds.forEach(function(bdd){
-//                            nodes.push({'name':bdd.value,'color':'#FF7043','icon':'device:storage'});
-//                            links.push({'source':this.app,'target':bdd.value});
-//                        });
-//                    }
-//
-//                    this.graphData.nodes = nodes;
-//                    this.graphData.links = links;
-//
-//                }
-//            }
+                if(this.data){
+                    console.log('Creating graph with ',this.app,this.data)
+                    let app = this.app;
+                    this.graphData = {};
+                    let nodes = [];
+                    let links = [];
+
+                    nodes.push({'name':this.app,'color':'#FFCC80','icon':'tab'});
+
+                    if(this.data.servers){
+                        this.data.servers.forEach(function(server){
+                            nodes.push({'name':server.value,'color':'#B0BEC5','icon':'dns'});
+                            links.push({'source':app,'target':server.value});
+                        });
+                    }
+
+                    if(this.data.bdds){
+                        this.data.bdds.forEach(function(bdd){
+                            nodes.push({'name':bdd.value,'color':'#FF7043','icon':'device:storage'});
+                            links.push({'source':app,'target':bdd.value});
+                        });
+                    }
+
+                    this.graphData.nodes = nodes;
+                    this.graphData.links = links;
+
+                    console.log('Graph data : ',this.graphData);
+                    this.$.graph.draw();
+
+                }
+            }
         }
 
         window.customElements.define(DorySamCardDetailsTab.is, DorySamCardDetailsTab);
