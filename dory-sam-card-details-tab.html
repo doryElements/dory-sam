@@ -4,37 +4,49 @@
 <link rel="import" href="../iron-icons/device-icons.html">
 <link rel="import" href="../iron-icon/iron-icon.html">
 
+<link rel="import" href="dory-d3-relationship-graph.html">
+
 <dom-module id="dory-sam-card-details-tab">
     <template>
         <style>
             :host {
                 display: block;
             }
+
+            h4{
+                color : var(--h4-color);
+            }
         </style>
 
-        <h3>Softwares</h3>
+        <h4>Softwares</h4>
         <template is="dom-repeat" items="[[data.softwares]]" as="it">
             <p>[[it.value]]</p>
         </template>
-        <h3>Servers</h3>
+
+        <h4>Servers</h4>
         <template is="dom-repeat" items="[[data.servers]]" as="it">
             <p>
                 <iron-icon icon="dns"></iron-icon>
                 <label>[[it.zone]] - [[it.value]]</label>
             </p>
         </template>
-        <h3>Bases de données</h3>
+
+        <h4>Bases de données</h4>
         <template is="dom-repeat" items="[[data.bdds]]" as="it">
             <p><iron-icon icon="device:storage"></iron-icon> [[it.value]] </p>
         </template>
-        <h3>URLs</h3>
+
+        <h4>URLs</h4>
         <template is="dom-repeat" items="[[data.urls]]" as="it">
             <p><iron-icon icon="cloud"></iron-icon> [[it.value]] </p>
         </template>
-        <h3>VIPs</h3>
+
+        <h4>VIPs</h4>
         <template is="dom-repeat" items="[[data.vips]]" as="it">
             <p><iron-icon icon="face"></iron-icon> [[it.value]] </p>
         </template>
+
+        <!--<dory-d3-relationship-graph data="[[graphData]]" width="500" height="500"></dory-d3-relationship-graph>-->
     </template>
 
     <script>
@@ -53,11 +65,49 @@
 
             static get properties() {
                 return {
+                    app:{
+                        type : String
+                    },
                     data: {
-                        type: Object
+                        type: Object,
+                        observer : '_createGraphData'
+                    },
+                    graphData:{
+                        type : Object,
+                        notify : true
                     }
                 };
             }
+
+            _createGraphData(){
+//                if(this.data){
+//                    console.log('Creating graph with ',this.app,this.data)
+//
+//                    this.graphData = {};
+//                    let nodes = [];
+//                    let links = [];
+//
+//                    nodes.push({'name':this.app,'color':'#FFCC80','icon':'tab'});
+//
+//                    if(this.data.servers){
+//                        this.data.servers.forEach(function(server){
+//                            nodes.push({'name':server.value,'color':'#B0BEC5','icon':'dns'});
+//                            links.push({'source':this.app,'target':server.value});
+//                        });
+//                    }
+//
+//                    if(this.data.bdds){
+//                        this.data.bdds.forEach(function(bdd){
+//                            nodes.push({'name':bdd.value,'color':'#FF7043','icon':'device:storage'});
+//                            links.push({'source':this.app,'target':bdd.value});
+//                        });
+//                    }
+//
+//                    this.graphData.nodes = nodes;
+//                    this.graphData.links = links;
+//
+//                }
+//            }
         }
 
         window.customElements.define(DorySamCardDetailsTab.is, DorySamCardDetailsTab);
