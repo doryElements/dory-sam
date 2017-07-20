@@ -84,9 +84,13 @@
             draw(){
                 const container = this.$.svgcontainer;
 
+                if(container.hasChildNodes()){
+                    container.innerHTML='';
+                }
+
                 let root = this.data;
                 if(!root){
-                    console.log('D3 : Pas de data');
+                    console.error('D3 : Pas de data');
                     return;
                 }
 
