@@ -35,10 +35,10 @@
         <template is="dom-if" if="[[servers]]">
             <div class="dyn-list">
                 <h4>Servers</h4>
-                <template is="dom-repeat" items="[[data.servers]]" as="it">
+                <template is="dom-repeat" items="[[data.serveurs]]" as="it">
                     <p>
                         <iron-icon icon="dns" style="--iron-icon-fill-color:#FFE0B2"></iron-icon>
-                        <label>[[it.zone]] - [[it.value]]</label>
+                        <label>[[it]]</label>
                     </p>
                 </template>
             </div>
@@ -48,7 +48,7 @@
             <div class="dyn-list">
                 <h4>Bases de données</h4>
                 <template is="dom-repeat" items="[[data.bdds]]" as="it">
-                    <p><iron-icon icon="device:storage" style="--iron-icon-fill-color:#FF8A65"></iron-icon> [[it.value]] </p>
+                    <p><iron-icon icon="device:storage" style="--iron-icon-fill-color:#FF8A65"></iron-icon> [[it]] </p>
                 </template>
             </div>
         </template>
@@ -57,7 +57,7 @@
             <div class="dyn-list">
                 <h4>URLs</h4>
                 <template is="dom-repeat" items="[[data.urls]]" as="it">
-                    <p><iron-icon icon="cloud" style="--iron-icon-fill-color:#B2EBF2"></iron-icon> [[it.value]] </p>
+                    <p><iron-icon icon="cloud" style="--iron-icon-fill-color:#B2EBF2"></iron-icon> [[it]] </p>
                 </template>
             </div>
         </template>
@@ -66,7 +66,7 @@
             <div class="dyn-list">
                 <h4>Softwares</h4>
                 <template is="dom-repeat" items="[[data.softwares]]" as="it">
-                    <p>[[it.value]]</p>
+                    <p>[[it]]</p>
                 </template>
             </div>
         </template>
@@ -75,7 +75,7 @@
             <div class="dyn-list">
                 <h4>VIPs</h4>
                 <template is="dom-repeat" items="[[data.vips]]" as="it">
-                    <p><iron-icon icon="face" style="--iron-icon-fill-color:#FFE0B2"></iron-icon> [[it.value]] </p>
+                    <p><iron-icon icon="face" style="--iron-icon-fill-color:#FFE0B2"></iron-icon> [[it]] </p>
                 </template>
             </div>
         </template>
@@ -153,7 +153,7 @@
                     if(this.data.urls && this.data.urls.length>0){
                         this.set('urls',true);
                     }
-                    if(this.data.servers && this.data.servers.length>0){
+                    if(this.data.serveurs && this.data.serveurs.length>0){
                         this.set('servers',true);
                     }
                     if(this.data.vips && this.data.vips.length>0){
@@ -165,7 +165,6 @@
 
             _createGraph(){
                 if(this.data){
-                    console.log('Creating graph with ',this.app,this.data)
                     let app = this.app;
                     this.graphData = {};
                     let nodes = [];
@@ -173,17 +172,17 @@
 
                     nodes.push({'name':this.app,'color':'#FFCC80','icon':'tab'});
 
-                    if(this.data.servers){
-                        this.data.servers.forEach(function(server){
-                            nodes.push({'name':server.value,'color':'#B0BEC5','icon':'dns'});
-                            links.push({'source':app,'target':server.value});
+                    if(this.data.serveurs){
+                        this.data.serveurs.forEach(function(server){
+                            nodes.push({'name':server,'color':'#B0BEC5','icon':'dns'});
+                            links.push({'source':app,'target':server});
                         });
                     }
 
                     if(this.data.bdds){
                         this.data.bdds.forEach(function(bdd){
-                            nodes.push({'name':bdd.value,'color':'#FF7043','icon':'device:storage'});
-                            links.push({'source':app,'target':bdd.value});
+                            nodes.push({'name':bdd,'color':'#FF7043','icon':'device:storage'});
+                            links.push({'source':app,'target':bdd});
                         });
                     }
 
