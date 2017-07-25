@@ -34,14 +34,7 @@
             <template is="dom-repeat" items="{{servers}}" as="item">
 
                 <div class="server">
-                    <paper-dropdown-menu label="Zone">
-                        <paper-listbox slot="dropdown-content" selected="{{item.zone}}">
-                            <paper-item value="DMZ">DMZ</paper-item>
-                            <paper-item value="LAN">LAN</paper-item>
-                        </paper-listbox>
-                    </paper-dropdown-menu>
-
-                    <paper-input value="{{item.value}}" label="Serveur [[_add(index,1)]]">
+                    <paper-input value="{{item}}" label="Serveur [[_add(index,1)]]">
                         <paper-icon-button slot="suffix" icon="clear" on-tap="_deleteServer"></paper-icon-button>
                     </paper-input>
                 </div>

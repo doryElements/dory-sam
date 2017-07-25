@@ -67,7 +67,7 @@
                     <h4>Production</h4>
                     <div class="info">
                         <iron-icon id="url" icon="cloud"></iron-icon>
-                        <span>[[data.prod.urls.0.value]]</span>
+                        <span>[[data.Production.urls.0]]</span>
                     </div>
                     <div class="info">
                         <iron-icon id="servers" icon="dns"></iron-icon>
@@ -118,17 +118,20 @@
              */
             _handleListsDisplay(){
                 let result = "";
-                if(this.data.prod.servers){
-                    this.data.prod.servers.forEach(function(e){
-                        result = result+" / "+e.value;
+                if(!this.data.Production){
+                    return;
+                }
+                if(this.data.Production.serveurs){
+                    this.data.Production.serveurs.forEach(function(e){
+                        result = result+" / "+e;
                     });
                 }
                 result = result.substr(3);
                 this.servers = result;
                 result ="";
-                if(this.data.prod.bdds){
-                    this.data.prod.bdds.forEach(function(e){
-                        result = result+" / "+e.value;
+                if(this.data.Production.bdds){
+                    this.data.Production.bdds.forEach(function(e){
+                        result = result+" / "+e;
                     });
                 }
                 result = result.substr(3);
