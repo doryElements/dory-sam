@@ -1,19 +1,15 @@
 <link rel="import" href="../polymer/polymer-element.html">
 
 <link rel="import" href="../paper-fab/paper-fab.html">
-<link rel="import" href="../iron-ajax/iron-ajax.html">
-<link rel="import" href="../app-layout/app-layout.html">
-<link rel="import" href="../app-layout/app-toolbar/app-toolbar.html">
 <link rel="import" href="../iron-icons/iron-icons.html">
-<link rel="import" href="../iron-pages/iron-pages.html">
 
-<link rel="import" href="dory-main-layout.html">
+<link rel="import" href="../dory-layout/dory-main-layout/dory-main-layout.html">
+
 <link rel="import" href="dory-editor-layout.html">
 <link rel="import" href="dory-sam-editor.html">
 <link rel="import" href="dory-sam-list.html">
 <link rel="import" href="dory-sam-card-details.html">
 <link rel="import" href="dory-cruddy-event.html">
-<link rel="import" href="dory-search-bar.html">
 
 <dom-module id="dory-sam">
     <template>
@@ -47,16 +43,21 @@
             }
         </style>
 
-        <iron-ajax auto id="request" url="http://localhost:9200/sam/sam/_search?" handle-as="json"
-            content-type="application/json" body="[[queryBody]]" method="post"
-            on-response="_handleResponse"></iron-ajax>
-
         <iron-pages selected="[[tabSelected]]" fallback-selection="fallback">
 
             <!-- LISTE -->
-            <dory-main-layout>
-                <dory-search-bar id="searchBar"placeholder="Application/Tag" slot="sidebar" result="{{listData}}" search-text="{{searchText}}"></dory-search-bar>
-                <div class="main-content" slot="content">
+            <dory-main-layout   search
+                                url="https://localhost:8181/api/sams/"
+                                list-data="{{listData}}"
+                                method="get">
+                <div slot="top-sidebar">
+                    <img src="[[logo]]" alt="Agrica">
+                </div>
+                <div slot="title">
+                    <h1>DORY</h1>
+                    Dépendances des applications
+                </div>
+                <div slot="list">
                     <dory-sam-list id="doryList" items="{{listData}}" entity-id="{{entityId}}"></dory-sam-list>
                     <paper-fab  icon="add-circle-outline" on-tap="_openEditorCreate"></paper-fab>
                 </div>
@@ -100,11 +101,8 @@
                 this.listData = new Array();
                 this.$.doryList.addEventListener('dory-open-editor', e => this._handleEdit(e));
                 this.$.doryList.addEventListener('dory-open-details', e => this._handleDetails(e));
-                this.$.doryList.addEventListener('dory-load-data', e => this._loadMoreData(e));
                 this.$.edit.addEventListener('editor-close', e => this._close(e));
                 this.$.edit.addEventListener('editor-control', e => this.$.doryEditor._handleCommand(e.detail.command));
-                this.$.searchBar.addEventListener('search',e => this._handleSearch(e));
-                this.search();
             }
 
             static get properties() {
@@ -118,31 +116,15 @@
                             return [];
                         }
                     },
-                    listDataTotal:{
-                        type: Number,
-                        value : 0
-                    },
-                    searchText:{
-                        type:String
-                    },
-                    queryFrom: {
-                        type:Number,
-                        value:0
-                    },
-                    querySize : {
-                        type: Number,
-                        value:15
-                    },
-                    queryBody: {
-                        type: Object,
-                        readonly: true
-                    },
                     entityId : {
                         type : String
                     },
                     tabSelected : {
                         type: Number,
                         value : 0
+                    },
+                    logo: {
+                        type:String
                     }
                 };
             };
@@ -166,64 +148,6 @@
             }
             _close(){
                 this.tabSelected = 0;
-            }
-
-            _handleSearch(e){
-                this.listData=[];
-                this.queryFrom=0;
-                this.queryBody=this._createRequest(e.detail.searchText);
-                this.$.doryList.clearTriggers();
-            }
-
-            search() {
-                this.queryBody = this._createRequest(this.searchText);
-            }
-
-            _createRequest(searchText) {
-                let request = {
-                    "query" : {"match_all" : {} },
-                    "size": this.querySize,
-                    "from": this.queryFrom
-                };
-                if(searchText) {
-                    request={
-                        'query':{
-                            'simple_query_string':{
-                                'fields':['app','tags'],
-                                'query': `${searchText}*`
-                            }
-                        }
-                    };
-                };
-                console.log('_createRequest : ',  request);
-                return request;
-            }
-
-            _handleResponse(e) {
-                new Promise( (resolve, error) => {
-                    const response =  e.detail.response.hits;
-                    const result = response.hits;
-                    const total = response.total;
-                    const items = result.map( x => Object.assign( x._source, { id:x._id} ));
-                    resolve( [items, total] );
-                }).then( ([items, total]) => {
-                    let newResult = [...this.listData, ...items];
-                    this.listData = newResult;
-                    console.log(total,this.listDataTotal);
-                    if(total>this.listDataTotal){
-                        this.listDataTotal = total;
-                        this.$.doryList.clearTriggers();
-                    }
-                    else{
-                        this.$.doryList.clearProgressBar();
-                    }
-                    return [items, total];
-                });
-            }
-
-            _loadMoreData(){
-                this.queryFrom += this.querySize;
-                this.search();
             }
         }
         window.customElements.define(DorySam.is, DorySam);

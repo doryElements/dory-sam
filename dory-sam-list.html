@@ -38,11 +38,6 @@
                 font : 15px "Roboto" bold;
             }
 
-            iron-scroll-threshold {
-                height: 100%;
-                overflow: auto;
-            }
-
             paper-progress {
                 display: block;
                 width: 95%;
@@ -55,24 +50,18 @@
             }
         </style>
 
-        <iron-scroll-threshold id="scrollThreshold"
-                               lower-threshold="500"
-                               on-lower-threshold="_loadMoreData">
-
-            <iron-list id="list"  items="[[items]]" grid >
-                <template>
-                    <div class="card">
-                        <dory-sam-card data="[[item]]" on-tap="_openDetails"></dory-sam-card>
-                        <paper-fab mini icon="create" on-tap="_handleEditTap"></paper-fab>
-                    </div>
-                </template>
-            </iron-list>
-            <template is="dom-if" if="[[fetching]]">
-                <paper-progress indeterminate class="blue"></paper-progress>
+        <iron-list id="list"  items="[[items]]" grid >
+            <template>
+                <div class="card">
+                    <dory-sam-card data="[[item]]" on-tap="_openDetails"></dory-sam-card>
+                    <paper-fab mini icon="create" on-tap="_handleEditTap"></paper-fab>
+                </div>
             </template>
+        </iron-list>
 
-        </iron-scroll-threshold>
-
+        <template is="dom-if" if="[[fetching]]">
+            <paper-progress indeterminate class="blue"></paper-progress>
+        </template>
 
     </template>
 
@@ -118,16 +107,6 @@
                     this.entityId= item.id;
                     this.dispatchEvent(new CustomEvent('dory-open-details',{detail:{id:this.entityId}}));
                 }
-            }
-
-            _loadMoreData(){
-                this.fetching = true;
-                this.dispatchEvent(new CustomEvent('dory-load-data'));
-            }
-
-            clearTriggers(){
-                this.$.scrollThreshold.clearTriggers();
-                this.fetching = false;
             }
 
             clearProgressBar(){

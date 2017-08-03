@@ -1,6 +1,4 @@
 <link rel="import" href="../polymer/polymer-element.html">
-
-
 <link rel="import" href="../paper-toast/paper-toast.html">
 
 <dom-module id="dory-cruddy-event">
@@ -83,7 +81,6 @@
             _showToastResponse(e, message) {
                 let detail = e.detail;
                 e.preventDefault();
-//                console.log('Handle response : ', detail);
                 this.$.toastResponse.show(message);
             };
 
@@ -91,8 +88,6 @@
                 let detail = e.detail;
                 console.error('Handle Error : ', detail);
                 e.preventDefault();
-//                this.lastError = detail.message  || 'Error is Raised';
-//                this.$.toastError.open();
                 this.$.toastError.show(detail.message);
             };
         }
