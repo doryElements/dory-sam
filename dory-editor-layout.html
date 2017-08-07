@@ -44,7 +44,7 @@
         <app-drawer-layout>
             <app-drawer opened slot="drawer" class="sidebar">
                 <div class="logo">
-                    <img src="../imgs/agrica-white.png" alt="Agrica">
+                    <img src="[[logo]]" alt="Agrica">
                 </div>
                 <div class="sidebar">
                     <slot name="sidebar"></slot>
@@ -85,7 +85,9 @@
 
             static get properties() {
                 return {
-
+                    logo : {
+                        type : String
+                    }
                 };
             }
 
