@@ -13,17 +13,17 @@
                 display: block;
             }
         </style>
-        <air-cruddy-elasticsearch id="cruddy"
+        <air-cruddy id="cruddy"
                                   mode="cors"
                                   url="http://localhost:9200/sam/sam"
                                   elastic-refresh="true"
                                   data="{{data}}"
+                                  credentials="include"
                                   entity-id="{{entityId}}" debug>
-
 
                     <dory-sam-editor-form id="editor-form" data="{{data}}"></dory-sam-editor-form>
 
-        </air-cruddy-elasticsearch>
+        </air-cruddy>
     </template>
 
     <script>
