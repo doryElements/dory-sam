@@ -5,6 +5,7 @@
 <link rel="import" href="../iron-icons/device-icons.html">
 <link rel="import" href="../iron-pages/iron-pages.html">
 <link rel="import" href="../tags-input/tags-input.html">
+<link rel="import" href="../air-cruddy/air-cruddy-mixin.html">
 
 <link rel="import" href="dory-sam-card-details-tab.html">
 
@@ -51,9 +52,13 @@
                 }
             }
         </style>
-        <air-cruddy-elasticsearch id="cruddy"  mode="cors" url="http://localhost:9200/sam/sam"
-                                  elastic-refresh="true" debug
-                                  data="{{data}}" entity-id="{{entityId}}">
+        <!--<air-cruddy-elasticsearch id="cruddy"  mode="cors" url="http://localhost:9200/sam/sam"-->
+                                  <!--elastic-refresh="true" debug-->
+                                  <!--data="{{data}}" entity-id="{{entityId}}">-->
+
+        <air-cruddy-mixin id="cruddy"  mode="cors" url="https://localhost:8181/api/sams/"
+                          data="{{data}}"
+                          entity-id="{{entityId}}">
 
             <div class="details">
                 <h2>[[data.app]]</h2>
@@ -101,8 +106,8 @@
                     </iron-pages>
                 </div>
             </div>
-
-        </air-cruddy-elasticsearch>
+        </air-cruddy-mixin>
+        <!--</air-cruddy-elasticsearch>-->
     </template>
 
     <script>
