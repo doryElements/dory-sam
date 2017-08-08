@@ -52,62 +52,53 @@
                 }
             }
         </style>
-        <!--<air-cruddy-elasticsearch id="cruddy"  mode="cors" url="http://localhost:9200/sam/sam"-->
-                                  <!--elastic-refresh="true" debug-->
-                                  <!--data="{{data}}" entity-id="{{entityId}}">-->
 
-        <air-cruddy-mixin id="cruddy"  mode="cors" url="https://localhost:8181/api/sams/"
-                          data="{{data}}"
-                          entity-id="{{entityId}}">
+        <div class="details">
+            <h2>[[data.app]]</h2>
+            <div class="details-content">
+                <h3>Informations</h3>
 
-            <div class="details">
-                <h2>[[data.app]]</h2>
-                <div class="details-content">
-                    <h3>Informations</h3>
-
-                    <div class="info">
-                        <label>Nom : </label>
-                        [[data.name]]
-                    </div>
-                    <div class="info">
-                        <label>Type : </label>
-                        [[data.type]]
-                    </div>
-                    <div class="info">
-                        <label>Departement propriétaire : </label>
-                        [[data.dpt]]
-                    </div>
-                    <div class="info">
-                        <label>Description : </label>
-                        [[data.description]]
-                    </div>
-                    <div class="info">
-                        <label>Documentation : </label>
-                        [[data.doc]]
-                    </div>
-                    <div class="info">
-                        <label>Tags : </label>
-                        <tags-input no-edit tags="[[data.tags]]" ></tags-input>
-                    </div>
+                <div class="info">
+                    <label>Nom : </label>
+                    [[data.name]]
                 </div>
-
-                <div class="details-content">
-                    <h3>Environnements Disponibles</h3>
-                    <paper-tabs selected="{{tabSelected}}" fit-container>
-                        <paper-tab>QUALIFICATION</paper-tab>
-                        <paper-tab>RECETTE</paper-tab>
-                        <paper-tab>PRODUCTION</paper-tab>
-                    </paper-tabs>
-
-                    <iron-pages selected="[[tabSelected]]"  fallback-selection="fallback">
-                        <dory-sam-card-details-tab data="[[data.qualif]]" app="[[data.app]]"></dory-sam-card-details-tab>
-                        <dory-sam-card-details-tab data="[[data.recette]]" app="[[data.app]]"></dory-sam-card-details-tab>
-                        <dory-sam-card-details-tab data="[[data.production]]" app="[[data.app]]"></dory-sam-card-details-tab>
-                    </iron-pages>
+                <div class="info">
+                    <label>Type : </label>
+                    [[data.type]]
+                </div>
+                <div class="info">
+                    <label>Departement propriétaire : </label>
+                    [[data.dpt]]
+                </div>
+                <div class="info">
+                    <label>Description : </label>
+                    [[data.description]]
+                </div>
+                <div class="info">
+                    <label>Documentation : </label>
+                    [[data.doc]]
+                </div>
+                <div class="info">
+                    <label>Tags : </label>
+                    <tags-input no-edit tags="[[data.tags]]" ></tags-input>
                 </div>
             </div>
-        </air-cruddy-mixin>
-        <!--</air-cruddy-elasticsearch>-->
+
+            <div class="details-content">
+                <h3>Environnements Disponibles</h3>
+                <paper-tabs selected="{{tabSelected}}" fit-container>
+                    <paper-tab>QUALIFICATION</paper-tab>
+                    <paper-tab>RECETTE</paper-tab>
+                    <paper-tab>PRODUCTION</paper-tab>
+                </paper-tabs>
+
+                <iron-pages selected="[[tabSelected]]"  fallback-selection="fallback">
+                    <dory-sam-card-details-tab data="[[data.qualif]]" app="[[data.app]]"></dory-sam-card-details-tab>
+                    <dory-sam-card-details-tab data="[[data.recette]]" app="[[data.app]]"></dory-sam-card-details-tab>
+                    <dory-sam-card-details-tab data="[[data.production]]" app="[[data.app]]"></dory-sam-card-details-tab>
+                </iron-pages>
+            </div>
+        </div>
     </template>
 
     <script>
@@ -131,9 +122,38 @@
                         value : 2
                     },
                     entityId: {
-                        type : String
+                        type : String,
+                        observer : '_getById'
+                    },
+                    data : {
+                        type : Object
+                    },
+                    url : {
+                        type : String,
+                        value : "https://localhost:8181/api/sams/"
                     }
                 };
+            }
+
+            _getById(){
+                let myHeaders = new Headers({
+                    'Content-Type':'application/json'
+                });
+
+                let request = {
+                    method : 'GET',
+                    headers : myHeaders,
+                    mode : 'cors',
+                    credentials : 'include',
+                };
+
+                fetch(this.url+this.entityId,request)
+                    .then(response =>{
+                        return response.json();
+                    })
+                    .then(json =>{
+                        this.data = json;
+                    });
             }
         }
 
