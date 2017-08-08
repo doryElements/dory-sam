@@ -159,7 +159,6 @@
                     if(this.data.vips && this.data.vips.length>0){
                         this.set('vips',true);
                     }
-                    console.log('Data',this.data);
                 }
             }
 
@@ -188,8 +187,6 @@
 
                     this.graphData.nodes = nodes;
                     this.graphData.links = links;
-
-                    console.log('Graph data : ',this.graphData);
                     this.$.graph.draw();
 
                 }

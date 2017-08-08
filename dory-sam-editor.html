@@ -43,8 +43,7 @@
                 return {
                     entityId: {
                         type: String,
-                        notify : true,
-                        observer : '_checkForId'
+                        notify : true
                     },
                     data: {
                         type: Object,
@@ -55,16 +54,6 @@
 
             _handleCommand(command){
                 this.$.cruddy.command=command;
-            }
-
-            _checkForId(){
-                if(this.entityId == null){
-                    console.log('Creation');
-//                    this.set('data.quali',{});
-//                    this.set('data.quali.urls',[]);
-//                    this.set('data.rec',{});
-//                    this.set('data.prod',{});
-                }
             }
         }
         window.customElements.define(DorySamEditor.is, DorySamEditor);

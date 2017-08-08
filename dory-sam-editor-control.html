@@ -12,11 +12,6 @@
             }
         </style>
         <div class="control">
-            <!--<paper-icon-button icon=":create-new-folder" disabled$="[[status.isDirty]]"-->
-                               <!--action="newEntity"-->
-                               <!--on-tap="_handleEditorControl"></paper-icon-button>-->
-
-
             <paper-icon-button icon="check" disabled$="[[!status.isDirty]]"
                                action="save" alt="Save"
                                on-tap="_handleEditorControl"></paper-icon-button>
@@ -56,9 +51,7 @@
             }
 
             _handleEditorControl(e){
-                //console.log(event, e);
                 const action = e.target.getAttribute('action');
-                console.log(action);
                 this.dispatchEvent(new CustomEvent('dory-control-editor',{detail:{command:action}}));
             }
         }

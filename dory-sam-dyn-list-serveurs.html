@@ -83,13 +83,10 @@
                 }
                 let server = {};
                 this.push('servers', server);
-    //                console.log('data', JSON.stringify(this.data));
             }
 
             _deleteServer(e) {
-                //var index = this.servers.indexOf(server);
                 let index = e.model.index;
-                //console.log('delete server ', e.model.index);
                 this.splice('servers', index, 1);
             }
 
