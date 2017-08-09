@@ -32,10 +32,22 @@
             }
         </style>
 
-        <template is="dom-if" if="[[servers]]">
+        <template is="dom-if" if="[[LAN]]">
             <div class="dyn-list">
                 <h4>Serveurs</h4>
-                <template is="dom-repeat" items="[[data.serveurs]]" as="it">
+                <template is="dom-repeat" items="[[serversLAN]]" as="it">
+                    <p>
+                        <iron-icon icon="dns" style="--iron-icon-fill-color:#FFE0B2"></iron-icon>
+                        <label>[[it]]</label>
+                    </p>
+                </template>
+            </div>
+        </template>
+
+        <template is="dom-if" if="[[DMZ]]">
+            <div class="dyn-list">
+                <h4>Serveurs</h4>
+                <template is="dom-repeat" items="[[serversDMZ]]" as="it">
                     <p>
                         <iron-icon icon="dns" style="--iron-icon-fill-color:#FFE0B2"></iron-icon>
                         <label>[[it]]</label>
@@ -111,9 +123,19 @@
                         type: Object,
                         observer : '_createGraph'
                     },
-                    servers:{
+                    LAN:{
                         type : Boolean,
                         value : false
+                    },
+                    serversLAN:{
+                        type : Array
+                    },
+                    DMZ:{
+                        type : Boolean,
+                        value : false
+                    },
+                    serversDMZ: {
+                        type : Array
                     },
                     bdds:{
                         type: Boolean,
@@ -145,7 +167,19 @@
             _setArraysDisplay(){
                 if(this.data){
                     if(this.data.softwares && this.data.softwares.length>0){
-                        this.set('softwares',true);
+//                        this.set('softwares',true);
+                        this.serversLAN = [];
+                        this.serversDMZ = [];
+                        this.data.softwares.forEach(function(e){
+                            if(e.includes('DMZ')){
+                                this.serversDMZ.push(e.split(' - '));
+                                this.set('DMZ',true);
+                            }
+                            else{
+                                this.serversLAN.push(e.split(' - '));
+                                this.set('LAN',true);
+                            }
+                        });
                     }
                     if(this.data.bdds && this.data.bdds.length>0){
                         this.set('bdds',true);
@@ -171,11 +205,25 @@
 
                     nodes.push({'name':this.app,'color':'#FFCC80','icon':'tab'});
 
-                    if(this.data.serveurs){
-                        this.data.serveurs.forEach(function(server){
-                            nodes.push({'name':server,'color':'#B0BEC5','icon':'dns'});
+//                    if(this.data.serveurs){
+//                        this.data.serveurs.forEach(function(server){
+//                            nodes.push({'name':server,'color':'#B0BEC5','icon':'dns'});
+//                            links.push({'source':app,'target':server});
+//                        });
+//                    }
+
+                    if(this.data.DMZ){
+                        this.serversDMZ.forEach(function(server){
+                            nodes.push({'name':server,'color':'#F44336','icon':'dns'});
                             links.push({'source':app,'target':server});
-                        });
+                        })
+                    }
+
+                    if(this.data.LAN){
+                        this.serversLAN.forEach(function(server){
+                            nodes.push({'name':server,'color':'#8BC34A','icon':'dns'});
+                            links.push({'source':app,'target':server});
+                        })
                     }
 
                     if(this.data.bdds){
