@@ -66,14 +66,9 @@
             </dory-main-layout>
 
             <!-- EDITOR -->
-            <!--<dory-editor-layout id="edit" logo="[[logo]]">-->
-                <!--<dory-cruddy-event slot="editor">-->
-                    <!--<dory-sam-editor id="doryEditor" entity-id="{{entityId}}"></dory-sam-editor>-->
-                <!--</dory-cruddy-event>-->
-            <!--</dory-editor-layout>-->
             <earth-cruddy id="earth">
                 <div slot="title">Edition</div>
-                <div>
+                <div slot="content">
                     <air-cruddy id="cruddy"
                                 mode="cors"
                                 url="https://localhost:8181/api/sams"
