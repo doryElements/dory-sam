@@ -2,11 +2,13 @@
 
 <link rel="import" href="../paper-fab/paper-fab.html">
 <link rel="import" href="../iron-icons/iron-icons.html">
+<link rel="import" href="../earth-cruddy/earth-cruddy.html">
+<link rel="import" href="../air-cruddy/air-cruddy.html">
 
 <link rel="import" href="../dory-layout/dory-main-layout/dory-main-layout.html">
 
 <link rel="import" href="dory-editor-layout.html">
-<link rel="import" href="dory-sam-editor.html">
+<link rel="import" href="dory-sam-editor-form.html">
 <link rel="import" href="dory-sam-list.html">
 <link rel="import" href="dory-sam-card-details.html">
 <link rel="import" href="dory-cruddy-event.html">
@@ -64,11 +66,28 @@
             </dory-main-layout>
 
             <!-- EDITOR -->
-            <dory-editor-layout id="edit" logo="[[logo]]">
-                <dory-cruddy-event slot="editor">
-                    <dory-sam-editor id="doryEditor" entity-id="{{entityId}}"></dory-sam-editor>
-                </dory-cruddy-event>
-            </dory-editor-layout>
+            <!--<dory-editor-layout id="edit" logo="[[logo]]">-->
+                <!--<dory-cruddy-event slot="editor">-->
+                    <!--<dory-sam-editor id="doryEditor" entity-id="{{entityId}}"></dory-sam-editor>-->
+                <!--</dory-cruddy-event>-->
+            <!--</dory-editor-layout>-->
+            <earth-cruddy>
+                <div slot="title">Edition</div>
+                <div>
+                    <air-cruddy id="cruddy"
+                                mode="cors"
+                                url="https://localhost:8181/api/sams"
+                                elastic-refresh="true"
+                                data="{{data}}"
+                                credentials="include"
+                                entity-id="{{entityId}}"
+                                debug>
+
+                        <dory-sam-editor-form id="editor-form" data="{{data}}"></dory-sam-editor-form>
+                    </air-cruddy>
+                </div>
+
+            </earth-cruddy>
 
             <!-- DETAILS VIEW -->
             <dory-main-layout>
