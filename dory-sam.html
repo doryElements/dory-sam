@@ -71,7 +71,7 @@
                     <!--<dory-sam-editor id="doryEditor" entity-id="{{entityId}}"></dory-sam-editor>-->
                 <!--</dory-cruddy-event>-->
             <!--</dory-editor-layout>-->
-            <earth-cruddy>
+            <earth-cruddy id="earth">
                 <div slot="title">Edition</div>
                 <div>
                     <air-cruddy id="cruddy"
@@ -126,8 +126,9 @@
                 this.listData = new Array();
                 this.$.doryList.addEventListener('dory-open-editor', e => this._handleEdit(e));
                 this.$.doryList.addEventListener('dory-open-details', e => this._handleDetails(e));
-                this.$.edit.addEventListener('editor-close', e => this._close(e));
-                this.$.edit.addEventListener('editor-control', e => this.$.doryEditor._handleCommand(e.detail.command));
+//                this.$.edit.addEventListener('editor-close', e => this._close(e));
+//                this.$.edit.addEventListener('editor-control', e => this.$.doryEditor._handleCommand(e.detail.command));
+                this.$.earth.addEventListener('earth-layout-close', e => this._close(e));
             }
 
             static get properties() {
