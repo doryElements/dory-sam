@@ -123,8 +123,13 @@
                 if(!this.data.production){
                     return;
                 }
-                if(this.data.production.serveurs){
-                    this.data.production.serveurs.forEach(function(e){
+                if(this.data.production.serveursDmz){
+                    this.data.production.serveursDmz.forEach(function(e){
+                        result = result+" / "+e;
+                    });
+                }
+                if(this.data.production.serveursLan){
+                    this.data.production.serveursLan.forEach(function(e){
                         result = result+" / "+e;
                     });
                 }
