@@ -4,6 +4,7 @@
 <link rel="import" href="../iron-icons/iron-icons.html">
 <link rel="import" href="../iron-pages/iron-pages.html">
 <link rel="import" href="../paper-tabs/paper-tabs.html">
+<link rel="import" href="../paper-dropdown-menu/paper-dropdown-menu.html">
 <link rel="import" href="../paper-input/paper-input.html">
 <link rel="import" href="../paper-input/paper-textarea.html">
 <link rel="import" href="../paper-icon-button/paper-icon-button.html">
@@ -66,9 +67,16 @@
                                 value="{{data.description}}"></paper-textarea>
             </water-marked-editor>
             <paper-input value="{{data.doc}}" label="Documentation" ></paper-input>
+            <paper-input value="{{data.git}}" label="Git" ></paper-input>
+            <paper-input value="{{data.state}}" label="État" ></paper-input>
+            <paper-dropdown-menu label="Intégration Continue" value="{{data.ci}}">
+                <paper-listbox slot="dropdown-content" selected="1">
+                    <paper-item>Oui</paper-item>
+                    <paper-item>Non</paper-item>
+                </paper-listbox>
+            </paper-dropdown-menu>
             <tags-input tags="{{data.tags}}" label="Tags"></tags-input>
         </div>
-
 
         <div class="form">
             <h3>Environnements Disponibles</h3>
@@ -128,27 +136,33 @@
                     dpt : '',
                     type : '',
                     doc : '',
+                    state: '',
+                    git: '',
+                    ci: '',
                     tags : [],
                     qualif : {
                         softwares:[],
                         urls:[],
                         bdds:[],
                         vips:[],
-                        serveurs :[]
+                        serveursDmz :[],
+                        serveursLan :[]
                     },
                     recette : {
                         softwares:[],
                         urls:[],
                         bdds:[],
                         vips:[],
-                        serveurs :[]
+                        serveursDmz :[],
+                        serveursLan :[]
                     },
                     production : {
                         softwares:[],
                         urls:[],
                         bdds:[],
                         vips:[],
-                        serveurs :[]
+                        serveursDmz :[],
+                        serveursLan :[]
                     }
                 }
             }

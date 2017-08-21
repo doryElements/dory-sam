@@ -11,40 +11,46 @@
             }
         </style>
 
-            <!-- Sofrwares -->
-            <dory-sam-dyn-list class="dynbox" title="Softwares"
-                               list="{{data.softwares}}"
-                               button-label="Ajouter un soft"
-                               label-item="Software">
-            </dory-sam-dyn-list>
+        <!-- Sofrwares -->
+        <dory-sam-dyn-list class="dynbox" title="Softwares"
+                           list="{{data.softwares}}"
+                           button-label="Ajouter un soft"
+                           label-item="Software">
+        </dory-sam-dyn-list>
 
-            <!-- Serveurs -->
-            <dory-sam-dyn-list-serveurs class="dynbox" servers="{{data.serveurs}}">
+        <!-- Serveurs -->
+        <dory-sam-dyn-list class="dynbox" title="Serveurs LAN"
+                           list="{{data.serversLan}}"
+                           button-label="Ajouter un serveur LAN"
+                           label-item="LAN">
+        </dory-sam-dyn-list>
+        <dory-sam-dyn-list class="dynbox" title="Serveurs DMZ"
+                           list="{{data.serversDmz}}"
+                           button-label="Ajouter un serveur DMZ"
+                           label-item="DMZ">
+        </dory-sam-dyn-list>
 
-            </dory-sam-dyn-list-serveurs>
+        <!-- URLs -->
+        <dory-sam-dyn-list class="dynbox" title="URLs"
+                           list="{{data.urls}}"
+                           button-label="Ajouter une URL"
+                           label-item="URL"
+                           placeholder="http://">
+        </dory-sam-dyn-list>
 
-            <!-- URLs -->
-            <dory-sam-dyn-list class="dynbox" title="URLs"
-                               list="{{data.urls}}"
-                               button-label="Ajouter une URL"
-                               label-item="URL"
-                               placeholder="http://">
-            </dory-sam-dyn-list>
+        <!-- DBs -->
+        <dory-sam-dyn-list class="dynbox" title="Bases de données"
+                           list="{{data.bdds}}"
+                           button-label="Ajouter une BDD"
+                           label-item="BDD">
+        </dory-sam-dyn-list>
 
-            <!-- DBs -->
-            <dory-sam-dyn-list class="dynbox" title="Bases de données"
-                               list="{{data.bdds}}"
-                               button-label="Ajouter une BDD"
-                               label-item="BDD">
-            </dory-sam-dyn-list>
-
-            <!-- VIPs -->
-            <dory-sam-dyn-list class="dynbox" title="VIPs"
-                               list="{{data.vips}}"
-                               button-label="Ajouter un VIP"
-                               label-item="VIP">
-            </dory-sam-dyn-list>
-
+        <!-- VIPs -->
+        <dory-sam-dyn-list class="dynbox" title="VIPs"
+                           list="{{data.vips}}"
+                           button-label="Ajouter un VIP"
+                           label-item="VIP">
+        </dory-sam-dyn-list>
     </template>
 
     <script>
