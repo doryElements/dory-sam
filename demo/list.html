@@ -38,11 +38,7 @@
         <dom-bind id="demo">
           <template>
             <demo-data no-options data="{{data}}" count="25"></demo-data>
-            <dory-main-layout>
-              <label slot="title">DORY</label>
-              <label slot="subtitle">Dépendances des applications</label>
-              <dory-sam-list items="[[data]]" slot="content"></dory-sam-list>
-            </dory-main-layout>
+            <dory-sam-list items="[[data]]" slot="content"></dory-sam-list>
           </template>
         </dom-bind>
     </div>

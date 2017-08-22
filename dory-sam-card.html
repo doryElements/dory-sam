@@ -107,10 +107,12 @@
                         observer : '_handleListsDisplay'
                     },
                     servers : {
-                        type : String
+                        type : String,
+                        computed: 'computeServers(data.production.serveursDmz,data.production.serveursLan)'
                     },
                     bdds : {
-                        type : String
+                        type : String,
+                        computed: 'computeDbs(data.production.bdds)'
                     }
                 };
             }
