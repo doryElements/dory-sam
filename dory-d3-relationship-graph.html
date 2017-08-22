@@ -74,7 +74,8 @@
                 };
             }
 
-            connectedCallback() {
+            ready() {
+                super.ready();
                 this.draw();
             }
 
@@ -90,7 +91,7 @@
 
                 let root = this.data;
                 if(!root){
-                    console.error('D3 : Pas de data');
+//                    console.error('D3 : Pas de data');
                     return;
                 }
 
