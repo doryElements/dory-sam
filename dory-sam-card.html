@@ -103,8 +103,8 @@
                 return {
                     data: {
                         type: Object,
-                        notify : true,
-                        observer : '_handleListsDisplay'
+                        notify : true
+//                        observer : '_handleListsDisplay'
                     },
                     servers : {
                         type : String,
@@ -117,35 +117,56 @@
                 };
             }
 
+            computeDbs(dbs) {
+                if(dbs){
+                    return dbs.join(' / ');
+                }
+                return '';
+            }
+
+            computeServers(dmz,lan){
+                let res='';
+                if(dmz){
+                    res = res+dmz.join(' / ');
+                    if(lan && res.length>0){
+                        res = res+ ' / ';
+                    }
+                }
+                if(lan){
+                    res = res+lan.join(' / ');
+                }
+                return res;
+            }
+
             /**
              * Fill out servers and DBs strings with the content of their arrays in the data object.
              */
-            _handleListsDisplay(){
-                let result = "";
-                if(!this.data.production){
-                    return;
-                }
-                if(this.data.production.serveursDmz){
-                    this.data.production.serveursDmz.forEach(function(e){
-                        result = result+" / "+e;
-                    });
-                }
-                if(this.data.production.serveursLan){
-                    this.data.production.serveursLan.forEach(function(e){
-                        result = result+" / "+e;
-                    });
-                }
-                result = result.substr(3);
-                this.servers = result;
-                result ="";
-                if(this.data.production.bdds){
-                    this.data.production.bdds.forEach(function(e){
-                        result = result+" / "+e;
-                    });
-                }
-                result = result.substr(3);
-                this.bdds = result;
-            }
+//            _handleListsDisplay(){
+//                let result = "";
+//                if(!this.data.production){
+//                    return;
+//                }
+//                if(this.data.production.serveursDmz){
+//                    this.data.production.serveursDmz.forEach(function(e){
+//                        result = result+" / "+e;
+//                    });
+//                }
+//                if(this.data.production.serveursLan){
+//                    this.data.production.serveursLan.forEach(function(e){
+//                        result = result+" / "+e;
+//                    });
+//                }
+//                result = result.substr(3);
+//                this.servers = result;
+//                result ="";
+//                if(this.data.production.bdds){
+//                    this.data.production.bdds.forEach(function(e){
+//                        result = result+" / "+e;
+//                    });
+//                }
+//                result = result.substr(3);
+//                this.bdds = result;
+//            }
         }
 
         window.customElements.define(DorySamCard.is, DorySamCard);
