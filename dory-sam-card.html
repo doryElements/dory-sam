@@ -61,6 +61,18 @@
                 position : absolute;
                 margin-left : 4px;
             }
+            paper-card{
+                --paper-card-header: {
+                    height : 70px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                };
+                --paper-card-header-text: {
+                    padding: 0;
+                    text-align: center;
+                };
+            }
         </style>
 
         <paper-card heading="[[data.app]]">
@@ -104,7 +116,6 @@
                     data: {
                         type: Object,
                         notify : true
-//                        observer : '_handleListsDisplay'
                     },
                     servers : {
                         type : String,
@@ -137,36 +148,6 @@
                 }
                 return res;
             }
-
-            /**
-             * Fill out servers and DBs strings with the content of their arrays in the data object.
-             */
-//            _handleListsDisplay(){
-//                let result = "";
-//                if(!this.data.production){
-//                    return;
-//                }
-//                if(this.data.production.serveursDmz){
-//                    this.data.production.serveursDmz.forEach(function(e){
-//                        result = result+" / "+e;
-//                    });
-//                }
-//                if(this.data.production.serveursLan){
-//                    this.data.production.serveursLan.forEach(function(e){
-//                        result = result+" / "+e;
-//                    });
-//                }
-//                result = result.substr(3);
-//                this.servers = result;
-//                result ="";
-//                if(this.data.production.bdds){
-//                    this.data.production.bdds.forEach(function(e){
-//                        result = result+" / "+e;
-//                    });
-//                }
-//                result = result.substr(3);
-//                this.bdds = result;
-//            }
         }
 
         window.customElements.define(DorySamCard.is, DorySamCard);
