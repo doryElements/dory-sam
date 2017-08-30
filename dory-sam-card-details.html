@@ -4,11 +4,12 @@
 <link rel="import" href="../iron-icons/iron-icons.html">
 <link rel="import" href="../iron-icons/device-icons.html">
 <link rel="import" href="../iron-pages/iron-pages.html">
+
 <link rel="import" href="../tags-input/tags-input.html">
 <link rel="import" href="../air-cruddy/air-cruddy-mixin.html">
+<link rel="import" href="../marked-element/marked-element.html">
 
 <link rel="import" href="dory-sam-card-details-tab.html">
-
 <dom-module id="dory-sam-card-details">
     <template>
         <style>
@@ -58,6 +59,17 @@
             paper-tab.iron-selected {
                 color: var(--details-h2-color);
             }
+
+            marked-element {
+                display: block;
+                background-color: var(--water-marked-editor-background-color, var(--google-grey-100));
+                margin-bottom: 10px;
+            }
+
+            .markdown-html.custom p {
+                padding-left: 24px;
+            }
+
         </style>
 
         <air-cruddy id="cruddy"
@@ -86,7 +98,9 @@
                     </div>
                     <div class="info">
                         <label>Description : </label>
-                        [[data.description]]
+                        <marked-element markdown="[[data.description]]">
+                            <div slot="markdown-html" class="markdown-html custom"></div>
+                        </marked-element>
                     </div>
                     <div class="info">
                         <label>Documentation : </label>
