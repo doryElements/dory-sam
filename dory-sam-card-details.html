@@ -7,9 +7,12 @@
 
 <link rel="import" href="../tags-input/tags-input.html">
 <link rel="import" href="../air-cruddy/air-cruddy-mixin.html">
-<link rel="import" href="../marked-element/marked-element.html">
+
 
 <link rel="import" href="dory-sam-card-details-tab.html">
+<link rel="import" href="dory-markdown.html">
+
+
 <dom-module id="dory-sam-card-details">
     <template>
         <style>
@@ -60,14 +63,6 @@
                 color: var(--details-h2-color);
             }
 
-            marked-element {
-                display: block;
-                margin-bottom: 10px;
-            }
-
-            .markdown-html.custom p {
-                padding-left: 24px;
-            }
 
         </style>
 
@@ -97,9 +92,7 @@
                     </div>
                     <div class="info">
                         <label>Description : </label>
-                        <marked-element markdown="[[data.description]]">
-                            <div slot="markdown-html" class="markdown-html custom"></div>
-                        </marked-element>
+                        <dory-markdown value="[[data.description]]"></dory-markdown>
                     </div>
                     <div class="info">
                         <label>Documentation : </label>
