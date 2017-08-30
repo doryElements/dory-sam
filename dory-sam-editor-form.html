@@ -1,13 +1,16 @@
 <link rel="import" href="../polymer/polymer-element.html">
 
-
 <link rel="import" href="../iron-icons/iron-icons.html">
 <link rel="import" href="../iron-pages/iron-pages.html">
+
 <link rel="import" href="../paper-tabs/paper-tabs.html">
 <link rel="import" href="../paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="../paper-listbox/paper-listbox.html">
+<link rel="import" href="../paper-item/paper-item.html">
 <link rel="import" href="../paper-input/paper-input.html">
 <link rel="import" href="../paper-input/paper-textarea.html">
 <link rel="import" href="../paper-icon-button/paper-icon-button.html">
+
 <link rel="import" href="../tags-input/tags-input.html">
 
 <link rel="import" href="dory-sam-editor-env.html">
@@ -74,9 +77,9 @@
                 <paper-input value="{{data.git}}" label="Git" ></paper-input>
                 <paper-input value="{{data.state}}" label="État" ></paper-input>
                 <paper-dropdown-menu label="Intégration Continue" value="{{data.ci}}">
-                    <paper-listbox slot="dropdown-content" selected="1">
-                        <paper-item>Oui</paper-item>
+                    <paper-listbox slot="dropdown-content">
                         <paper-item>Non</paper-item>
+                        <paper-item>Oui</paper-item>
                     </paper-listbox>
                 </paper-dropdown-menu>
                 <tags-input tags="{{data.tags}}" label="Tags"></tags-input>

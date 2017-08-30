@@ -61,6 +61,18 @@
                 position : absolute;
                 margin-left : 4px;
             }
+            paper-card{
+                --paper-card-header: {
+                    height : 70px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                };
+                --paper-card-header-text: {
+                    padding: 0;
+                    text-align: center;
+                };
+            }
         </style>
 
         <paper-card heading="[[data.app]]">
@@ -103,8 +115,7 @@
                 return {
                     data: {
                         type: Object,
-                        notify : true,
-                        observer : '_handleListsDisplay'
+                        notify : true
                     },
                     servers : {
                         type : String,
@@ -117,34 +128,25 @@
                 };
             }
 
-            /**
-             * Fill out servers and DBs strings with the content of their arrays in the data object.
-             */
-            _handleListsDisplay(){
-                let result = "";
-                if(!this.data.production){
-                    return;
+            computeDbs(dbs) {
+                if(dbs){
+                    return dbs.join(' / ');
                 }
-                if(this.data.production.serveursDmz){
-                    this.data.production.serveursDmz.forEach(function(e){
-                        result = result+" / "+e;
-                    });
+                return '';
+            }
+
+            computeServers(dmz,lan){
+                let res='';
+                if(dmz){
+                    res = res+dmz.join(' / ');
+                    if(lan && res.length>0){
+                        res = res+ ' / ';
+                    }
                 }
-                if(this.data.production.serveursLan){
-                    this.data.production.serveursLan.forEach(function(e){
-                        result = result+" / "+e;
-                    });
+                if(lan){
+                    res = res+lan.join(' / ');
                 }
-                result = result.substr(3);
-                this.servers = result;
-                result ="";
-                if(this.data.production.bdds){
-                    this.data.production.bdds.forEach(function(e){
-                        result = result+" / "+e;
-                    });
-                }
-                result = result.substr(3);
-                this.bdds = result;
+                return res;
             }
         }
 
