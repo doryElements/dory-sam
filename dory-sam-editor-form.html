@@ -28,13 +28,6 @@
                 padding: 25px;
             }
 
-            paper-input{
-                display : inline-block;
-                width : 40%;
-                min-width: 300px;
-                padding : 10px;
-            }
-
             paper-textarea{
                 width : 80%;
                 padding : 10px;
@@ -44,14 +37,17 @@
                 color: var(--h3-color);
             }
 
-            tags-input{
-                width : 40%;
-                min-width : 300px;
+            .form-input {
+                display:block;
+                width : 90%;
                 padding : 10px;
+                margin:auto;
             }
 
             .form{
-                margin  : 25px;
+                margin  : 25px auto 0 auto;
+                width: 60%;
+                min-width: 450px;
                 background-color: white;
                 padding : 15px;
                 border-radius : 5px;
@@ -69,25 +65,25 @@
         <div class="container">
             <div class="form">
                 <h3>Informations</h3>
-                <paper-input value="{{data.app}}" label="Application" required></paper-input>
-                <paper-input value="{{data.name}}" label="Nom" ></paper-input>
-                <paper-input value="{{data.dpt}}" label="Département propriétaire"></paper-input>
-                <paper-input value="{{data.type}}" label="Type" ></paper-input>
-                <paper-input value="{{data.doc}}" label="Documentation" ></paper-input>
-                <paper-input value="{{data.git}}" label="Git" ></paper-input>
-                <paper-input value="{{data.state}}" label="État" ></paper-input>
-                <paper-dropdown-menu label="Intégration Continue" value="{{data.ci}}">
+                <paper-input class="form-input" value="{{data.app}}" label="Application" required></paper-input>
+                <paper-input class="form-input" value="{{data.name}}" label="Nom" ></paper-input>
+                <paper-input class="form-input" value="{{data.dpt}}" label="Département propriétaire"></paper-input>
+                <paper-input class="form-input" value="{{data.type}}" label="Type" ></paper-input>
+                <paper-input class="form-input" value="{{data.doc}}" label="Documentation" ></paper-input>
+                <paper-input class="form-input" value="{{data.git}}" label="Git" ></paper-input>
+                <paper-input class="form-input" value="{{data.state}}" label="État" ></paper-input>
+                <paper-dropdown-menu class="form-input" label="Intégration Continue" value="{{data.ci}}">
                     <paper-listbox slot="dropdown-content">
                         <paper-item>Non</paper-item>
                         <paper-item>Oui</paper-item>
                     </paper-listbox>
                 </paper-dropdown-menu>
-                <tags-input tags="{{data.tags}}" label="Tags"></tags-input>
+                <tags-input class="form-input" tags="{{data.tags}}" label="Tags"></tags-input>
             </div>
             <div class="form">
                 <h3>Description</h3>
                 <water-marked-editor value="{{data.description}}">
-                    <paper-textarea char-counter maxlength="1000"
+                    <paper-textarea class="form-input" char-counter maxlength="1000"
                                     always-float-label rows="5"
                                     value="{{data.description}}"></paper-textarea>
                 </water-marked-editor>

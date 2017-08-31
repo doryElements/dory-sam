@@ -2,7 +2,6 @@
 
 <link rel="import" href="../paper-input/paper-input.html">
 <link rel="import" href="../paper-icon-button/paper-icon-button.html">
-<link rel="import" href="../paper-button/paper-button.html">
 
 <link rel="import" href="../iron-icons/iron-icons.html">
 
@@ -28,7 +27,8 @@
                     <paper-icon-button slot="suffix" icon="clear" on-tap="_deleteElt"></paper-icon-button>
                 </paper-input>
             </template>
-            <paper-button class="buttonadd" on-tap="_addElt" raised>[[buttonLabel]]</paper-button>
+            <!--<paper-button class="buttonadd" on-tap="_addElt" raised>[[buttonLabel]]</paper-button>-->
+            <paper-icon-button icon="create" on-tap="_addElt"></paper-icon-button>
         </div>
     </template>
 
