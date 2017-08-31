@@ -1,0 +1,41 @@
+<link rel="import" href="../polymer/polymer-element.html">
+
+<link rel="import" href="../marked-element/marked-element.html">
+
+<dom-module id="dory-markdown">
+    <template>
+        <style>
+            :host {
+                display: block;
+            }
+        </style>
+        <marked-element markdown="[[value]]">
+            <div slot="markdown-html" class="markdown-html custom"></div>
+        </marked-element>
+    </template>
+
+    <script>
+        /**
+         * `dory-markdown`
+         *
+         *
+         * @customElement
+         * @polymer
+         */
+        class DoryMarkdown extends Polymer.Element {
+            static get is() {
+                return 'dory-markdown';
+            }
+
+            static get properties() {
+                return {
+                    value: {
+                        type: String
+                    }
+                };
+            }
+        }
+
+        window.customElements.define(DoryMarkdown.is, DoryMarkdown);
+    </script>
+</dom-module>
