@@ -18,17 +18,19 @@
                 min-width: 300px;
                 padding : 10px;
             }
+            h4 {
+                color: var(--h4-color);
+            }
         </style>
 
-        <label>[[title]]</label>
+        <h4>[[title]]</h4>
         <div>
             <template is="dom-repeat" items="{{list}}" as="it">
                 <paper-input value="{{it}}"  label="[[labelItem]] [[_add(index,1)]]" required placeholder="[[placeholder]]">
                     <paper-icon-button slot="suffix" icon="clear" on-tap="_deleteElt"></paper-icon-button>
                 </paper-input>
             </template>
-            <!--<paper-button class="buttonadd" on-tap="_addElt" raised>[[buttonLabel]]</paper-button>-->
-            <paper-icon-button icon="create" on-tap="_addElt"></paper-icon-button>
+            <paper-icon-button icon="add-circle-outline" on-tap="_addElt"></paper-icon-button>
         </div>
     </template>
 
