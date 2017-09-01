@@ -21,12 +21,18 @@
             h4 {
                 color: var(--h4-color);
             }
+
+            paper-input.uppercase {
+                --paper-input-container-input: {
+                    text-transform:uppercase;
+                }
+            }
         </style>
 
         <h4>[[title]]</h4>
         <div>
             <template is="dom-repeat" items="{{list}}" as="it">
-                <paper-input value="{{it}}"  label="[[labelItem]] [[_add(index,1)]]" required placeholder="[[placeholder]]">
+                <paper-input value="{{it}}"  label="[[labelItem]] [[_add(index,1)]]" required placeholder="[[placeholder]]" class$="{{getClasses()}}">
                     <paper-icon-button slot="suffix" icon="clear" on-tap="_deleteElt"></paper-icon-button>
                 </paper-input>
             </template>
@@ -62,8 +68,19 @@
                     },
                     buttonLabel: {
                         type: String,
+                    },
+                    uppercase: {
+                        type: Boolean,
+                        value: false
                     }
                 };
+            }
+
+            getClasses() {
+                if(this.uppercase){
+                    return 'uppercase'
+                }
+                else return ''
             }
 
             _addElt() {
