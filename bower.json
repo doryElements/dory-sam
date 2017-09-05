@@ -30,6 +30,7 @@
     "polymer": "Polymer/polymer#^2.0.0",
     "tags-input": "jifalops/tags-input",
     "marked-element": "PolymerElements/marked-element#^2.0.0",
+    "vaadin-icons": "vaadin/vaadin-icons",
     "water-marked-editor": "FiveElements/water-marked-editor"
   },
   "devDependencies": {
