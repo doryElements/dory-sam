@@ -13,8 +13,10 @@
 
 <link rel="import" href="../tags-input/tags-input.html">
 
-<link rel="import" href="dory-sam-editor-env.html">
 <link rel="import" href="../water-marked-editor/water-marked-editor.html">
+
+<link rel="import" href="dory-sam-editor-env.html">
+<link rel="import" href="dory-sam-dyn-list-dropdown.html">
 
 <dom-module id="dory-sam-editor-form">
     <template>
@@ -85,6 +87,7 @@
                 </paper-dropdown-menu>
                 <tags-input class="form-input" tags="{{data.tags}}" label="Tags"></tags-input>
             </div>
+
             <div class="form">
                 <h3>Description</h3>
                 <water-marked-editor value="{{data.description}}">
@@ -93,6 +96,16 @@
                                     value="{{data.description}}"></paper-textarea>
                 </water-marked-editor>
             </div>
+
+            <div class="form">
+                <h3>Dépendances</h3>
+                <dory-sam-dyn-list-dropdown
+                        list="{{data.relatives}}"
+                        options="[[]]"
+                        label-item="[[Relation]]">
+                </dory-sam-dyn-list-dropdown>
+            </div>
+
             <div class="form">
                 <paper-tabs selected="{{tabSelected}}">
                     <paper-tab>QUALIFICATION</paper-tab>
@@ -138,6 +151,10 @@
                         value : function(){
                             return [];
                         }
+                    },
+                    options: {
+                        type: Array,
+                        value: function() {return [];}
                     }
                 };
             }
@@ -154,6 +171,7 @@
                     git: '',
                     ci: '',
                     tags : [],
+                    relatives: [],
                     qualif : {
                         softwares:[],
                         urls:[],
@@ -179,6 +197,30 @@
                         serveursLan :[]
                     }
                 }
+            }
+
+            _getDropdownOptions() {
+                const request={
+                    method: 'GET',
+                    mode: 'cors',
+                    credentials: 'include',
+                };
+                fetch('/api/sams/options', request)
+                    .then( (response)=>{
+                        if(response.status !== 200) {
+                            console.error('Fetch error : Error code ', response.status);
+                            this.dispatchEvent(new CustomEvent('dory-request-error', {
+                                detail: response,
+                                bubbles: true,
+                                composed: true
+                            }));
+                        }
+                        else{
+                            response.json().then((data)=>{
+                                this.options = data;
+                            });
+                        }
+                    });
             }
         }
 
