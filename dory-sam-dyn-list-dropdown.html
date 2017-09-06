@@ -31,19 +31,21 @@
             }
         </style>
 
-        <div>
-            <template is="dom-repeat" items="{{list}}" as="it">
-                <paper-dropdown-menu value="{{it}}" label="[[labelItem]] [[_add(index,1)]]">
-                    <paper-listbox>
-                        <template is="dom-repeat" items="{{options}}">
-                            <paper-item>[[item]]</paper-item>
-                        </template>
-                    </paper-listbox>
-                </paper-dropdown-menu>
-                <paper-icon-button icon="clear" on-tap="_deleteElt"></paper-icon-button>
-            </template>
-            <paper-icon-button icon="add-circle-outline" on-tap="_addElt"></paper-icon-button>
-        </div>
+        <template is="dom-repeat" items="{{list}}" as="it">
+
+            <paper-dropdown-menu value="{{it}}" label="[[labelItem]] [[_add(index,1)]]" >
+                <paper-listbox slot="dropdown-content" attr-for-selected="value" selected="{{it}}">
+
+                    <template is="dom-repeat" items="{{options}}" as="option">
+                        <paper-item value="{{option}}">{{option}}</paper-item>
+                    </template>
+
+                </paper-listbox>
+            </paper-dropdown-menu>
+            <paper-icon-button icon="clear" on-tap="_deleteElt"></paper-icon-button>
+
+        </template>
+        <paper-icon-button icon="add-circle-outline" on-tap="_addElt"></paper-icon-button>
     </template>
 
     <script>
@@ -68,7 +70,7 @@
                     },
                     options: {
                         type: Array,
-                        value: function() { return []; }
+                        notify: true
                     },
                     labelItem: {
                         type: String,
