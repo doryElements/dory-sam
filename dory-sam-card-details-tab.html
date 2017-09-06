@@ -3,6 +3,7 @@
 <link rel="import" href="../iron-icons/iron-icons.html">
 <link rel="import" href="../iron-icons/device-icons.html">
 <link rel="import" href="../iron-icon/iron-icon.html">
+<link rel="import" href="../vaadin-icons/vaadin-icons.html">
 
 <link rel="import" href="dory-d3-relationship-graph.html">
 
@@ -37,7 +38,7 @@
                 <h4>Serveurs LAN</h4>
                 <template is="dom-repeat" items="[[data.serveursLan]]" as="it">
                     <p>
-                        <iron-icon icon="dns" style="--iron-icon-fill-color:#FFE0B2"></iron-icon>
+                        <iron-icon icon="vaadin:server" style="--iron-icon-fill-color:#FFE0B2"></iron-icon>
                         <label>[[it]]</label>
                     </p>
                 </template>
@@ -49,7 +50,7 @@
                 <h4>Serveurs DMZ</h4>
                 <template is="dom-repeat" items="[[data.serveursDmz]]" as="it">
                     <p>
-                        <iron-icon icon="dns" style="--iron-icon-fill-color:#FFE0B2"></iron-icon>
+                        <iron-icon icon="vaadin:server" style="--iron-icon-fill-color:#FFE0B2"></iron-icon>
                         <label>[[it]]</label>
                     </p>
                 </template>
@@ -60,7 +61,7 @@
             <div class="dyn-list">
                 <h4>Bases de données</h4>
                 <template is="dom-repeat" items="[[data.bdds]]" as="it">
-                    <p><iron-icon icon="device:storage" style="--iron-icon-fill-color:#FF8A65"></iron-icon> [[it]] </p>
+                    <p><iron-icon icon="vaadin:database" style="--iron-icon-fill-color:#FF8A65"></iron-icon> [[it]] </p>
                 </template>
             </div>
         </template>
