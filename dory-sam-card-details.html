@@ -132,6 +132,16 @@
                         <dory-sam-card-details-tab data="[[data.production]]" app="[[data.app]]"></dory-sam-card-details-tab>
                     </iron-pages>
                 </div>
+
+                <div class="details-content">
+                    <h3>Schéma Applicatif</h3>
+                    <dory-d3-relationship-graph
+                            id ="graphApplicatif"
+                            data="[[appGraphData]]"
+                            width="720"
+                            height="720">
+                    </dory-d3-relationship-graph>
+                </div>
             </div>
 
         </air-cruddy>
@@ -158,10 +168,55 @@
                         value : 2
                     },
                     entityId: {
-                        type : String,
-                        observer : '_getById'
+                        type : String
+                    },
+                    data: {
+                        type: Object,
+                        notify: true,
+                        observer: '_createGraphData'
+                    },
+                    appGraphData: {
+                        type : Object,
+                        notify : true
                     }
                 };
+            }
+
+            _createGraphData() {
+                if(this.data){
+                    const request={
+                        method:'GET',
+                        mode:'cors',
+                        credentials:'include'
+                    };
+                    fetch('/api/sams/relatives/'+this.entityId,request)
+                        .then( (response) => {
+                            if(response.status !== 200) {
+                                console.error('Fetch error : Error code ', response.status);
+                                this.dispatchEvent(new CustomEvent('dory-request-error', {
+                                    detail: response,
+                                    bubbles: true,
+                                    composed: true
+                                }));
+                            }
+                            else{
+                                response.json().then(data => {
+                                    let nodes = [];
+                                    let links = [];
+
+                                    nodes.push({name:this.data.app,color:'#FFCC80',icon:'tab'});
+                                    data.nodes.map( node => {
+                                        nodes.push({name:node,color:'#FFCC80',icon:'tab'});
+                                    });
+                                    data.links.map( link => {
+                                        links.push(link);
+                                    });
+                                    this.appGraphData = {nodes:nodes,links:links};
+                                    this.$.graphApplicatif.draw();
+                                })
+                            }
+                        });
+                }
             }
         }
 

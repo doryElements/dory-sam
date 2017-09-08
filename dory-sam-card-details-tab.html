@@ -193,7 +193,6 @@
 
                     if(this.DMZ){
                         this.data.serveursDmz.forEach(function(server){
-                            console.log('pushing node');
                             nodes.push({'name':server,'color':'#8BC34A','icon':'dns'});
                             links.push({'source':app,'target':server});
                         })
