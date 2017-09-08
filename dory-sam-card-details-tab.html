@@ -1,225 +1,195 @@
 <link rel="import" href="../polymer/polymer-element.html">
 
+<link rel="import" href="../iron-icon/iron-icon.html">
 <link rel="import" href="../iron-icons/iron-icons.html">
 <link rel="import" href="../iron-icons/device-icons.html">
-<link rel="import" href="../iron-icon/iron-icon.html">
-<link rel="import" href="../vaadin-icons/vaadin-icons.html">
 
-<link rel="import" href="dory-d3-relationship-graph.html">
+<script src="../d3/d3.min.js"></script>
 
-<dom-module id="dory-sam-card-details-tab">
+<dom-module id="dory-d3-relationship-graph">
     <template>
         <style>
             :host {
                 display: block;
             }
 
-            h3{
-                color : var(--h3-color);
+            .links line{
+                stroke : #999;
+                stroke-opacity : 0.6;
             }
 
-            h4{
-                color : var(--h4-color);
+            .nodes circle{
+                stroke : #fff;
+                stroke-width : 1px;
             }
 
-            .dyn-list{
-                display : inline-table;
-                width  : 33%;
-                min-width : 300px;
+            .nodes text{
+                pointer-events: none;
             }
 
-            .scheme{
-                width : 100%;
+            text{
+                font : 12px roboto;
             }
+
+            iron-icon{
+                --iron-icon-fill-color: white;
+            }
+
+            /*#svgcontainer{*/
+            /*margin-right : auto;*/
+            /*margin-left : auto;*/
+            /*}*/
         </style>
 
-        <template is="dom-if" if="[[LAN]]">
-            <div class="dyn-list">
-                <h4>Serveurs LAN</h4>
-                <template is="dom-repeat" items="[[data.serveursLan]]" as="it">
-                    <p>
-                        <iron-icon icon="vaadin:server" style="--iron-icon-fill-color:#FFE0B2"></iron-icon>
-                        <label>[[it]]</label>
-                    </p>
-                </template>
-            </div>
-        </template>
-
-        <template is="dom-if" if="[[DMZ]]">
-            <div class="dyn-list">
-                <h4>Serveurs DMZ</h4>
-                <template is="dom-repeat" items="[[data.serveursDmz]]" as="it">
-                    <p>
-                        <iron-icon icon="vaadin:server" style="--iron-icon-fill-color:#FFE0B2"></iron-icon>
-                        <label>[[it]]</label>
-                    </p>
-                </template>
-            </div>
-        </template>
-
-        <template is="dom-if" if="[[bdds]]">
-            <div class="dyn-list">
-                <h4>Bases de données</h4>
-                <template is="dom-repeat" items="[[data.bdds]]" as="it">
-                    <p><iron-icon icon="vaadin:database" style="--iron-icon-fill-color:#FF8A65"></iron-icon> [[it]] </p>
-                </template>
-            </div>
-        </template>
-
-        <template is="dom-if" if="[[urls]]">
-            <div class="dyn-list">
-                <h4>URLs</h4>
-                <template is="dom-repeat" items="[[data.urls]]" as="it">
-                    <p><iron-icon icon="cloud" style="--iron-icon-fill-color:#B2EBF2"></iron-icon> [[it]] </p>
-                </template>
-            </div>
-        </template>
-
-        <template is="dom-if" if="[[softwares]]">
-            <div class="dyn-list">
-                <h4>Logiciels</h4>
-                <template is="dom-repeat" items="[[data.softwares]]" as="it">
-                    <p>[[it]]</p>
-                </template>
-            </div>
-        </template>
-
-        <template is="dom-if" if="[[vips]]">
-            <div class="dyn-list">
-                <h4>VIPs</h4>
-                <template is="dom-repeat" items="[[data.vips]]" as="it">
-                    <p><iron-icon icon="face" style="--iron-icon-fill-color:#FFE0B2"></iron-icon> [[it]] </p>
-                </template>
-            </div>
-        </template>
-
-        <div class="scheme">
-            <h3>Schéma Infrastructure</h3>
-            <dory-d3-relationship-graph id ="graph" data="[[graphData]]" width="720" height="720"></dory-d3-relationship-graph>
-        </div>
-
+        <div id="svgcontainer" style$='width: [[width]]px; height: [[height]]px'></div>
     </template>
 
     <script>
         /**
-         * `dory-sam-card-details-tab`
+         * `dory-d3-relationship-graph`
          *
          *
          * @customElement
          * @polymer
          * @demo demo/index.html
          */
-        class DorySamCardDetailsTab extends Polymer.Element {
+        class DoryD3RelationshipGraph extends Polymer.Element {
             static get is() {
-                return 'dory-sam-card-details-tab';
+                return 'dory-d3-relationship-graph';
             }
 
             static get properties() {
                 return {
-                    app:{
-                        type : String,
-                        observer : '_setArraysDisplay'
+                    data : {
+                        type : Object
                     },
-                    data: {
-                        type: Object,
-                        observer : '_createGraph'
+                    width:{
+                        type : Number,
+                        value : 750
                     },
-                    LAN:{
-                        type : Boolean,
-                        value : false
-                    },
-                    DMZ:{
-                        type : Boolean,
-                        value : false
-                    },
-                    bdds:{
-                        type: Boolean,
-                        value : false
-                    },
-                    vips:{
-                        type: Boolean,
-                        value : false
-                    },
-                    softwares:{
-                        type: Boolean,
-                        value : false
-                    },
-                    urls:{
-                        type: Boolean,
-                        value : false
-                    },
-                    graphData:{
-                        type : Object,
-                        notify : true
+                    height:{
+                        type:Number,
+                        value : 750
                     }
                 };
             }
 
-            /**
-             * Set booleans related to arrays to True if the arrays are not empty
-             * @private
-             */
-            _setArraysDisplay(){
-                if(this.data){
-                    if(this.data.softwares && this.data.softwares.length>0){
-                        this.set('softwares',true);
-                    }
-                    if(this.data.bdds && this.data.bdds.length>0){
-                        this.set('bdds',true);
-                    }
-                    if(this.data.urls && this.data.urls.length>0){
-                        this.set('urls',true);
-                    }
-                    if(this.data.serveursLan && this.data.serveursLan.length>0){
-                        this.set('LAN',true);
-                    }
-                    if(this.data.serveursDmz && this.data.serveursDmz.length>0){
-                        this.set('DMZ',true);
-                    }
-                    if(this.data.vips && this.data.vips.length>0){
-                        this.set('vips',true);
-                    }
-                }
+            ready() {
+                super.ready();
+                this.draw();
             }
 
-            _createGraph(){
-                if(this.data){
-                    let app = this.app;
-                    this.graphData = {};
-                    let nodes = [];
-                    let links = [];
+            /**
+             * Draw svg
+             */
+            draw(){
+                const container = this.$.svgcontainer;
 
-                    nodes.push({'name':this.app,'color':'#FFCC80','icon':'tab'});
-
-                    if(this.DMZ){
-                        this.data.serveursDmz.forEach(function(server){
-                            nodes.push({'name':server,'color':'#8BC34A','icon':'dns'});
-                            links.push({'source':app,'target':server});
-                        })
-                    }
-
-                    if(this.LAN){
-                        this.data.serveursLan.forEach(function(server){
-                            nodes.push({'name':server,'color':'#F44336','icon':'dns'});
-                            links.push({'source':app,'target':server});
-                        })
-                    }
-
-                    if(this.data.bdds){
-                        this.data.bdds.forEach(function(bdd){
-                            nodes.push({'name':bdd,'color':'#FF7043','icon':'device:storage'});
-                            links.push({'source':app,'target':bdd});
-                        });
-                    }
-
-                    this.graphData.nodes = nodes;
-                    this.graphData.links = links;
-                    this.$.graph.draw();
-
+                if(container.hasChildNodes()){
+                    container.innerHTML='';
                 }
+
+                let root = this.data;
+                if(!root){
+//                    console.error('D3 : Pas de data');
+                    return;
+                }
+
+                let svg = d3.select(container).append('svg')
+                    .attr('width',this.offsetWidth)
+                    .attr('height',this.offsetHeight);
+
+                let simulation = d3.forceSimulation()
+                    .nodes(this.data.nodes);
+
+                simulation
+                    .force("charge", d3.forceManyBody().strength(-500))
+                    .force('center_force',d3.forceCenter(this.width/2,this.height/2))
+                    .force('link',d3.forceLink(this.data.links).id(function(d){return d.name}).distance(250).strength(2));
+
+                let link = svg.append('g')
+                    .attr('class','links')
+                    .selectAll('line')
+                    .data(this.data.links)
+                    .enter()
+                    .append('line')
+                    .attr('stroke-width',2);
+
+                let node = svg.append('g')
+                    .attr('class','node')
+                    .selectAll('circle')
+                    .data(this.data.nodes)
+                    .enter()
+                    .append('circle')
+                    .attr('r',60)
+                    .attr('fill',function(d){return d.color;});
+
+                let label = svg.append('g')
+                    .attr('class','labels')
+                    .selectAll('.myText')
+                    .data(this.data.nodes)
+                    .enter()
+                    .append('text')
+                    .text(function(d){return d.name})
+                    .style('text-anchor','middle')
+                    .style('fill','white');
+
+                let icon = svg.append('g')
+                    .attr('class','icons')
+                    .style('min-width',this.width)
+                    .style('min-height',this.height)
+                    .selectAll('icons')
+                    .data(this.data.nodes)
+                    .enter()
+                    .append('svg:foreignObject')
+                    .style('position','absolute');
+
+                icon.append('xhtml:div')
+                    .html(function(d){return "<iron-icon icon='"+d.icon+"'></iron-icon>"});
+
+                /**
+                 *  Handle drag of the nodes
+                 */
+                let drag_handler = d3.drag()
+                    .on('start',function(d){
+                        if(!d3.event.active) simulation.alphaTarget(0.1).restart();
+                        d.fx = d.x;
+                        d.fy = d.y;
+                    })
+                    .on('drag',function(d){
+                        d.fx = d3.event.x;
+                        d.fy = d3.event.y;
+                    })
+                    .on('end',function(d){
+                        if(!d3.event.active) simulation.alphaTarget(0);
+                        d.fx = null;
+                        d.fy = null;
+                    });
+
+                drag_handler(node);
+
+                /**
+                 * Handle every tick of the simulation
+                 */
+                simulation.on('tick',function(){
+                    node
+                        .attr('cx',function(d){return d.x;})
+                        .attr('cy',function(d){return d.y;});
+                    label
+                        .attr('x',function(d){return d.x;})
+                        .attr('y',function(d){return d.y-10;});
+                    link
+                        .attr('x1', function(d) {return d.source.x;})
+                        .attr('y1', function(d) {return d.source.y;})
+                        .attr('x2', function(d) {return d.target.x;})
+                        .attr('y2', function(d) {return d.target.y;});
+                    icon
+                        .attr('x',function(d){return d.x-12;})
+                        .attr('y',function(d){return d.y;});
+                });
             }
         }
 
-        window.customElements.define(DorySamCardDetailsTab.is, DorySamCardDetailsTab);
+        window.customElements.define(DoryD3RelationshipGraph.is, DoryD3RelationshipGraph);
     </script>
 </dom-module>
