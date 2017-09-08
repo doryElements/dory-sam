@@ -103,7 +103,7 @@
                     .nodes(this.data.nodes);
 
                 simulation
-                    .force('change_force',d3.forceManyBody())
+                    .force("charge", d3.forceManyBody().strength(-500))
                     .force('center_force',d3.forceCenter(this.width/2,this.height/2))
                     .force('link',d3.forceLink(this.data.links).id(function(d){return d.name}).distance(200));
 
