@@ -1,6 +1,5 @@
-import { PolymerElement } from '@polymer/polymer/polymer-element.js';
+import { PolymerElement, html } from '@polymer/polymer/polymer-element.js';
 import './dory-sam-dyn-list.js';
-import { html } from '@polymer/polymer/lib/utils/html-tag.js';
 /**
  * `dory-sam-editor-env`
  *

@@ -1,14 +1,15 @@
-import { PolymerElement } from '@polymer/polymer/polymer-element.js';
+import { html,  PolymerElement } from '@polymer/polymer/polymer-element.js';
 import '@polymer/paper-tabs/paper-tabs.js';
 import '@polymer/iron-icons/iron-icons.js';
 import '@polymer/iron-icons/device-icons.js';
 import '@polymer/iron-pages/iron-pages.js';
-import 'air-cruddy/air-cruddy-mixin.js';
+
+import '@bower_components/air-cruddy/air-cruddy-mixin.js';
+
 import './dory-sam-card-details-tab.js';
 import './dory-markdown.js';
-import { html } from '@polymer/polymer/lib/utils/html-tag.js';
 
-import '@bower_components/tags-input/tags-input.html';
+//import '@bower_components/tags-input/tags-input.html';
 
 /**
  * `dory-sam-card-details`

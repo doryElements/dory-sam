@@ -3,7 +3,7 @@ import '@polymer/iron-icon/iron-icon.js';
 import '@polymer/iron-icons/iron-icons.js';
 import '@polymer/iron-icons/device-icons.js';
 import { html as html$0 } from '@polymer/polymer/lib/utils/html-tag.js';
-import 'd3/d3.min.js';
+import * as d3 from "d3";
 /**
  * `dory-d3-relationship-graph`
  *

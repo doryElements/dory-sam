@@ -1,11 +1,10 @@
-import { PolymerElement } from '@polymer/polymer/polymer-element.js';
+import { PolymerElement, html } from '@polymer/polymer/polymer-element.js';
 import '@polymer/iron-list/iron-list.js';
 import '@polymer/iron-icons/iron-icons.js';
 import '@polymer/paper-fab/paper-fab.js';
 import '@polymer/iron-scroll-threshold/iron-scroll-threshold.js';
 import '@polymer/paper-progress/paper-progress.js';
 import './dory-sam-card.js';
-import { html } from '@polymer/polymer/lib/utils/html-tag.js';
 /**
  * `dory-sam-list`
  *

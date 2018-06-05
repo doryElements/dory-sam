@@ -1,8 +1,7 @@
-import { PolymerElement } from '@polymer/polymer/polymer-element.js';
+import { PolymerElement, html } from '@polymer/polymer/polymer-element.js';
 import '@polymer/paper-input/paper-input.js';
 import '@polymer/paper-icon-button/paper-icon-button.js';
 import '@polymer/iron-icons/iron-icons.js';
-import { html } from '@polymer/polymer/lib/utils/html-tag.js';
 /**
  * `dory-sam-dyn-list`
  *

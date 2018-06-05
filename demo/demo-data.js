@@ -1,7 +1,6 @@
-import { PolymerElement } from '@polymer/polymer/polymer-element.js';
+import { PolymerElement, html } from '@polymer/polymer/polymer-element.js';
 import '@polymer/paper-slider/paper-slider.js';
 import '@polymer/iron-flex-layout/iron-flex-layout-classes.js';
-import { html } from '@polymer/polymer/lib/utils/html-tag.js';
 //import {  Chance } from 'chance/chance.js';
 /**
  * `demo-data`

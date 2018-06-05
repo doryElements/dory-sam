@@ -1,6 +1,5 @@
-import { PolymerElement } from '@polymer/polymer/polymer-element.js';
+import { PolymerElement, html } from '@polymer/polymer/polymer-element.js';
 import '@polymer/marked-element/marked-element.js';
-import { html } from '@polymer/polymer/lib/utils/html-tag.js';
 /**
  * `dory-markdown`
  *
