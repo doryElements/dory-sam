@@ -1,13 +1,21 @@
-<link rel="import" href="../polymer/polymer-element.html">
-
-<link rel="import" href="../paper-card/paper-card.html">
-<link rel="import" href="../iron-icon/iron-icon.html">
-<link rel="import" href="../iron-icons/iron-icons.html">
-<link rel="import" href="../iron-icons/device-icons.html">
-<link rel="import" href="../vaadin-icons/vaadin-icons.html">
-
-<dom-module id="dory-sam-card">
-    <template>
+import { PolymerElement } from '@polymer/polymer/polymer-element.js';
+import '@polymer/paper-card/paper-card.js';
+import '@polymer/iron-icon/iron-icon.js';
+import '@polymer/iron-icons/iron-icons.js';
+import '@polymer/iron-icons/device-icons.js';
+import '@vaadin/vaadin-icons/vaadin-icons.js';
+import { html } from '@polymer/polymer/lib/utils/html-tag.js';
+/**
+ * `dory-sam-card`
+ *
+ *
+ * @customElement
+ * @polymer
+ * @demo demo/index.html
+ */
+class DorySamCard extends PolymerElement {
+  static get template() {
+    return html`
         <style>
             :host {
                 display: inline-block;
@@ -96,61 +104,50 @@
                 </div>
             </div>
         </paper-card>
-    </template>
+`;
+  }
 
-    <script>
-        /**
-         * `dory-sam-card`
-         *
-         *
-         * @customElement
-         * @polymer
-         * @demo demo/index.html
-         */
-        class DorySamCard extends Polymer.Element {
-            static get is() {
-                return 'dory-sam-card';
-            }
+  static get is() {
+      return 'dory-sam-card';
+  }
 
-            static get properties() {
-                return {
-                    data: {
-                        type: Object,
-                        notify : true
-                    },
-                    servers : {
-                        type : String,
-                        computed: 'computeServers(data.production.serveursDmz,data.production.serveursLan)'
-                    },
-                    bdds : {
-                        type : String,
-                        computed: 'computeDbs(data.production.bdds)'
-                    }
-                };
-            }
+  static get properties() {
+      return {
+          data: {
+              type: Object,
+              notify : true
+          },
+          servers : {
+              type : String,
+              computed: 'computeServers(data.production.serveursDmz,data.production.serveursLan)'
+          },
+          bdds : {
+              type : String,
+              computed: 'computeDbs(data.production.bdds)'
+          }
+      };
+  }
 
-            computeDbs(dbs) {
-                if(dbs){
-                    return dbs.join(' / ');
-                }
-                return '';
-            }
+  computeDbs(dbs) {
+      if(dbs){
+          return dbs.join(' / ');
+      }
+      return '';
+  }
 
-            computeServers(dmz,lan){
-                let res='';
-                if(dmz){
-                    res = res+dmz.join(' / ');
-                    if(lan && res.length>0){
-                        res = res+ ' / ';
-                    }
-                }
-                if(lan){
-                    res = res+lan.join(' / ');
-                }
-                return res;
-            }
-        }
+  computeServers(dmz,lan){
+      let res='';
+      if(dmz){
+          res = res+dmz.join(' / ');
+          if(lan && res.length>0){
+              res = res+ ' / ';
+          }
+      }
+      if(lan){
+          res = res+lan.join(' / ');
+      }
+      return res;
+  }
+}
 
-        window.customElements.define(DorySamCard.is, DorySamCard);
-    </script>
-</dom-module>
+window.customElements.define(DorySamCard.is, DorySamCard);

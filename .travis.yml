@@ -10,11 +10,10 @@ addons:
       - google-chrome-stable
 node_js: '8'
 cache: yarn
-before_script:
-  - npm install -g bower polymer-cli
-  - bower install
+before_script: npm install -g polymer-cli
 after_success:
   - codeclimate-test-reporter < lcov.info
 script:
   - xvfb-run npm run lint
-  - xvfb-run polymer test
+  - xvfb-run polymer test --module-resolution=node --npm
+

@@ -1,22 +1,22 @@
-<link rel="import" href="../polymer/polymer-element.html">
+<script type="module" src="../@polymer/polymer/polymer-element.js"></script>
 
-<link rel="import" href="../iron-icons/iron-icons.html">
-<link rel="import" href="../iron-pages/iron-pages.html">
+<script type="module" src="../@polymer/iron-icons/iron-icons.js"></script>
+<script type="module" src="../@polymer/iron-pages/iron-pages.js"></script>
 
-<link rel="import" href="../paper-tabs/paper-tabs.html">
-<link rel="import" href="../paper-dropdown-menu/paper-dropdown-menu.html">
-<link rel="import" href="../paper-listbox/paper-listbox.html">
-<link rel="import" href="../paper-item/paper-item.html">
-<link rel="import" href="../paper-input/paper-input.html">
-<link rel="import" href="../paper-input/paper-textarea.html">
-<link rel="import" href="../paper-icon-button/paper-icon-button.html">
+<script type="module" src="../@polymer/paper-tabs/paper-tabs.js"></script>
+<script type="module" src="../@polymer/paper-dropdown-menu/paper-dropdown-menu.js"></script>
+<script type="module" src="../@polymer/paper-listbox/paper-listbox.js"></script>
+<script type="module" src="../@polymer/paper-item/paper-item.js"></script>
+<script type="module" src="../@polymer/paper-input/paper-input.js"></script>
+<script type="module" src="../@polymer/paper-input/paper-textarea.js"></script>
+<script type="module" src="../@polymer/paper-icon-button/paper-icon-button.js"></script>
 
-<link rel="import" href="../tags-input/tags-input.html">
+<script type="module" src="../tags-input/tags-input.js"></script>
 
-<link rel="import" href="../water-marked-editor/water-marked-editor.html">
+<script type="module" src="../water-marked-editor/water-marked-editor.js"></script>
 
-<link rel="import" href="dory-sam-editor-env.html">
-<link rel="import" href="dory-sam-dyn-list-dropdown.html">
+<script type="module" src="./dory-sam-editor-env.js"></script>
+<script type="module" src="./dory-sam-dyn-list-dropdown.js"></script>
 
 <dom-module id="dory-sam-editor-form">
     <template>
@@ -122,113 +122,127 @@
         </div>
     </template>
 
-    <script>
-        /**
-         * `dory-sam-editor-form`
-         *
-         *
-         * @customElement
-         * @polymer
-         * @demo demo/index.html
-         */
-        class DorySamEditorForm extends Polymer.Element {
-            static get is() {
-                return 'dory-sam-editor-form';
-            }
+    <script type="module">
+import { PolymerElement } from '@polymer/polymer/polymer-element.js';
+import '@polymer/iron-icons/iron-icons.js';
+import '@polymer/iron-pages/iron-pages.js';
+import '@polymer/paper-tabs/paper-tabs.js';
+import '@polymer/paper-dropdown-menu/paper-dropdown-menu.js';
+import '@polymer/paper-listbox/paper-listbox.js';
+import '@polymer/paper-item/paper-item.js';
+import '@polymer/paper-input/paper-input.js';
+import '@polymer/paper-input/paper-textarea.js';
+import '@polymer/paper-icon-button/paper-icon-button.js';
+import 'tags-input/tags-input.js';
+import 'water-marked-editor/water-marked-editor.js';
+import './dory-sam-editor-env.js';
+import './dory-sam-dyn-list-dropdown.js';
+/**
+ * `dory-sam-editor-form`
+ *
+ *
+ * @customElement
+ * @polymer
+ * @demo demo/index.html
+ */
+class DorySamEditorForm extends PolymerElement {
+    static get is() {
+        return 'dory-sam-editor-form';
+    }
 
-            ready() {
-                super.ready();
-                this._getDropdownOptions();
-            }
+    ready() {
+        super.ready();
+        this._getDropdownOptions();
+    }
 
-            static get properties() {
-                return {
-                    data: {
-                        type: Object,
-                        notify: true
-                    },
-                    tabSelected: {
-                        type: Number,
-                        value: 0
-                    },
-                    tags : {
-                        type : Array,
-                        value : function(){
-                            return [];
-                        }
-                    },
-                    options: {
-                        type: Array,
-                        notify: true
-                    }
-                };
-            }
-
-            createEmptyEntityModel() {
-                return {
-                    app: '',
-                    description :'',
-                    name : '',
-                    dpt : '',
-                    type : '',
-                    doc : '',
-                    state: '',
-                    git: '',
-                    ci: '',
-                    tags : [],
-                    relatives: [],
-                    qualif : {
-                        softwares:[],
-                        urls:[],
-                        bdds:[],
-                        vips:[],
-                        serveursDmz :[],
-                        serveursLan :[]
-                    },
-                    recette : {
-                        softwares:[],
-                        urls:[],
-                        bdds:[],
-                        vips:[],
-                        serveursDmz :[],
-                        serveursLan :[]
-                    },
-                    production : {
-                        softwares:[],
-                        urls:[],
-                        bdds:[],
-                        vips:[],
-                        serveursDmz :[],
-                        serveursLan :[]
-                    }
+    static get properties() {
+        return {
+            data: {
+                type: Object,
+                notify: true
+            },
+            tabSelected: {
+                type: Number,
+                value: 0
+            },
+            tags : {
+                type : Array,
+                value : function(){
+                    return [];
                 }
+            },
+            options: {
+                type: Array,
+                notify: true
             }
+        };
+    }
 
-            _getDropdownOptions() {
-                const request={
-                    method: 'GET',
-                    mode: 'cors',
-                    credentials: 'include',
-                };
-                fetch('/api/sams/options', request)
-                    .then( (response)=>{
-                        if(response.status !== 200) {
-                            console.error('Fetch error : Error code ', response.status);
-                            this.dispatchEvent(new CustomEvent('dory-request-error', {
-                                detail: response,
-                                bubbles: true,
-                                composed: true
-                            }));
-                        }
-                        else{
-                            response.json().then((data)=>{
-                                this.options = data;
-                            });
-                        }
-                    });
+    createEmptyEntityModel() {
+        return {
+            app: '',
+            description :'',
+            name : '',
+            dpt : '',
+            type : '',
+            doc : '',
+            state: '',
+            git: '',
+            ci: '',
+            tags : [],
+            relatives: [],
+            qualif : {
+                softwares:[],
+                urls:[],
+                bdds:[],
+                vips:[],
+                serveursDmz :[],
+                serveursLan :[]
+            },
+            recette : {
+                softwares:[],
+                urls:[],
+                bdds:[],
+                vips:[],
+                serveursDmz :[],
+                serveursLan :[]
+            },
+            production : {
+                softwares:[],
+                urls:[],
+                bdds:[],
+                vips:[],
+                serveursDmz :[],
+                serveursLan :[]
             }
         }
+    }
 
-        window.customElements.define(DorySamEditorForm.is, DorySamEditorForm);
-    </script>
+    _getDropdownOptions() {
+        const request={
+            method: 'GET',
+            mode: 'cors',
+            credentials: 'include',
+        };
+        fetch('/api/sams/options', request)
+            .then( (response)=>{
+                if(response.status !== 200) {
+                    console.error('Fetch error : Error code ', response.status);
+                    this.dispatchEvent(new CustomEvent('dory-request-error', {
+                        detail: response,
+                        bubbles: true,
+                        composed: true
+                    }));
+                }
+                else{
+                    response.json().then((data)=>{
+                        this.options = data;
+                    });
+                }
+            });
+    }
+}
+
+window.customElements.define(DorySamEditorForm.is, DorySamEditorForm);
+</script>
 </dom-module>

@@ -4,43 +4,35 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
 
-    <title>Demo liste</title>
+    <title>demo-app demo</title>
 
-    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+    <script src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
 
-    <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
-    <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
-    <link rel="import" href="../dory-sam-list.html">
-    <link rel="import" href="../dory-main-layout.html">
-    <link rel="import" href="demo-data.html">
+    <script type="module">
+      import '@polymer/iron-demo-helpers/demo-pages-shared-styles';
+      import '@polymer/iron-demo-helpers/demo-snippet';
+      import '@polymer/polymer/lib/elements/dom-bind.js';
+    </script>
+
+      <script type="module" src="./demo-data.js"></script>
+    <script type="module" src="../dory-sam-list.js"></script>
 
     <custom-style>
       <style is="custom-style" include="demo-pages-shared-styles">
-        html{
-          --h1-color : #FFD54F;
-          --logo-background-color : #FB8C00;
-          --sidebar-background-color : #424242;
-          --sidebar-text-color: white;
-          --background-color : #EFEBE9;
-          --h3-color: #FFAB40;
-          --h4-color:#80CBC4;
-          --paper-fab-background: #4285f4;
-          --h2-color :#FF6F00 ;
-        }
-        body{
-          padding : 0;
-        }
       </style>
     </custom-style>
   </head>
   <body>
-    <div>
-        <dom-bind id="demo">
-          <template>
-            <demo-data no-options data="{{data}}" count="25"></demo-data>
-            <dory-sam-list items="[[data]]" slot="content"></dory-sam-list>
-          </template>
-        </dom-bind>
+    <div class="vertical-section-container centered">
+      <h3>Basic demo-app demo</h3>
+          <dom-bind>
+              <!--<demo-snippet>-->
+            <template>
+                <demo-data no-options="" data="{{data}}" count="25"></demo-data>
+                <dory-sam-list items="[[data]]" slot="content"></dory-sam-list>
+            </template>
+              <!--</demo-snippet>-->
+          </dom-bind>
     </div>
   </body>
 </html>

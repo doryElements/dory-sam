@@ -1,0 +1,191 @@
+import { PolymerElement } from '@polymer/polymer/polymer-element.js';
+import '@polymer/iron-icon/iron-icon.js';
+import '@polymer/iron-icons/iron-icons.js';
+import '@polymer/iron-icons/device-icons.js';
+import { html as html$0 } from '@polymer/polymer/lib/utils/html-tag.js';
+import 'd3/d3.min.js';
+/**
+ * `dory-d3-relationship-graph`
+ *
+ *
+ * @customElement
+ * @polymer
+ * @demo demo/index.html
+ */
+class DoryD3RelationshipGraph extends PolymerElement {
+  static get template() {
+    return html$0`
+        <style>
+            :host {
+                display: block;
+            }
+
+            .links line{
+                stroke : #999;
+                stroke-opacity : 0.6;
+            }
+
+            .nodes circle{
+                stroke : #fff;
+                stroke-width : 1px;
+            }
+
+            .nodes text{
+                pointer-events: none;
+            }
+
+            text{
+                font : 12px roboto;
+            }
+
+            iron-icon{
+                --iron-icon-fill-color: white;
+            }
+
+            #svgcontainer{
+                margin-right : auto;
+                margin-left : auto;
+            }
+        </style>
+
+        <div id="svgcontainer" style\$="width: [[width]]px; height: [[height]]px"></div>
+`;
+  }
+
+  static get is() {
+      return 'dory-d3-relationship-graph';
+  }
+
+  static get properties() {
+      return {
+          data : {
+              type : Object
+          },
+          width:{
+              type : Number,
+              value : 750
+          },
+          height:{
+              type:Number,
+              value : 750
+          }
+      };
+  }
+
+  ready() {
+      super.ready();
+      this.draw();
+  }
+
+  /**
+   * Draw svg
+   */
+  draw(){
+      const container = this.$.svgcontainer;
+
+      if(container.hasChildNodes()){
+          container.innerHTML='';
+      }
+
+      let root = this.data;
+      if(!root){
+//                    console.error('D3 : Pas de data');
+          return;
+      }
+
+      let svg = d3.select(container).append('svg')
+          .attr('width',this.width)
+          .attr('height',this.height);
+
+      let simulation = d3.forceSimulation()
+          .nodes(this.data.nodes);
+
+      simulation
+          .force("charge", d3.forceManyBody().strength(-500))
+          .force('center_force',d3.forceCenter(this.width/2,this.height/2))
+          .force('link',d3.forceLink(this.data.links).id(function(d){return d.name}).distance(200));
+
+      let link = svg.append('g')
+          .attr('class','links')
+          .selectAll('line')
+          .data(this.data.links)
+          .enter()
+          .append('line')
+              .attr('stroke-width',2);
+
+      let node = svg.append('g')
+          .attr('class','node')
+          .selectAll('circle')
+          .data(this.data.nodes)
+          .enter()
+          .append('circle')
+              .attr('r',60)
+              .attr('fill',function(d){return d.color;});
+
+      let label = svg.append('g')
+          .attr('class','labels')
+          .selectAll('.myText')
+          .data(this.data.nodes)
+          .enter()
+          .append('text')
+              .text(function(d){return d.name})
+              .style('text-anchor','middle')
+              .style('fill','white');
+
+      let icon = svg.append('g')
+          .attr('class','icons')
+          .style('min-width',this.width)
+          .style('min-height',this.height)
+          .selectAll('icons')
+          .data(this.data.nodes)
+          .enter()
+          .append('svg:foreignObject')
+          .style('position','absolute');
+
+          icon.append('xhtml:div')
+              .html(function(d){return "<iron-icon icon='"+d.icon+"'></iron-icon>"});
+
+      /**
+       *  Handle drag of the nodes
+       */
+      let drag_handler = d3.drag()
+          .on('start',function(d){
+              if(!d3.event.active) simulation.alphaTarget(0.1).restart();
+              d.fx = d.x;
+              d.fy = d.y;
+          })
+          .on('drag',function(d){
+              d.fx = d3.event.x;
+              d.fy = d3.event.y;
+          })
+          .on('end',function(d){
+              if(!d3.event.active) simulation.alphaTarget(0);
+              d.fx = null;
+              d.fy = null;
+          });
+
+      drag_handler(node);
+
+      /**
+       * Handle every tick of the simulation
+       */
+      simulation.on('tick',function(){
+          node
+              .attr('cx',function(d){return d.x;})
+              .attr('cy',function(d){return d.y;});
+          label
+              .attr('x',function(d){return d.x;})
+              .attr('y',function(d){return d.y-10;});
+          link
+              .attr('x1', function(d) {return d.source.x;})
+              .attr('y1', function(d) {return d.source.y;})
+              .attr('x2', function(d) {return d.target.x;})
+              .attr('y2', function(d) {return d.target.y;});
+          icon
+              .attr('x',function(d){return d.x-12;})
+              .attr('y',function(d){return d.y;});
+      });
+  }
+}
+
+window.customElements.define(DoryD3RelationshipGraph.is, DoryD3RelationshipGraph);

@@ -6,15 +6,26 @@
 
         <title>Demo D3.js</title>
 
-        <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+        <script src="../../@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
 
-        <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
-        <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
+        <script type="module" src="../../@polymer/iron-demo-helpers/demo-pages-shared-styles.js"></script>
+        <script type="module" src="../../@polymer/iron-demo-helpers/demo-snippet.js"></script>
 
-        <link rel="import" href="../dory-d3-relationship-graph.html">
-        <link rel="import" href="demo-graph-data.html">
+        <script type="module" src="../dory-d3-relationship-graph.js"></script>
+        <script type="module" src="./demo-graph-data.js"></script>
 
-        <custom-style>
+        <!-- FIXME(polymer-modulizer):
+        These imperative modules that innerHTML your HTML are
+        a hacky way to be sure that any mixins in included style
+        modules are ready before any elements that reference them are
+        instantiated, otherwise the CSS @apply mixin polyfill won't be
+        able to expand the underlying CSS custom properties.
+        See: https://github.com/Polymer/polymer-modulizer/issues/154
+        -->
+    <script type="module">
+const $_documentContainer = document.createElement('template');
+
+$_documentContainer.innerHTML = `<custom-style>
             <style is="custom-style" include="demo-pages-shared-styles">
                 html{
                     --h1-color : #FFD54F;
@@ -31,16 +42,25 @@
                     padding : 0;
                 }
             </style>
-        </custom-style>
+        </custom-style>`;
+
+document.body.appendChild($_documentContainer.content);
+</script>
     </head>
     <body>
-    <div>
+    <script type="module">
+const $_documentContainer = document.createElement('template');
+
+$_documentContainer.innerHTML = `<div>
         <dom-bind id="demo">
             <template>
                 <demo-graph-data data="{{data}}"></demo-graph-data>
                 <dory-d3-relationship-graph data="[[data]]"></dory-d3-relationship-graph>
             </template>
         </dom-bind>
-    </div>
+    </div>`;
+
+document.body.appendChild($_documentContainer.content);
+</script>
     </body>
 </html>
