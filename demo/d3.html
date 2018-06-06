@@ -15,9 +15,7 @@
         <script type="module" src="./demo-graph-data.js"></script>
 
         <!-- FIXME(polymer-modulizer):
-        These imperative modules that innerHTML your HTML are
-        a hacky way to be sure that any mixins in included style
-        modules are ready before any elements that reference them are
+        <script type="module" src="../dory-d3-relationship-graph.js"></script> type="module" src="./demo-graph-data.js"></script>        modules are ready before any elements that reference them are
         instantiated, otherwise the CSS @apply mixin polyfill won't be
         able to expand the underlying CSS custom properties.
         See: https://github.com/Polymer/polymer-modulizer/issues/154
